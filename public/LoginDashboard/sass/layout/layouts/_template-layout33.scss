@@ -1,0 +1,473 @@
+.fxt-template-layout33 {
+    background-color: #ffffff;
+    width: 100%;
+    min-height: 100vh;
+    display: -ms-grid;
+    display: grid;
+    position: relative;
+    z-index: 1;
+    .fxt-content-wrap {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        @media only screen and (max-width: 991px) {
+            display: block;
+        }
+    }
+    .fxt-heading-content {
+        padding: 30px;
+        position: relative;
+        width: 50%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        @media only screen and (max-width: 991px) {
+            width: 100%;
+        }
+        @media only screen and (max-width: 575px) {
+            padding: 15px;
+        }
+        &:before {
+            content: "";
+            border-radius: 0 100px 100px 0;
+            position: absolute;
+            z-index: -1;
+            height: 100%;
+            width: 100%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-image: url("img/figure/bg33-1.jpg");
+            top: 0;
+            left: 0;
+            @media only screen and (max-width: 991px) {
+                border-radius: 0;
+            }
+        }
+        .fxt-inner-wrap {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            max-height: 680px;
+            height: 100%;
+            padding: 60px 50px;
+            border-radius: 30px;
+            max-width: 515px;
+            width: 100%;
+            background-color: rgba(#000, 0.7);
+            @media only screen and (max-width: 575px) {
+                padding: 40px 30px;
+                border-radius: 15px;
+            }
+        }
+        .fxt-logo {
+            margin-bottom: 30px;
+            display: block;
+            max-width: 35vw;
+        }
+        .fxt-sub-title {
+            color: #ffffff;
+            margin-bottom: 5px;
+            font-size: 24px;
+            font-weight: 300;
+            @media only screen and (max-width: 767px) {
+                font-size: 22px;
+            }
+        }
+        .fxt-main-title {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: 300;
+            @media only screen and (max-width: 991px) {
+                font-size: 30px;
+            }
+            @media only screen and (max-width: 767px) {
+                font-size: 28px;
+            }
+        }
+        .fxt-description {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 300;
+            max-width: 390px;
+            width: 100%;
+        }
+        .fxt-switcher-description {
+            font-size: 16px;
+            font-weight: 300;
+            color: #ffffff;
+            .fxt-switcher-text {
+                display: table;
+                color: #ffffff;
+                font-weight: 500;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    .fxt-form-content {
+        width: 50%;
+        @media only screen and (max-width: 991px) {
+            width: 100%;
+        }
+        .fxt-page-title {
+            margin-bottom: 15px;
+            font-size: 36px;
+            font-weight: 700;
+            color: #14133b;
+            @media only screen and (max-width: 1199px) {
+                font-size: 32px;
+            }
+            @media only screen and (max-width: 991px) {
+                font-size: 30px;
+            }
+            @media only screen and (max-width: 767px) {
+                font-size: 28px;
+            }
+            @media only screen and (max-width: 575px) {
+                font-size: 26px;
+            }
+            @media only screen and (max-width: 479px) {
+                font-size: 24px;
+            }
+        }
+        .fxt-description {
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+        .fxt-label {
+            color: #14133b;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .fxt-main-form {
+            padding: 50px 65px 40px 65px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            height: 100%;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            @media only screen and (max-width: 991px) {
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+            }
+            @media only screen and (max-width: 575px) {
+                padding: 40px 15px 30px;
+            }
+        }
+        .fxt-inner-wrap {
+            max-width: 454px;
+            width: 100%;
+        }
+        .form-group {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+        }
+        .form-control {
+            min-height: 50px;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: 1px solid #e7e7e7;
+            padding: 10px 15px;
+            color: #111;
+        }
+        input::-webkit-input-placeholder {
+            color: #acacac;
+            font-size: 17px;
+            font-weight: 400;
+        }
+        input::-moz-placeholder {
+            color: #acacac;
+            font-size: 17px;
+            font-weight: 400;
+        }
+        input:-moz-placeholder {
+            color: #acacac;
+            font-size: 17px;
+            font-weight: 400;
+        }
+        input:-ms-input-placeholder {
+            color: #acacac;
+            font-size: 17px;
+            font-weight: 400;
+        }
+        .fxt-otp-row {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            .fxt-otp-col {
+                padding: 10px 5px;
+                text-align: center;
+                margin-right: 30px;
+                -ms-flex-preferred-size: 0;
+                flex-basis: 0;
+                -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+        .fxt-otp-btn {
+            margin-bottom: 20px;
+        }
+        .fxt-switcher-description {
+            text-align: center;
+            font-size: 16px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            color: #646464;
+        }
+        .fxt-switcher-text {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: 0;
+            background-color: transparent;
+            cursor: pointer;
+            padding: 0;
+            color: #39a688;
+            font-size: 15px;
+            font-weight: 500;
+            display: inline-block;
+            -webkit-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                color: #099e74;
+                text-decoration: underline;
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+        .fxt-checkbox-box {
+            margin-bottom: 25px;
+            label {
+                color: #14133b;
+                margin-bottom: 0;
+                font-size: 14px;
+                font-weight: 500;
+                position: relative;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    width: 16px;
+                    height: 16px;
+                    top: 5px;
+                    left: 0;
+                    right: 0;
+                    border: 1px solid;
+                    border-color: #dcdcdc;
+                    border-radius: 3px;
+                    background-color: #fff;
+                    -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+                    -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+                    transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+                }
+                &:after {
+                    position: absolute;
+                    font-size: 10px;
+                    color: #555555;
+                }
+            }
+            input[type="checkbox"] {
+                display: none;
+            }
+            input[type="checkbox"]:checked+label::after {
+                font-family: 'Font Awesome 5 Free';
+                content: "\f00c";
+                font-weight: 900;
+                color: #ffffff;
+                left: 0;
+                right: 0;
+                top: 5px;
+                width: 16px;
+                text-align: center;
+            }
+            input[type="checkbox"]:checked+label::before {
+                background-color: #1ebe92;
+                border-color: #1ebe92;
+            }
+        }
+        .fxt-btn-fill {
+            font-family: 'Roboto', sans-serif;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 17px;
+            font-weight: 500;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            outline: none;
+            border: 1px solid;
+            border-color: #1ebe92;
+            color: #fff;
+            border-radius: 10px;
+            background-color: #1ebe92;
+            padding: 9px 36px;
+            width: 100%;
+            -webkit-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                background-color: #099e74;
+                border-color: #099e74;
+            }
+            &:focus {
+                outline: none;
+            }
+            @media only screen and (max-width: 767px) {
+                font-size: 16px;
+            }
+        }
+        .fxt-divider-text {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .fxt-login-option {
+            ul {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                margin-left: -5px;
+                margin-right: -5px;
+                @media only screen and (max-width: 575px) {
+                    display: block;
+                }
+                li {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    margin-bottom: 10px;
+                    width: auto;
+                    -webkit-transition: all .3s ease-in-out;
+                    -o-transition: all .3s ease-in-out;
+                    transition: all .3s ease-in-out;
+                    @media only screen and (max-width: 575px) {
+                        width: 100%;
+                    }
+                    a {
+                        padding: 10px 15px;
+                        color: #ffffff;
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-box-align: center;
+                        -ms-flex-align: center;
+                        align-items: center;
+                        -webkit-box-pack: center;
+                        -ms-flex-pack: center;
+                        justify-content: center;
+                        min-height: 50px;
+                        width: 50px;
+                        border-radius: 10px;
+                        font-size: 15px;
+                        @media only screen and (max-width: 767px) {
+                            min-height: 47px;
+                        }
+                        @media only screen and (max-width: 575px) {
+                            width: 100%;
+                        }
+                        .fxt-option-icon {
+                            display: inline-block;
+                        }
+                        .fxt-option-text {
+                            display: inline-block;
+                            display: none;
+                            @media only screen and (max-width: 575px) {
+                                display: block;
+                            }
+                        }
+                    }
+                    &.fxt-google {
+                        a {
+                            background-color: $fxt-google;
+                            &:hover {
+                                background-color: $fxt-google-hover;
+                            }
+                        }
+                    }
+                    &.fxt-facebook {
+                        a {
+                            background-color: $fxt-facebook;
+                            &:hover {
+                                background-color: $fxt-facebook-hover;
+                            }
+                        }
+                    }
+                    &.fxt-apple {
+                        a {
+                            background-color: $fxt-apple;
+                            &:hover {
+                                background-color: $fxt-apple-hover;
+                            }
+                        }
+                    }
+                    &.active {
+                        width: 100%;
+                        a {
+                            width: 100%;
+                            .fxt-option-text {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.fxt-template-animation {
+        .fxt-heading-content {
+            &:before {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    }
+    &.loaded.fxt-template-animation {
+        .fxt-heading-content {
+            &:before {
+                opacity: 1;
+                visibility: visible;
+                -webkit-transition: opacity 1.5s ease-in-out;
+                -o-transition: opacity 1.5s ease-in-out;
+                transition: opacity 1.5s ease-in-out;
+                -webkit-transition-delay: 0.3s;
+                -o-transition-delay: 0.3s;
+                transition-delay: 0.3s;
+            }
+        }
+    }
+}
