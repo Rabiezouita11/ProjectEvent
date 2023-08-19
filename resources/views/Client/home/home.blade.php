@@ -23,7 +23,12 @@
 </head>
 
 <body>
+<?php
 
+
+
+
+?>
     <!-- Preloader -->
     <div id="preloader">
         <div id="status"></div>
@@ -88,14 +93,70 @@
                                     </ul>
                                 </li>
                                 <li><a href="contact.html" class="">Contact Us</a></li>
+
+
+
+
+                                @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                                <li class="submenu dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a> 
+                                    <ul class="dropdown-menu">
+                                    <li><a href="detail-1.html">Mon Compte</a></li>    
+                                    <li><a  href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Logout</a></li>
+                                     
+                                    </ul>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
+                                @endguest
+
+
+                                
+
                                 <li class="search-main">
                                     <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
                                 </li>
                             </ul>
                         </div><!-- /.navbar-collapse -->  
+                        @guest
                         <div class="register-login">
                             <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
                         </div>
+                        @else
+                        <?php
+                        $role = Auth::user()->role;	
+                        ?>
+
+
+<div class="register-login">
+                            <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
+                        </div>
+                        <!-- @if($role == 'participant')
+
+
+                        <div class="register-login">
+                            <a href="#" class="nir-btn white">{{$role}} <i class="fa fa-angle-right "></i></a>
+                        </div>
+
+                        @endif -->
+
+                        @endguest
+
 
                         <div id="slicknav-mobile"></div>
                     </div>

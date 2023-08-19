@@ -15,18 +15,25 @@ use Illuminate\Support\Facades\Route;
 
 
 //  pour test 
-Route::get('/admin', function () {
-    return view('Admin.home.home');
-});
+// Route::get('/admin', function () {
+//     return view('Admin.home.home');
+// });
+// Route::get('/akrem', function () {
+//     return view('Client.home.home');
+// });
 
 
+// show page admin
+Route::get('/admin', [App\Http\Controllers\AdminController::class, 'home'])->name('admin')->middleware('role:admin');
+ 
+// show page client
+Route::get('/home', [App\Http\Controllers\DemandeurController::class, 'index'])->name('home');
 
-Route::get('/akrem', function () {
-    return view('Client.home.home');
-});
+Route::get('/logoutt', [App\Http\Controllers\AdminController::class, 'logout'])->name('logoutt');
+
 
 
 // authentification 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

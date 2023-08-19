@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Xmee | Login and Register Form Html Templates</title>
+	<title>Login </title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
@@ -40,15 +40,28 @@
 			</div>
 			<div class="fxt-form">
 				<p>Login into your account</p>
-				<form method="POST">
+				<form method="POST" action="{{ route('login') }}">
+                        @csrf
+
 					<div class="form-group">
 						<div class="fxt-transformY-50 fxt-transition-delay-1">
-							<input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required">
+							<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+							@error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="fxt-transformY-50 fxt-transition-delay-2">
-							<input id="password" type="password" class="form-control" name="password" placeholder="********" required="required">
+							
+							<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="********" name="password" required autocomplete="current-password">
+							@error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 							<i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
 						</div>
 					</div>
@@ -59,7 +72,7 @@
 									<input id="checkbox1" type="checkbox">
 									<label for="checkbox1">Keep me logged in</label>
 								</div>
-								<a href="forgot-password-8.html" class="switcher-text">Forgot Password</a>
+								<a href="{{ route('password.request') }}" class="switcher-text">Forgot Password</a>
 							</div>
 						</div>
 					</div>
@@ -75,26 +88,10 @@
 					<h3>Or Login With</h3>
 				</div>
 			</div>
-			<ul class="fxt-socials">
-				<li class="fxt-google">
-					<div class="fxt-transformY-50 fxt-transition-delay-6">
-						<a href="#" title="google"><i class="fab fa-google-plus-g"></i><span>Google +</span></a>
-					</div>
-				</li>
-				<li class="fxt-twitter">
-					<div class="fxt-transformY-50 fxt-transition-delay-7">
-						<a href="#" title="twitter"><i class="fab fa-twitter"></i><span>Twitter</span></a>
-					</div>
-				</li>
-				<li class="fxt-facebook">
-					<div class="fxt-transformY-50 fxt-transition-delay-8">
-						<a href="#" title="Facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></a>
-					</div>
-				</li>
-			</ul>
+		
 			<div class="fxt-footer">
 				<div class="fxt-transformY-50 fxt-transition-delay-9">
-					<p>Don't have an account?<a href="register-8.html" class="switcher-text2 inline-text">Register</a></p>
+					<p>Don't have an account?<a href="{{route('register')}}" class="switcher-text2 inline-text">Register</a></p>
 				</div>
 			</div>
 		</div>
