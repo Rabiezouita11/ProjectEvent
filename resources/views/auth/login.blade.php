@@ -97,6 +97,7 @@
 		</div>
 	</section>
 	<!-- jquery-->
+	
 	<script src="LoginDashboard/js/jquery-3.5.0.min.js"></script>
 	<!-- Bootstrap js -->
 	<script src="LoginDashboard/js/bootstrap.min.js"></script>

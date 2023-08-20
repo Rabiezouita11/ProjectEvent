@@ -15,20 +15,15 @@
     <link href="client/css/style.css" rel="stylesheet" type="text/css">
     <!--Plugin CSS-->
     <link href="client/css/plugin.css" rel="stylesheet" type="text/css">
-
     <!--Font Awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="client/fonts/line-icons.css" type="text/css">
+   
 </head>
 
 <body>
-<?php
 
-
-
-
-?>
     <!-- Preloader -->
     <div id="preloader">
         <div id="status"></div>
@@ -170,6 +165,7 @@
 
     <!-- banner starts -->
     <section class="banner pt-10 pb-0 overflow-hidden" style="background-image:url(client/images/pexels-wendy-wei-1190297.jpg);">
+ 
         <div class="container">
             <div class="banner-in pt-6">
                 <div class="row align-items-end">
@@ -1292,6 +1288,7 @@
         </div>
         <div class="theme-overlay opacity-90"></div>
     </footer>
+     
     <div class="footer-copyright bg-theme1">
         <div class="container">
             <p class="m-0 white text-center py-3">Copyright ©2023 Eventiz. All Rights Reserved Copyright</p>
@@ -1313,9 +1310,11 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
-
+    @include('kustomer::kustomer')
 
     <!-- *Scripts* -->
+    <script src="{{ asset('vendor/kustomer/js/kustomer.js') }}" defer></script>
+
     <script src="client/js/jquery-3.5.1.min.js"></script>
     <script src="client/js/bootstrap.min.js"></script>
     <script src="client/js/plugin.js"></script>

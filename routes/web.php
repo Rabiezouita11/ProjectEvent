@@ -23,12 +23,20 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
+
+
+// show page profile client
+Route::get('/profileclient', [App\Http\Controllers\DemandeurController::class, 'profile'])->name('profileclient')->middleware('auth');
+
+
 // show page admin
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'home'])->name('admin')->middleware('role:admin');
  
 // show page client
 Route::get('/home', [App\Http\Controllers\DemandeurController::class, 'index'])->name('home');
 
+
+// logout admin
 Route::get('/logoutt', [App\Http\Controllers\AdminController::class, 'logout'])->name('logoutt');
 
 
@@ -37,3 +45,12 @@ Route::get('/logoutt', [App\Http\Controllers\AdminController::class, 'logout'])-
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+// modifier profile
+Route::post('/EditProfile', [App\Http\Controllers\DemandeurController::class, 'EditProfile'])->name('EditProfile');
+
+// modifier password
+Route::post('/update_password', [App\Http\Controllers\DemandeurController::class, 'update_password'])->name('update_password');
