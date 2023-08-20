@@ -53,7 +53,8 @@ class DemandeurController extends Controller
                 'password'=>bcrypt($request->new_password)
             ]);
   
-            return redirect()->back()->with('success','Mot de passe bien modifié.');
+            return redirect()->back()->with('passwordChangeSuccess', 'Password changed successfully')->with('activeTab', 'v-pills-motdepasse-tab');
+
   
         }else{
             return redirect()->back()->with('error','Ancien mot de passe incorrect.');

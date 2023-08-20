@@ -205,7 +205,7 @@
                     <div class="nav flex-column nav-pills col-lg-3 pe-lg-4 mb-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                      
                       <button class="nav-link active" id="v-pills-account-tab" data-bs-toggle="pill" data-bs-target="#v-pills-account" type="button" role="tab" aria-controls="v-pills-account" aria-selected="false">Account Details</button>
-                      <button class="nav-link " id="v-pills-motdepasse-tab" data-bs-toggle="pill" data-bs-target="#v-pills-motdepasse" type="button" role="tab" aria-controls="v-pills-motdepasse" aria-selected="false">changer mot de passe </button>
+                      <button class="nav-link" id="v-pills-motdepasse-tab" data-bs-toggle="pill" data-bs-target="#v-pills-motdepasse" type="button" role="tab" aria-controls="v-pills-motdepasse" aria-selected="false">changer mot de passe</button>
 
                       <button class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -391,6 +391,32 @@
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if there's a session message for password change success and active tab
+        var passwordChangeSuccess = '{{ session('passwordChangeSuccess') }}';
+        var activeTab = '{{ session('activeTab') }}';
+
+        if (passwordChangeSuccess && activeTab) {
+            // Display the success message
+            var successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success';
+            successAlert.innerHTML = '<center>' + passwordChangeSuccess + '</center>';
+
+            var alertContainer = document.querySelector('.event-account-in'); // Replace with the appropriate container
+            if (alertContainer) {
+                alertContainer.insertBefore(successAlert, alertContainer.firstChild);
+            }
+
+            // Activate the "changer mot de passe" tab
+            var tabToActivate = document.getElementById(activeTab);
+            if (tabToActivate) {
+                tabToActivate.click(); // Trigger the click event to activate the tab
+            }
+        }
+    });
+</script>
 
 
 <!-- *Scripts* -->
