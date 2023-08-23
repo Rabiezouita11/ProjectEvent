@@ -1098,7 +1098,7 @@ input#submit:hover {
 
 /* End Preloader */
 #back-to-top {
-  position: fixed;
+  position: sticky;
   z-index: 1000;
   bottom: 20px;
   right: 20px;

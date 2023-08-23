@@ -39,7 +39,12 @@ Route::get('/home', [App\Http\Controllers\DemandeurController::class, 'index'])-
 // logout admin
 Route::get('/logoutt', [App\Http\Controllers\AdminController::class, 'logout'])->name('logoutt');
 
+// show page contact
+Route::get('/contact', [App\Http\Controllers\DemandeurController::class, 'contact'])->name('contact')->middleware('auth');
 
+
+// ajouter  contact
+Route::post('/AjoutContact', [App\Http\Controllers\DemandeurController::class, 'AjoutContact'])->name('AjoutContact');
 
 // authentification 
 Auth::routes();

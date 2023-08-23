@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="client/fonts/line-icons.css" type="text/css">
-   
+    <script src="{{ asset('vendor/kustomer/js/kustomer.js') }}" defer></script>
 </head>
 
 <body>
@@ -87,7 +87,7 @@
                                         <li><a href="detail-1.html">Single Post</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html" class="">Contact Us</a></li>
+                                <li><a href="{{ url('contact') }}" class="">Contact Us</a></li>
 
 
 
@@ -1310,10 +1310,9 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
-    @include('kustomer::kustomer')
+
 
     <!-- *Scripts* -->
-    <script src="{{ asset('vendor/kustomer/js/kustomer.js') }}" defer></script>
 
     <script src="client/js/jquery-3.5.1.min.js"></script>
     <script src="client/js/bootstrap.min.js"></script>
@@ -1321,5 +1320,5 @@
     <script src="client/js/main.js"></script>
     <script src="client/js/custom-nav.js"></script>
 </body>
-
+@include('kustomer::kustomer')
 </html>

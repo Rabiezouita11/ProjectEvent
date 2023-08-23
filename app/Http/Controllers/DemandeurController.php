@@ -11,6 +11,40 @@ class DemandeurController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+
+     public function contact()
+     {
+         return view ('Client.Contact.contact');
+     }
+
+
+
+     public function AjoutContact(Request $request)
+     {
+         $this->validate($request, [
+ 
+          
+             'message' => 'string|required|max:255',
+             'numero' => 'required|numeric|digits:8',
+             ]);
+      
+        $contacts = new \App\Models\Contact();
+          $contacts->nom=$request['nom'];
+          $contacts->email=$request['email'];
+          $contacts->numero=$request['numero'];
+          $contacts->message=$request['message'];
+          $contacts->save();
+ 
+       
+          return redirect()->route('contact')->with('azer','le message a été bien envoyé');
+     }
+ 
+
+ 
+
+
     public function index()
     {
         return view ('Client.home.home');
