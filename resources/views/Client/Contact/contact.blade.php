@@ -231,11 +231,12 @@
                         </div>
                     </div>
                         <div id="contact-form1" class="contact-form" style="font-size: 20px;">
-                   <center> @if (session('azer'))
-                <div class="alert alert-success">
-                {{session('azer')}}
 
-                </div>
+                        
+                   <center> @if (session('azer'))
+                   <div class="alert alert-success" role="alert">
+                            {{ session('azer') }}
+                        </div>
                 @endif</center>    
                         <div class="row">
                             <div class="col-lg-8 pe-lg-4 mb-4">
