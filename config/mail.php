@@ -7,8 +7,8 @@ return [
       "address" => "admin@admin.com",
       "name" => "Example"
   ),
-  "username" => "2cea0d074f3caa",
-  "password" => "53f1e8b70020a2",
+  "username" => "2ec271deb2df01",
+  "password" => "07a70f93eb3f65",
   "sendmail" => "/usr/sbin/sendmail -bs"
 ]
 ?>

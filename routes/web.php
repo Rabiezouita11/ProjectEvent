@@ -35,6 +35,9 @@ Route::get('/admin', [App\Http\Controllers\AdminController::class, 'home'])->nam
 // show page client
 Route::get('/home', [App\Http\Controllers\DemandeurController::class, 'index'])->name('home');
 
+// show page About
+Route::get('/about', [App\Http\Controllers\DemandeurController::class, 'about'])->name('about');
+
 
 // logout admin
 Route::get('/logoutt', [App\Http\Controllers\AdminController::class, 'logout'])->name('logoutt');

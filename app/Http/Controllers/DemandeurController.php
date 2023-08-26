@@ -12,7 +12,10 @@ class DemandeurController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
+     public function about()
+     {
+         return view ('Client.About.about');
+     }
 
      public function contact()
      {

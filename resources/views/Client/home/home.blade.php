@@ -51,7 +51,7 @@
                                     <a href="index.html" class="">Home</a>
                                 </li>
 
-                                <li><a href="about.html" class="">About Us</a></li>
+                                <li><a href="{{ url('about' )}}" class="">About Us</a></li>
 
                                 <li class="submenu dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a> 
