@@ -24,13 +24,12 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
+                                                                              /* Client */ 
 // show page profile client
 Route::get('/profileclient', [App\Http\Controllers\DemandeurController::class, 'profile'])->name('profileclient')->middleware('auth');
 
 
-// show page admin
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'home'])->name('admin')->middleware('role:admin');
+
  
 // show page client
 Route::get('/home', [App\Http\Controllers\DemandeurController::class, 'index'])->name('home');
@@ -39,8 +38,6 @@ Route::get('/home', [App\Http\Controllers\DemandeurController::class, 'index'])-
 Route::get('/about', [App\Http\Controllers\DemandeurController::class, 'about'])->name('about');
 
 
-// logout admin
-Route::get('/logoutt', [App\Http\Controllers\AdminController::class, 'logout'])->name('logoutt');
 
 // show page contact
 Route::get('/contact', [App\Http\Controllers\DemandeurController::class, 'contact'])->name('contact')->middleware('auth');
@@ -52,13 +49,36 @@ Route::post('/AjoutContact', [App\Http\Controllers\DemandeurController::class, '
 // authentification 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-
 
 // modifier profile
 Route::post('/EditProfile', [App\Http\Controllers\DemandeurController::class, 'EditProfile'])->name('EditProfile');
 
 // modifier password
 Route::post('/update_password', [App\Http\Controllers\DemandeurController::class, 'update_password'])->name('update_password');
+
+
+
+
+
+                                                                            /* Admin */ 
+
+                                                                            // show page admin
+Route::get('/admin', [App\Http\Controllers\AdminController::class, 'home'])->name('admin')->middleware('role:admin');
+
+// logout admin
+Route::get('/logoutt', [App\Http\Controllers\AdminController::class, 'logout'])->name('logoutt');
+
+// show page categories list
+Route::get('/categories', [App\Http\Controllers\AdminController::class, 'categories'])->name('categories')->middleware('role:admin');
+
+// button ajouter Categories
+Route::post('/AddCategory', [App\Http\Controllers\AdminController::class, 'AddCategory'])->name('AddCategory');
+
+// button supprimer Categories
+Route::post('/deleteCategory', [App\Http\Controllers\AdminController::class, 'deleteCategory'])->name('deleteCategory');
+
+// show page ajouter Categories
+Route::get('/pageCategoryAjouter', [App\Http\Controllers\AdminController::class, 'showPageAddCategory'])->name('pageCategoryAjouter')->middleware('role:admin');
+
+// show page modifier Categories
+Route::post('/updateCategory', [App\Http\Controllers\AdminController::class, 'updateCategory'])->name('updateCategory')->middleware('role:admin');

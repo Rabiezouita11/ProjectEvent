@@ -266,7 +266,7 @@
                                 @endif</div>
                                     </div>
                                     <div class="comment-btn text-center text-lg-start">
-                                        <input  href="{{ route('logout') }}"
+                                        <input  href="{{ route('AjoutContact') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('contactform2').submit();"  type="submit" class="nir-btn" id="submit2" value="Send Message">
                                     </div>
