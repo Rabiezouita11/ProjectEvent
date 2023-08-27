@@ -418,7 +418,7 @@
         <tr>
             <td colspan="3" class="text-center">Aucune donnée disponible</td>
         </tr>
-    @endforelse
+    @endforelse   
                                                  
                                                 </tbody>
                                             </table>
