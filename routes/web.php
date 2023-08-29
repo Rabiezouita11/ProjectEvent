@@ -97,3 +97,6 @@ Route::post('/addEvent', [App\Http\Controllers\AdminController::class, 'addEvent
 
 // button update Events
 Route::post('/updateEvent', [App\Http\Controllers\AdminController::class, 'updateEvent'])->name('updateEvent');
+
+// show page Contact list
+Route::get('/contacts', [App\Http\Controllers\AdminController::class, 'contacts'])->name('contacts')->middleware('role:admin');

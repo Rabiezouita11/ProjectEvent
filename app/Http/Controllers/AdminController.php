@@ -8,40 +8,42 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use App\Models\Category;
 use App\Models\Events;
+
 class AdminController extends Controller
 {
-   // protected $redirectTo = '/admin';
-    public function __construct() {
+    // protected $redirectTo = '/admin';
+    public function __construct()
+    {
         $this->middleware('auth');
-      }
+    }
 
 
 
     public function home()
     {
         $users = DB::table('users')
-        ->orWhere('role', 'participant')
-        ->orWhere('role', 'demandeur')
-        ->count();       
-         $categories = DB::table('categories')->count();
+            ->orWhere('role', 'participant')
+            ->orWhere('role', 'demandeur')
+            ->count();
+        $categories = DB::table('categories')->count();
         $events = DB::table('events')->count();
         $feedbacks = DB::table('feedbacks')->count();
 
-        return view('Admin.home.home',compact('users','categories','events','feedbacks' ));
+        return view('Admin.home.home', compact('users', 'categories', 'events', 'feedbacks'));
     }
 
     public function categories()
     {
         $categories = DB::table('categories')->paginate(4);
-        return view('Admin.category.index ',compact('categories'));
+        return view('Admin.category.index ', compact('categories'));
     }
 
     public function showPageAddCategory()
     {
-    
+
         return view('Admin.category.ajouterCategory');
     }
-    
+
 
 
     public function logout(Request $request)
@@ -74,64 +76,56 @@ class AdminController extends Controller
 
 
 
-public function AddCategory(Request $request)
-{
-    $request->validate([
-        'Nom' => 'required|unique:categories|max:255',
-       
-    ]);
-    DB::table('categories')->insert([
-        'Nom' => $request->Nom,
-       
-    ]);
-    return redirect()->route('categories')->with('success','Categorie ajouté avec succés');
+    public function AddCategory(Request $request)
+    {
+        $request->validate([
+            'Nom' => 'required|unique:categories|max:255',
 
-}
+        ]);
+        DB::table('categories')->insert([
+            'Nom' => $request->Nom,
 
-public function deleteCategory(Request $request)
-{
-  
-    DB::table('categories')->where('id', '=', $request->id)->delete();
-    return redirect()->route('categories')->with('supprimer','Categorie supprimé avec succés');
+        ]);
+        return redirect()->route('categories')->with('success', 'Categorie ajouté avec succés');
+    }
 
-}
+    public function deleteCategory(Request $request)
+    {
 
-public function updateCategory(Request $request)
-{
+        DB::table('categories')->where('id', '=', $request->id)->delete();
+        return redirect()->route('categories')->with('supprimer', 'Categorie supprimé avec succés');
+    }
 
-    $id=$request['id'];
-   
-    $category=Category::find($id);
+    public function updateCategory(Request $request)
+    {
 
-   
-        $category->Nom =  $request['Nom'];
+        $id = $request['id'];
+
+        $category = Category::find($id);
+
+
+        $category->Nom = $request['Nom'];
         $category->update();
-        return redirect()->route('categories')->with('modifier','Categorie modifié avec succés');
-   
-    
-   
-}
+        return redirect()->route('categories')->with('modifier', 'Categorie modifié avec succés');
+    }
 
-public function events()
-{
-    $events = \App\Models\Events::with('categorie')->paginate(10);
-    $categories = DB::table('categories')->get();
-    return view('Admin.Event.index ',compact('events','categories'));
-
-}
+    public function events()
+    {
+        $events = \App\Models\Events::with('categorie')->paginate(4);
+        $categories = DB::table('categories')->get();
+        return view('Admin.Event.index ', compact('events', 'categories'));
+    }
     public function deleteEvent(Request $request)
     {
         DB::table('events')->where('id', '=', $request->id)->delete();
-        return redirect()->route('events')->with('supprimer','Event supprimé avec succés');
+        return redirect()->route('events')->with('supprimer', 'Event supprimé avec succés');
     }
 
 
     public function showPageAddEvents()
     {
-        $categories = DB::table('categories')->get();	
-        return view('Admin.Event.ajouterEvent',compact('categories'));
-    
-     
+        $categories = DB::table('categories')->get();
+        return view('Admin.Event.ajouterEvent', compact('categories'));
     }
     public function addEvent(Request $request)
     {
@@ -155,7 +149,7 @@ public function events()
                 },
             ],
             'start_time' => 'required|string|max:255',
-    'end_time' => 'required|string|max:255|after:start_time',
+            'end_time' => 'required|string|max:255|after:start_time',
             'Description' => 'required|string',
             'Image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'category_id' => 'required|exists:categories,id'
@@ -220,87 +214,9 @@ public function events()
         return redirect()->route('events')->with('modifier', 'Event updated successfully!');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public function contacts()
+    {
+        $contacts = DB::table('contacts')->paginate(4);
+        return view('Admin.Contact.index ', compact('contacts'));
+    }
 }
