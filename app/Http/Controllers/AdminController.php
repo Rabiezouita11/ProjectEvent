@@ -219,4 +219,11 @@ class AdminController extends Controller
         $contacts = DB::table('contacts')->paginate(4);
         return view('Admin.Contact.index ', compact('contacts'));
     }
+
+    public function feedbacks()
+    {
+        $users = DB::table('users')->get();
+        $feedbacks = DB::table('feedbacks')->paginate(4);
+        return view('Admin.Feedbacks.index ', compact('feedbacks', 'users'));
+    }
 }

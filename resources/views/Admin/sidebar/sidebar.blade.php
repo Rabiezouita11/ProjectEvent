@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="}}" class=" waves-effect">
+                    <a href="{{route('feedbacks')}}" class=" waves-effect">
                         <i class="ti-comments"></i>
                         <span>Commentaires</span>
                     </a>

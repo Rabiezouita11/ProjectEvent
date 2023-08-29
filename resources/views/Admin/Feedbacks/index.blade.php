@@ -1,5 +1,11 @@
 @extends ('Admin.Layouts.index')
 
+
+
+
+
+
+
 @section ('content')
 
 
@@ -14,7 +20,7 @@
             <div class="page-title-box">
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <h6 class="page-title">Liste des  avis</h6>
+                        <h6 class="page-title">Liste des avis</h6>
 
                     </div>
 
@@ -77,54 +83,53 @@
                                     <table class="table mb-0">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Nom</th>
-                                                <th>email</th>
-                                                <th>n° de telephone</th>
-                                                <th>message</th>
-                                                <th>date de creation</th>
-
-                                                <th>Action</th>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Réaction</th>
+                                                <th scope="col">Message</th>
+                                                <th scope="col">Nom de l'utilisateur</th>
+                                                <th scope="col">Date de création</th>
+                                                <th scope="col">Mail</th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse($contacts as $contact)
-
 
                                             <tr>
-                                                <th scope="row">{{ $contact->id }}</th>
-                                                <td>{{ $contact->nom }}</td>
-                                                <td>{{ $contact->email }}</td>
-                                                <td>{{ $contact->numero }}</td>
-                                                <td>{{ $contact->message }}</td>
-                                                <td>{{ $contact->created_at }}</td>
+                                                @foreach ($feedbacks as $feed )
+                                                @foreach ($users as $user )
 
-                                                <td>
-                                                    <a href="mailto:{{ $contact->email }}" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i></a>
+                                                <?php
+
+                                                $id = $user->id;
+                                               
+
+                                                ?>
+                                                @if ($feed->user_info == "[$id]")
+                                              
+                                                <td> {{$feed->id}}</td>
+                                                <td> {{$feed->type}}</td>
+                                                <td> {{$feed->message}}</td>
+                                                <td> {{$user->name}}</td>
+                                                <td> {{$feed->created_at}}</td>
+                                                <td> {{$user->email}}</td>
+    
 
 
-
-
-
-
-                                                </td>
                                             </tr>
+                                            @endif
+                                            @endforeach
+                                            @endforeach
                                             <!-- Delete Confirmation Modal -->
 
                                             <!-- Modal -->
 
-                                            @empty
-                                            <tr>
-                                                <td colspan="3" class="text-center">Aucune donnée disponible</td>
-                                            </tr>
-                                            @endforelse
+
 
                                         </tbody>
                                     </table>
                                     <div class="text-centre">
 
-                                        {{$contacts->links()}}
+                                        {{$feedbacks->links()}}
 
                                     </div>
                                 </div>
@@ -142,6 +147,12 @@
 
 
     <!-- end main content-->
+
+
+
+
+
+
 
 
 

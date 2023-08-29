@@ -100,3 +100,6 @@ Route::post('/updateEvent', [App\Http\Controllers\AdminController::class, 'updat
 
 // show page Contact list
 Route::get('/contacts', [App\Http\Controllers\AdminController::class, 'contacts'])->name('contacts')->middleware('role:admin');
+
+// show page Feedback list
+Route::get('/feedbacks', [App\Http\Controllers\AdminController::class, 'feedbacks'])->name('feedbacks')->middleware('role:admin');
