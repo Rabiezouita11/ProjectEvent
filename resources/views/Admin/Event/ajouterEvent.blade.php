@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
 
+
     <head>
     
         <meta charset="utf-8">
-        <title>Basic Tables | Veltrix - Admin & Dashboard Template</title>
+        <title>Form Validation | Veltrix - Admin & Dashboard Template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
         <meta content="Themesbrand" name="author">
@@ -22,6 +23,8 @@
 
     <body data-sidebar="dark">
 
+
+       
         <!-- Begin page -->
         <div id="layout-wrapper">
 
@@ -284,7 +287,7 @@
             </header>
 
             <!-- ========== Left Sidebar Start ========== -->
-           @extends('Admin.sidebar.sidebar')
+                @extends('Admin.sidebar.sidebar')
             <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -299,165 +302,126 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Categories List</h6>
-                                 
+                                    <h6 class="page-title">Page ajouter Events  </h6>
+                                   
                                 </div>
-                            
+                              
                             </div>
                         </div>
                         <!-- end page title -->
 
 
 
-                    
-                        <!-- end row -->
-
-                  
-                         
-                            <!-- end col -->
-                         
-                        <!-- end row -->
-
-                      
-                        <!-- end row -->
-
-                      
-                        <!-- end row -->
-
-                      
-                        <!-- end row -->
-                         
-                        <center> @if (session('success'))
-                   <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                @endif</center>  
-                <center> @if (session('supprimer'))
-                   <div class="alert alert-danger" role="alert">
-                            {{ session('supprimer') }}
-                        </div>
-                @endif</center>     
-                <center> @if (session('modifier'))
-                   <div class="alert alert-info" role="alert">
-                            {{ session('modifier') }}
-                        </div>
-                @endif</center>     
-
-
-                
-                                      <a href="{{ route('pageCategoryAjouter') }}" class="btn btn-primary">ajouter Categorie</a>
                         <div class="row">
-    
-                            <div class="col-lg-12">
-                                <div class="card">
-                             
-                                    <div class="card-body">
-                                        <h4 class="card-title">
-                                      
-
-                                        <div class="table-responsive">
-                                            <table class="table mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Nom</th>
-                                                        <th>Action</th>
-                                                       
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                @forelse($categories as $category)
-
-
-                                                    <tr>
-                                                        <th scope="row">{{ $category->id }}</th>
-                                                        <td>{{ $category->Nom }}</td>
-                                                        <td>
-                                                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $category->id }}">Modifier</a>
-
-                                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $category->id }}">Supprimer</button>
-
-
-<form id="delete-form" action="{{ route('deleteCategory') }}" method="POST" class="d-none">
-    @csrf
-    <input type="hidden" name="id" value="{{ $category->id }}">
-</form>
-
-                                                        </td>
-                                                    </tr>
-                                                      <!-- Delete Confirmation Modal -->
-    <div class="modal" id="deleteModal{{ $category->id }}" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Supprimer la catégorie</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Êtes-vous sûr de vouloir supprimer la "{{ $category->Nom }}" ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <form action="{{ route('deleteCategory') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $category->id }}">
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-                                                     <!-- Modal -->
-            <div class="modal" id="editModal{{ $category->id }}" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Modifier la catégorie</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Your form elements for editing here -->
-                            <form id="editForm{{ $category->id }}" action="{{ route('updateCategory') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $category->id }}">
-                                <!-- Other input fields for category update -->
-                                <!-- For example: -->
-                                <input type="text" class="form-control" name="Nom" value="{{ $category->Nom }}">
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary" onclick="document.querySelector('#editForm{{ $category->id }}').submit()">Enregistrer</button>
-
-                        </div>
+    <div class="col-lg-12">
+        <div class="card" style="text-align: center;">
+            <div class="card-body">
+                <h4 class="card-title">Add New Event</h4>
+                <form method="post" action="{{ route('addEvent') }}" name="eventForm" id="eventForm" class="row g-3" enctype="multipart/form-data">
+                    @csrf
+                    <div class="col-md-12">
+                        <label class="form-label">Nom</label>
+                        <input type="text" name="Nom" class="form-control" placeholder="Enter Nom" value="{{ old('Nom') }}" required>
+                        @if ($errors->has('Nom'))
+                            <strong style="color: red;">{{ $errors->first('Nom') }}</strong>
+                        @endif
                     </div>
-                </div>
-            </div>
-        @empty
-        <tr>
-            <td colspan="3" class="text-center">Aucune donnée disponible</td>
-        </tr>
-    @endforelse   
-                                                 
-                                                </tbody>
-                                            </table>
-                                            <div class="text-centre">
-               
-                {{$categories->links()}}
+                    <div class="col-md-12">
+                        <label class="form-label">Location</label>
+                        <input type="text" name="Location" class="form-control" placeholder="Enter Location" value="{{ old('Location') }}" required>
+                        @if ($errors->has('Location'))
+                            <strong style="color: red;">{{ $errors->first('Location') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Nombre_total_abonnés</label>
+                        <input type="number" name="Nombre_total_abonnés" class="form-control" placeholder="Enter Nombre_total_abonnés" value="{{ old('Nombre_total_abonnés') }}" required>
+                        @if ($errors->has('Nombre_total_abonnés'))
+                            <strong style="color: red;">{{ $errors->first('Nombre_total_abonnés') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Prix</label>
+                        <input type="number" name="Prix" class="form-control" placeholder="Enter Prix" value="{{ old('Prix') }}" required>
+                        @if ($errors->has('Prix'))
+                            <strong style="color: red;">{{ $errors->first('Prix') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" name="start_date" class="form-control" value="{{ old('start_date') }}" required>
+                        @if ($errors->has('start_date'))
+                            <strong style="color: red;">{{ $errors->first('start_date') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">End Date</label>
+                        <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}" required>
+                        @if ($errors->has('end_date'))
+                            <strong style="color: red;">{{ $errors->first('end_date') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Start Time</label>
+                        <input type="time" name="start_time" class="form-control" value="{{ old('start_time') }}" required>
+                        @if ($errors->has('start_time'))
+                            <strong style="color: red;">{{ $errors->first('start_time') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">End Time</label>
+                        <input type="time" name="end_time" class="form-control" value="{{ old('end_time') }}" required>
+                        @if ($errors->has('end_time'))
+                            <strong style="color: red;">{{ $errors->first('end_time') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Description</label>
+                        <textarea name="Description" class="form-control" placeholder="Enter Description" required>{{ old('Description') }}</textarea>
+                        @if ($errors->has('Description'))
+                            <strong style="color: red;">{{ $errors->first('Description') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Image</label>
+                        <input type="file" name="Image" class="form-control" accept="image/*" required>
+                        @if ($errors->has('Image'))
+                            <strong style="color: red;">{{ $errors->first('Image') }}</strong>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Category</label>
+                        <select name="category_id" class="form-control" required>
+                            <option value="">Select Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->Nom }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Add Event</button>
+                    </div>
+                </form>
+            </div><!-- end cardbody -->
+        </div><!-- end card -->
+    </div>
+</div>
 
-                </div>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- end col -->
+                          
                             <!-- end col -->
                         </div>
                         <!-- end row -->
+
+                       
+                        
                     </div> <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
-
+                
                 
                 <footer class="footer">
                     <div class="container-fluid">
@@ -534,6 +498,9 @@
         <script src="assets/libs/simplebar/simplebar.min.js"></script>
         <script src="assets/libs/node-waves/waves.min.js"></script>
 
+        <script src="assets/libs/parsleyjs/parsley.min.js"></script>
+
+        <script src="assets/js/pages/form-validation.init.js"></script>
 
         <script src="assets/js/app.js"></script>
 

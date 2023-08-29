@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use App\Models\Category;
+use App\Models\Events;
 class AdminController extends Controller
 {
    // protected $redirectTo = '/admin';
@@ -111,8 +112,113 @@ public function updateCategory(Request $request)
    
 }
 
+public function events()
+{
+    $events = \App\Models\Events::with('categorie')->paginate(10);
+    $categories = DB::table('categories')->get();
+    return view('Admin.Event.index ',compact('events','categories'));
+
+}
+    public function deleteEvent(Request $request)
+    {
+        DB::table('events')->where('id', '=', $request->id)->delete();
+        return redirect()->route('events')->with('supprimer','Event supprimé avec succés');
+    }
 
 
+    public function showPageAddEvents()
+    {
+        $categories = DB::table('categories')->get();	
+        return view('Admin.Event.ajouterEvent',compact('categories'));
+    
+     
+    }
+    public function addEvent(Request $request)
+    {
+        $validatedData = $request->validate([
+            'Nom' => 'required|string|max:255',
+            'Location' => 'required|string|max:255',
+            'Nombre_total_abonnés' => 'required|integer',
+            'Prix' => 'required|integer',
+            'start_date' => 'required|string|max:255',
+            'end_date' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($request) {
+                    $start_date = strtotime($request->input('start_date'));
+                    $end_date = strtotime($value);
+
+                    if ($end_date <= $start_date) {
+                        $fail('The end date must be greater than the start date.');
+                    }
+                },
+            ],
+            'start_time' => 'required|string|max:255',
+    'end_time' => 'required|string|max:255|after:start_time',
+            'Description' => 'required|string',
+            'Image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'category_id' => 'required|exists:categories,id'
+        ]);
+
+        // Handle image upload
+        $imagePath = $request->file('Image')->store('event_images', 'public');
+
+        $event = new \App\Models\Events;
+        $event->Nom = $validatedData['Nom'];
+        $event->Location = $validatedData['Location'];
+        $event->Nombre_total_abonnés = $validatedData['Nombre_total_abonnés'];
+        $event->Prix = $validatedData['Prix'];
+        $event->start_date = $validatedData['start_date'];
+        $event->end_date = $validatedData['end_date'];
+        $event->start_time = $validatedData['start_time'];
+        $event->end_time = $validatedData['end_time'];
+        $event->Description = $validatedData['Description'];
+        $event->Image = $imagePath;
+        $event->categorie_id = $validatedData['category_id'];
+        $event->save();
+
+        return redirect()->route('events')->with('success', 'Event added successfully!');
+    }
+    public function updateEvent(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required|exists:events,id',
+            'Nom' => 'required|string|max:255',
+            'Location' => 'required|string|max:255',
+            'Nombre_total_abonnés' => 'required|integer',
+            'Prix' => 'required|integer',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+            'Description' => 'required|string',
+            'Image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'required|exists:categories,id'
+        ]);
+
+        $event = Events::findOrFail($validatedData['id']);
+        $event->Nom = $validatedData['Nom'];
+        $event->Location = $validatedData['Location'];
+        $event->Nombre_total_abonnés = $validatedData['Nombre_total_abonnés'];
+        $event->Prix = $validatedData['Prix'];
+        $event->start_date = $validatedData['start_date'];
+        $event->end_date = $validatedData['end_date'];
+        $event->start_time = $validatedData['start_time'];
+        $event->end_time = $validatedData['end_time'];
+        $event->Description = $validatedData['Description'];
+        $event->categorie_id = $validatedData['category_id'];
+
+        if ($request->hasFile('Image')) {
+            // Handle image upload
+            $imagePath = $request->file('Image')->store('event_images', 'public');
+            $event->Image = $imagePath;
+        }
+
+        $event->save();
+
+        return redirect()->route('events')->with('modifier', 'Event updated successfully!');
+    }
 
 
 

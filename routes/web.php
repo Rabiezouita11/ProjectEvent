@@ -82,3 +82,18 @@ Route::get('/pageCategoryAjouter', [App\Http\Controllers\AdminController::class,
 
 // show page modifier Categories
 Route::post('/updateCategory', [App\Http\Controllers\AdminController::class, 'updateCategory'])->name('updateCategory')->middleware('role:admin');
+
+// show page events list
+Route::get('/events', [App\Http\Controllers\AdminController::class, 'events'])->name('events')->middleware('role:admin');
+
+// button delete events 
+Route::post('/deleteEvent', [App\Http\Controllers\AdminController::class, 'deleteEvent'])->name('deleteEvent');
+
+//  show Page Add Events
+Route::get('/pageAddEvent', [App\Http\Controllers\AdminController::class, 'showPageAddEvents'])->name('showPageAddEvents')->middleware('role:admin');
+
+// button Add Events
+Route::post('/addEvent', [App\Http\Controllers\AdminController::class, 'addEvent'])->name('addEvent');
+
+// button update Events
+Route::post('/updateEvent', [App\Http\Controllers\AdminController::class, 'updateEvent'])->name('updateEvent');
