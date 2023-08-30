@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Events extends Model
+
+class Categorie extends Model
 {
     use HasFactory;
- 
-
-    public function categorie ()
+    
+    public function event()    // relation entre category et event
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->hasMany(Events::class);
     }
 }

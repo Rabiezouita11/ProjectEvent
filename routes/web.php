@@ -56,7 +56,8 @@ Route::post('/EditProfile', [App\Http\Controllers\DemandeurController::class, 'E
 // modifier password
 Route::post('/update_password', [App\Http\Controllers\DemandeurController::class, 'update_password'])->name('update_password');
 
-
+// show page events by category
+Route::get('/ShowEventByCategory/{id}', [App\Http\Controllers\DemandeurController::class, 'ShowEventByCategory'])->name('ShowEventByCategory');
 
 
 

@@ -54,24 +54,15 @@
                                 <li><a href="{{ url('about' )}}" class="">About Us</a></li>
 
                                 <li class="submenu dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="event-schedule.html">Event Schedule</a></li>
-                                        <li><a href="event-detail.html">Event Detail</a></li>
-                                        <li><a href="speakers.html">Speaker Lists</a></li>
-                                        <li><a href="speaker-detail.html">Speaker Detail</a></li>
-                                        <li><a href="sponsors.html">Sponsors</a></li>
-                                        <li><a href="pricing.html">Pricing</a></li>
-                                        <li><a href="gallery.html">Gallery</a></li>
-                                        <li><a href="testimonials.html">Testimonials</a></li>
-                                        <li><a href="faq.html">Faq</a></li>
-                                        <li><a href="comingsoon.html">Coming Soon</a></li>
-                                        <li><a href="search-result.html">Search Result</a></li>
-                                        <li><a href="404.html">404 Error</a></li>
-                                    </ul> 
+                                        @foreach($categories as $category)
+                                        <li><a href="{{route('ShowEventByCategory', $category->id)}}">{{$category->Nom}}</a></li>
+                                        @endforeach
+                                    </ul>
                                 </li>
                                 <li class="submenu dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="products.html">Product Lists</a></li>
                                         <li><a href="product-detail.html">Product Detail</a></li>
@@ -81,7 +72,7 @@
                                     </ul>
                                 </li>
                                 <li class="submenu dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">News <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">News <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="post-grid-1.html">All Posts</a></li>
                                         <li><a href="detail-1.html">Single Post</a></li>
@@ -93,26 +84,25 @@
 
 
                                 @guest
-                            @if (Route::has('login'))
+                                @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
-                            @endif
+                                @endif
 
-                            @if (Route::has('register'))
+                                @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
-                        @else
+                                @endif
+                                @else
                                 <li class="submenu dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
-                                    <li><a href="detail-1.html">Mon Compte</a></li>    
-                                    <li><a  href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                        <li><a href="detail-1.html">Mon Compte</a></li>
+                                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</a></li>
-                                     
+
                                     </ul>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -121,24 +111,24 @@
                                 @endguest
 
 
-                                
+
 
                                 <li class="search-main">
                                     <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
                                 </li>
                             </ul>
-                        </div><!-- /.navbar-collapse -->  
+                        </div><!-- /.navbar-collapse -->
                         @guest
                         <div class="register-login">
                             <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
                         </div>
                         @else
                         <?php
-                        $role = Auth::user()->role;	
+                        $role = Auth::user()->role;
                         ?>
 
 
-<div class="register-login">
+                        <div class="register-login">
                             <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
                         </div>
                         <!-- @if($role == 'participant')
@@ -165,7 +155,7 @@
 
     <!-- banner starts -->
     <section class="banner pt-10 pb-0 overflow-hidden" style="background-image:url(client/images/pexels-wendy-wei-1190297.jpg);">
- 
+
         <div class="container">
             <div class="banner-in pt-6">
                 <div class="row align-items-end">
@@ -174,11 +164,11 @@
                             <h4 class="theme mb-0">Big Event 2022</h4>
                             <div class="selector4" style="display: flex; justify-content: center;">
                                 <h1 class="ah-headline white">
-                                  <span>World Biggest 2023</span>
-                                  <span class="ah-words-wrapper white">
-                                    <b class="is-visible textcap">Conference</b>
-                                    <b>Conference</b>
-                                  </span>
+                                    <span>World Biggest 2023</span>
+                                    <span class="ah-words-wrapper white">
+                                        <b class="is-visible textcap">Conference</b>
+                                        <b>Conference</b>
+                                    </span>
                                 </h1>
                             </div>
                             <p class="mb-0 white">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
@@ -209,13 +199,13 @@
                     </div>
                 </div>
             </div>
-                
+
         </div>
     </section>
     <!-- coming counter Ends -->
 
-     <!-- about-us starts -->
-     <section class="about-us about-features pt-12 pb-8" style="background-image:url(client/images/testimonial-1.png);">
+    <!-- about-us starts -->
+    <section class="about-us about-features pt-12 pb-8" style="background-image:url(client/images/testimonial-1.png);">
         <div class="container">
             <div class="about-image-box">
                 <div class="row d-flex align-items-center justify-content-between">
@@ -264,19 +254,19 @@
                             <h4 class="h-title">Events</h4>
                             <div class="selector4" style="display: flex; justify-content: center;">
                                 <h2 class="ah-headline">
-                                  <span>Why You Should Join The</span>
-                                  <span class="ah-words-wrapper white theme">
-                                    <b class="is-visible textcap">Events?</b>
-                                    <b>Events?</b>
-                                  </span>
+                                    <span>Why You Should Join The</span>
+                                    <span class="ah-words-wrapper white theme">
+                                        <b class="is-visible textcap">Events?</b>
+                                        <b>Events?</b>
+                                    </span>
                                 </h2>
                             </div>
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                 Quis ip suspendisse ultrices gravida. Risus commodo</p>
+                                Quis ip suspendisse ultrices gravida. Risus commodo</p>
                             <a href="event-detail.html" class="nir-btn">Join Event <i class="fa fa-angle-right "></i></a>
                         </div>
                     </div>
-    
+
                 </div>
             </div>
         </div>
@@ -294,15 +284,15 @@
                             <h4 class="theme"> Conference Organisation</h4>
                             <div class="selector4" style="display: flex; justify-content: center;">
                                 <h2 class="ah-headline">
-                                  <span>Conference, Seminars &</span>
-                                  <span class="ah-words-wrapper white theme">
-                                    <b class="is-visible textcap">Events</b>
-                                    <b>Events</b>
-                                  </span>
+                                    <span>Conference, Seminars &</span>
+                                    <span class="ah-words-wrapper white theme">
+                                        <b class="is-visible textcap">Events</b>
+                                        <b>Events</b>
+                                    </span>
                                 </h2>
                             </div>
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                 Quis ip suspendisse ultrices gravida. Risus commodo</p>
+                                Quis ip suspendisse ultrices gravida. Risus commodo</p>
                             <a href="about.html" class="nir-btn">Discover Now <i class="fa fa-angle-right "></i></a>
                         </div>
                     </div>
@@ -316,11 +306,11 @@
                                     <img src="client/images/about/busi-1.jpg" alt="" class="mb-4">
                                     <img src="client/images/about/busi-2.jpg" alt="">
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
-    
+
                 </div>
             </div>
         </div>
@@ -330,7 +320,7 @@
     <!-- Counter Starts-->
     <section class="counter-section bg-white pb-6">
         <div class="container">
-            
+
             <div class="counter">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
@@ -371,7 +361,7 @@
 
                 </div>
             </div>
-            
+
         </div>
     </section>
     <!-- Counter ends-->
@@ -388,15 +378,15 @@
                             <h2 class="ah-headline mb-0">
                                 <span>List Of Planned Events Thay Are </span>
                                 <span class="ah-words-wrapper white theme">
-                                <b class="is-visible textcap">Expected</b>
-                                <b>Expected</b>
+                                    <b class="is-visible textcap">Expected</b>
+                                    <b>Expected</b>
                                 </span>
                             </h2>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="schedule-item">
                 <div class="about-image-box bg-white mb-4">
                     <div class="row">
@@ -412,11 +402,11 @@
                                 <p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
                                 <ul class="schedule-items d-flex justify-content-lg-start justify-content-center">
                                     <li class="d-flex align-items-center me-4">
-                                        <i  class="icon-location-pin theme pe-1"></i>
+                                        <i class="icon-location-pin theme pe-1"></i>
                                         <span class="theme1">Exploration Hall</span>
                                     </li>
                                     <li class="d-flex align-items-center">
-                                        <i  class="icon-location-pin theme pe-1"></i>
+                                        <i class="icon-location-pin theme pe-1"></i>
                                         <span class="theme1">Hall 01</span>
                                     </li>
                                 </ul>
@@ -431,7 +421,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                     </div>
                 </div>
                 <div class="about-image-box bg-white mb-4">
@@ -448,11 +438,11 @@
                                 <p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
                                 <ul class="schedule-items d-flex justify-content-lg-start justify-content-center">
                                     <li class="d-flex align-items-center me-4">
-                                        <i  class="icon-location-pin theme pe-1"></i>
+                                        <i class="icon-location-pin theme pe-1"></i>
                                         <span class="theme1">Exploration Hall</span>
                                     </li>
                                     <li class="d-flex align-items-center">
-                                        <i  class="icon-location-pin theme pe-1"></i>
+                                        <i class="icon-location-pin theme pe-1"></i>
                                         <span class="theme1">Hall 01</span>
                                     </li>
                                 </ul>
@@ -467,7 +457,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                     </div>
                 </div>
                 <div class="about-image-box bg-white mb-4">
@@ -484,11 +474,11 @@
                                 <p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
                                 <ul class="schedule-items d-flex justify-content-lg-start justify-content-center">
                                     <li class="d-flex align-items-center me-4">
-                                        <i  class="icon-location-pin theme pe-1"></i>
+                                        <i class="icon-location-pin theme pe-1"></i>
                                         <span class="theme1">Exploration Hall</span>
                                     </li>
                                     <li class="d-flex align-items-center">
-                                        <i  class="icon-location-pin theme pe-1"></i>
+                                        <i class="icon-location-pin theme pe-1"></i>
                                         <span class="theme1">Hall 01</span>
                                     </li>
                                 </ul>
@@ -503,7 +493,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                     </div>
                 </div>
                 <div class="about-image-box bg-white mb-4">
@@ -520,11 +510,11 @@
                                 <p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
                                 <ul class="schedule-items d-flex justify-content-lg-start justify-content-center">
                                     <li class="d-flex align-items-center me-4">
-                                        <i  class="icon-location-pin theme pe-1"></i>
+                                        <i class="icon-location-pin theme pe-1"></i>
                                         <span class="theme1">Exploration Hall</span>
                                     </li>
                                     <li class="d-flex align-items-center">
-                                        <i  class="icon-location-pin theme pe-1"></i>
+                                        <i class="icon-location-pin theme pe-1"></i>
                                         <span class="theme1">Hall 01</span>
                                     </li>
                                 </ul>
@@ -539,7 +529,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                     </div>
                 </div>
             </div>
@@ -558,8 +548,8 @@
                     <h2 class="ah-headline mb-0">
                         <span>Experience Speaker With </span>
                         <span class="ah-words-wrapper white theme">
-                        <b class="is-visible textcap">Knowledge</b>
-                        <b>Knowledge</b>
+                            <b class="is-visible textcap">Knowledge</b>
+                            <b>Knowledge</b>
                         </span>
                     </h2>
                 </div>
@@ -685,7 +675,7 @@
                 <div class="speaker-btn text-center">
                     <a href="speaker-detail.html" class="nir-btn">View All Speakers <i class="fa fa-angle-right "></i></a>
                 </div>
-                
+
             </div>
         </div>
         <div class="white-overlay"></div>
@@ -704,15 +694,15 @@
                             <h2 class="ah-headline mb-0">
                                 <span>Explore Flexible Our Pricing</span>
                                 <span class="ah-words-wrapper white theme">
-                                <b class="is-visible textcap">Plans</b>
-                                <b>Plans</b>
+                                    <b class="is-visible textcap">Plans</b>
+                                    <b>Plans</b>
                                 </span>
                             </h2>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="pricing-main">
                 <div class="row">
                     <div class="col-lg-4 mb-6">
@@ -721,9 +711,10 @@
                             <h3 class="mb-0">Basic Ticket</h3>
                             <p class="mb-0">Standard Package </p>
                             <div class="pricing-price py-4">
-                                
+
                                 <h2 class="mb-0 theme d-flex align-items-start justify-content-center lh-1">
-                                    <span class="pricing-currency theme">$</span> 39. <span class="fs-5">99</span></h2>
+                                    <span class="pricing-currency theme">$</span> 39. <span class="fs-5">99</span>
+                                </h2>
                                 <p class="mb-0">Person</p>
                             </div>
                             <ul class="pricing-features-list mb-4">
@@ -744,9 +735,10 @@
                             <h3 class="mb-0 white">Silver Ticket</h3>
                             <p class="mb-0 white">Pro Package </p>
                             <div class="pricing-price py-4">
-                                
+
                                 <h2 class="mb-0 theme d-flex align-items-start justify-content-center lh-1">
-                                    <span class="pricing-currency theme">$</span> 59. <span class="fs-5">99</span></h2>
+                                    <span class="pricing-currency theme">$</span> 59. <span class="fs-5">99</span>
+                                </h2>
                                 <p class="mb-0 white">Person</p>
                             </div>
                             <ul class="pricing-features-list mb-4">
@@ -768,9 +760,10 @@
                             <h3 class="mb-0">Gold Ticket</h3>
                             <p class="mb-0">Enterprise Package </p>
                             <div class="pricing-price py-4">
-                                
+
                                 <h2 class="mb-0 theme d-flex align-items-start justify-content-center lh-1">
-                                    <span class="pricing-currency theme">$</span> 199. <span class="fs-5">99</span></h2>
+                                    <span class="pricing-currency theme">$</span> 199. <span class="fs-5">99</span>
+                                </h2>
                                 <p class="mb-0">Person</p>
                             </div>
                             <ul class="pricing-features-list mb-4">
@@ -801,8 +794,8 @@
                     <h2 class="ah-headline mb-0">
                         <span class="white">Join Us At 20th Hero Nada Expo </span>
                         <span class="ah-words-wrapper white theme">
-                        <b class="is-visible textcap">2023</b>
-                        <b>2023</b>
+                            <b class="is-visible textcap">2023</b>
+                            <b>2023</b>
                         </span>
                     </h2>
                 </div>
@@ -860,16 +853,16 @@
                     <h2 class="ah-headline mb-0">
                         <span>Beautiful Snapshot Of Recent </span>
                         <span class="ah-words-wrapper white theme">
-                        <b class="is-visible textcap">Events</b>
-                        <b>Events</b>
+                            <b class="is-visible textcap">Events</b>
+                            <b>Events</b>
                         </span>
                     </h2>
                 </div>
             </div>
-            
+
             <div class="event-gallerystart mb-minus">
                 <div class="row gallery-main">
-    
+
                     <div class="col-lg-4 col-md-6 mansonry-item p-2">
                         <div class="gallery-item">
                             <div class="gallery-image">
@@ -930,7 +923,7 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </section>
@@ -948,8 +941,8 @@
                             <h2 class="ah-headline mb-0">
                                 <span>What Peoples's Says About</span>
                                 <span class="ah-words-wrapper white theme">
-                                <b class="is-visible textcap">Eventiz</b>
-                                <b>Eventiz</b>
+                                    <b class="is-visible textcap">Eventiz</b>
+                                    <b>Eventiz</b>
                                 </span>
                             </h2>
                         </div>
@@ -1018,8 +1011,8 @@
                     <h2 class="ah-headline mb-0">
                         <span>Our Perfect Partners & </span>
                         <span class="ah-words-wrapper white theme">
-                        <b class="is-visible textcap">Sponsors</b>
-                        <b>Sponsors</b>
+                            <b class="is-visible textcap">Sponsors</b>
+                            <b>Sponsors</b>
                         </span>
                     </h2>
                 </div>
@@ -1086,8 +1079,8 @@
                     <h2 class="ah-headline mb-0">
                         <span>Our News & </span>
                         <span class="ah-words-wrapper white theme">
-                        <b class="is-visible textcap">Articles</b>
-                        <b>Articles</b>
+                            <b class="is-visible textcap">Articles</b>
+                            <b>Articles</b>
                         </span>
                     </h2>
                 </div>
@@ -1170,8 +1163,8 @@
                                 <h2 class="ah-headline mb-0">
                                     <span>Get Direction To The Event </span>
                                     <span class="ah-words-wrapper white theme">
-                                    <b class="is-visible textcap">Location</b>
-                                    <b>Location</b>
+                                        <b class="is-visible textcap">Location</b>
+                                        <b>Location</b>
                                     </span>
                                 </h2>
                             </div>
@@ -1288,7 +1281,7 @@
         </div>
         <div class="theme-overlay opacity-90"></div>
     </footer>
-     
+
     <div class="footer-copyright bg-theme1">
         <div class="container">
             <p class="m-0 white text-center py-3">Copyright ©2023 Eventiz. All Rights Reserved Copyright</p>
@@ -1321,4 +1314,5 @@
     <script src="client/js/custom-nav.js"></script>
 </body>
 @include('kustomer::kustomer')
+
 </html>
