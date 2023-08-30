@@ -103,3 +103,9 @@ Route::get('/contacts', [App\Http\Controllers\AdminController::class, 'contacts'
 
 // show page Feedback list
 Route::get('/feedbacks', [App\Http\Controllers\AdminController::class, 'feedbacks'])->name('feedbacks')->middleware('role:admin');
+
+// show page utilisateurs list
+Route::get('/Users', [App\Http\Controllers\AdminController::class, 'Users'])->name('Users')->middleware('role:admin');
+
+// button delete utilisateurs
+Route::post('/deleteUser', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('deleteUser');

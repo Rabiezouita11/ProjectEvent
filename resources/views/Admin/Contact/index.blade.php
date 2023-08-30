@@ -102,7 +102,7 @@
 
                                                 <td>
                                                     <a href="mailto:{{ $contact->email }}" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i></a>
-
+                                                 
 
 
 

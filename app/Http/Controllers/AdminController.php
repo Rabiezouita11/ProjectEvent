@@ -226,4 +226,15 @@ class AdminController extends Controller
         $feedbacks = DB::table('feedbacks')->paginate(4);
         return view('Admin.Feedbacks.index ', compact('feedbacks', 'users'));
     }
+    public function Users()
+    {
+        $users = DB::table('users')->orWhere('role', 'participant')
+            ->orWhere('role', 'demandeur')->paginate(4);
+        return view('Admin.Users.index ', compact('users'));
+    }
+    public function deleteUser(Request $request)
+    {
+        DB::table('users')->where('id', '=', $request->id)->delete();
+        return redirect()->route('Users')->with('supprimer', 'User supprimé avec succés');
+    }
 }
