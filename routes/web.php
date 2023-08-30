@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//  pour test 
-// Route::get('/admin', function () {
-//     return view('Admin.home.home');
-// });
+
+Route::get('/qr', function () {
+    return view('home');
+});
 // Route::get('/akrem', function () {
 //     return view('Client.home.home');
 // });
@@ -110,3 +111,9 @@ Route::get('/Users', [App\Http\Controllers\AdminController::class, 'Users'])->na
 
 // button delete utilisateurs
 Route::post('/deleteUser', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('deleteUser');
+
+// qrcode
+Route::get('/generate-qr', [App\Http\Controllers\QRCodeController::class, 'generateQR'])->name('generate-qr');
+
+
+Route::get('/download-qr/{filename}', [App\Http\Controllers\QRCodeController::class, 'downloadQR'])->name('download-qr');
