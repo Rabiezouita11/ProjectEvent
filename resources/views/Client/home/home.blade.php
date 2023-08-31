@@ -124,7 +124,7 @@
                         </div>
                         @else
                        
-
+event <details></details>
 
                         <div class="register-login">
                             <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>

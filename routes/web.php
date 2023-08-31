@@ -60,7 +60,8 @@ Route::post('/update_password', [App\Http\Controllers\DemandeurController::class
 // show page events by category
 Route::get('/ShowEventByCategory/{id}', [App\Http\Controllers\DemandeurController::class, 'ShowEventByCategory'])->name('ShowEventByCategory');
 
-
+// show page events details
+Route::get('/ShowEventDetails_{id}', [App\Http\Controllers\DemandeurController::class, 'ShowEventDetails'])->name('ShowEventDetails');
 
                                                                             /* Admin */ 
 
@@ -111,6 +112,23 @@ Route::get('/Users', [App\Http\Controllers\AdminController::class, 'Users'])->na
 
 // button delete utilisateurs
 Route::post('/deleteUser', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('deleteUser');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // qrcode
 Route::get('/generate-qr', [App\Http\Controllers\QRCodeController::class, 'generateQR'])->name('generate-qr');

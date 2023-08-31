@@ -108,4 +108,16 @@ class DemandeurController extends Controller
         $categories = Categorie::all();
         return view('Client.Event.EventList')->with('cat', Categorie::find($id))->with('categories', $categories);
     }
+    public function ShowEventDetails($id){
+
+        $categories = Categorie::all();
+        $event = \App\Models\Events::find($id);
+
+        // $stock =$produits->stock === 0 ? 'Indisponible' : 'Disponible';
+
+        return view('Client.Event.EventDetail.eventDetails')->with('event', $event)->with('categories', $categories);
+
+
+
+    }
 }
