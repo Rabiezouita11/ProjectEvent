@@ -178,6 +178,12 @@
 
     <!-- contact starts -->
     <section class="contact-main pb-8" style="background-image: url(client/images/testimonial-1.png);">
+           
+    <center> @if (session('azer'))
+                   <div class="alert alert-success" role="alert" style="font-size: 40px;">
+                            {{ session('azer') }}
+                        </div>
+                @endif</center>    
         <div class="container">
             <div class="contact-info-main mt-0">
                 <div class="section-title mb-5 w-75 mx-auto text-center">
@@ -232,12 +238,7 @@
                     </div>
                         <div id="contact-form1" class="contact-form" style="font-size: 20px;">
 
-                        
-                   <center> @if (session('azer'))
-                   <div class="alert alert-success" role="alert">
-                            {{ session('azer') }}
-                        </div>
-                @endif</center>    
+                 
                         <div class="row">
                             <div class="col-lg-8 pe-lg-4 mb-4">
                                 

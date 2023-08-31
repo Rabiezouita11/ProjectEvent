@@ -123,20 +123,19 @@
                             <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
                         </div>
                         @else
-                       
-event <details></details>
+
+                        event <details></details>
 
                         <div class="register-login">
                             <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
                         </div>
-                        <!-- @if($role == 'participant')
 
 
                         <div class="register-login">
                             <a href="#" class="nir-btn white">{{$role}} <i class="fa fa-angle-right "></i></a>
                         </div>
 
-                        @endif -->
+                      
 
                         @endguest
 
