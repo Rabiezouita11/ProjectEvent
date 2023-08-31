@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{asset('client/fonts/line-icons.css')}}" type="text/css">
+    <script src="{{ asset('vendor/kustomer/js/kustomer.js') }}" defer></script>
 </head>
 
 <body>
@@ -343,7 +344,7 @@
     </div>
 </div>
 <!-- footer ends -->
-
+@include('kustomer::kustomer')
 <!-- Back to top start -->
 <div id="back-to-top">
     <a href="#"></a>

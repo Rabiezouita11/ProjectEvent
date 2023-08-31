@@ -133,9 +133,7 @@
                             <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
                         </div>
                         @else
-                        <?php
-                        $role = Auth::user()->role;	
-                        ?>
+                       
 
 
 <div class="register-login">
