@@ -114,6 +114,4 @@ Route::post('/deleteUser', [App\Http\Controllers\AdminController::class, 'delete
 
 // qrcode
 Route::get('/generate-qr', [App\Http\Controllers\QRCodeController::class, 'generateQR'])->name('generate-qr');
-
-
 Route::get('/download-qr/{filename}', [App\Http\Controllers\QRCodeController::class, 'downloadQR'])->name('download-qr');
