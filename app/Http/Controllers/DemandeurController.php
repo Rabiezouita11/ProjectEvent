@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
-use App\Models\Categories;
-use App\Models\Category;
+
 use App\Models\Events;
 use App\Models\Rate;
 use App\Models\Reservation;
@@ -12,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use PDF;
 
 class DemandeurController extends Controller
 {
@@ -202,4 +202,28 @@ class DemandeurController extends Controller
     {
         return redirect()->back()->with('success', ' ticket acheteé avec succeés');   
     }
+
+    public function historique()
+    {
+        $categories = Categorie::all();
+        $user_id = auth()->id();
+     
+        $reservations = Reservation::where('user_id', $user_id)->paginate(5);
+        return view('Client.historique.index')->with('reservations', $reservations)->with('categories', $categories);
+    }
+
+    public function downloadInvoice(Reservation $reservation)
+{
+    // Load the reservation data along with user and event details
+    $reservation->load('user', 'event');
+
+    // Generate the PDF using the invoice template view
+    $pdf = PDF::loadView('Client.invoices.invoice-template', compact('reservation'));
+
+    // Define the PDF filename
+    $filename = 'Facture-' . $reservation->id . '.pdf';
+
+    // Download the PDF with a specific filename
+    return $pdf->download($filename);
+}
 }

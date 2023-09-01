@@ -70,6 +70,14 @@ Route::post('/buyTicket', [App\Http\Controllers\DemandeurController::class, 'buy
 // button acheter ticket by stripe
 Route::post('/buyTicketByStripe', [App\Http\Controllers\StripeController::class, 'session'])->name('session')->middleware('auth');
 Route::get('/success',  [App\Http\Controllers\StripeController::class, 'success'])->name('success');
+
+
+// show page Historique
+Route::get('/historique', [App\Http\Controllers\DemandeurController::class, 'historique'])->name('historique')->middleware('auth');
+
+// pdf facture
+Route::get('/download-invoice/{reservation}', [App\Http\Controllers\DemandeurController::class, 'downloadInvoice'])->name('download-invoice');
+
                                                                             /* Admin */ 
 
                                                                             // show page admin

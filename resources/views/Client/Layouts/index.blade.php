@@ -61,6 +61,8 @@
                                         @endforeach
                                     </ul>
                                 </li>
+                                <li><a href="{{ url('historique' )}}" class="">Historique</a></li>
+
                                 <li class="submenu dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
