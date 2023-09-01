@@ -23,12 +23,14 @@ class DemandeurController extends Controller
 
     public function about()
     {
-        return view('Client.About.about');
+        $categories = Categorie::all();
+        return view('Client.About.about')->with('categories', $categories);
     }
 
     public function contact()
     {
-        return view('Client.Contact.contact');
+        $categories = Categorie::all();
+        return view('Client.Contact.contact')->with('categories', $categories);
     }
 
 
@@ -60,13 +62,14 @@ class DemandeurController extends Controller
     public function index()
     {
         $categories = Categorie::all();
-        return view('Client.home.home', compact('categories'));
+        return view('Client.home.home')->with('categories', $categories);
     }
 
 
     public function profile()
     {
-        return view('Client.profile.profile');
+        $categories = Categorie::all();
+        return view('Client.profile.profile')->with('categories', $categories);
     }
 
 

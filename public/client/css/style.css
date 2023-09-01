@@ -880,7 +880,7 @@ input[type='submit']:hover {
 
 /* End Preloader */
 #back-to-top {
-  position: sticky;
+  position: fixed;
   z-index: 1000;
   bottom: 20px;
   right: 20px;
