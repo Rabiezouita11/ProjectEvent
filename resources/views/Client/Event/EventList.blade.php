@@ -182,7 +182,15 @@
                                     </li>
                                     <li class="d-flex align-items-center">
                                         <i class="icon-location-pin theme pe-1"></i>
-                                        <span class="theme1"> il reste {{$events->Nombre_total_abonnés}} places</span>
+                                        <span class="theme1">
+                                        @if ($events->Nombre_total_abonnés == 0)
+                                        <span class="badge bg-danger"> Pas de place disponible</span>
+                                        @else
+                                        <span class="badge bg-success">Disponible {{$events->Nombre_total_abonnés}} places</span>
+                                        @endif
+                                       
+                                        
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
@@ -214,6 +222,7 @@
         </div>
     </section>
     @endforeach
+    
     <!-- event-schedule ends -->
 
 

@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Models\Categories;
 use App\Models\Category;
+use App\Models\Events;
+use App\Models\Rate;
+use App\Models\Reservation;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -108,16 +113,90 @@ class DemandeurController extends Controller
         $categories = Categorie::all();
         return view('Client.Event.EventList')->with('cat', Categorie::find($id))->with('categories', $categories);
     }
-    public function ShowEventDetails($id){
-
+    public function ShowEventDetails($id)
+    {
+        $users = User::all();
+        $rates = Rate::all();
         $categories = Categorie::all();
         $event = \App\Models\Events::find($id);
+        $averageRating = Rate::where('event_id', $event->id)->avg('rating');
 
         // $stock =$produits->stock === 0 ? 'Indisponible' : 'Disponible';
 
-        return view('Client.Event.EventDetail.eventDetails')->with('event', $event)->with('categories', $categories);
+        return view('Client.Event.EventDetail.eventDetails')->with('event', $event)->with('categories', $categories)->with('users', $users)->with('rates', $rates)->with('averageRating', $averageRating);
+    }
+
+    public function submitRating(Request $request)
+    {
 
 
 
+        // Create a new rating
+        Rate::create([
+            'event_id' => $request->input('event_id'),
+            'user_id' => auth()->id(),
+            'rating' => $request->input('rating'),
+        ]);
+
+        // Update the event's rating status
+
+
+        return redirect()->back()->with('success', 'Merci pour votre avis');
+    }
+
+    public function buyTicket(Request $request)
+    {
+
+        $user_id = $request->input('user_id');
+
+        $eventId = $request->input('event_id');
+        $PrixbyEvent_id = DB::table('events')->where('id', $eventId)->value('Prix');
+        $NomEvent = DB::table('events')->where('id', $eventId)->value('Nom');
+      
+        $event = Events::findOrFail($eventId);
+
+        if (!$event->isAvailable()) {
+            return redirect()->back()->with('error', 'Tickets are not available for this event.');
+        }
+
+
+
+
+        // Create a reservation
+        Reservation::create([
+            'event_id' => $eventId,
+            'user_id' =>  $user_id,
+            'nbr_ticket' => 1,
+        ]);
+
+        // Decrement available_tickets
+        $event->decrement('Nombre_total_abonnés');
+
+        \Stripe\Stripe::setApiKey(config('stripe.sk'));
+
+        $session = \Stripe\Checkout\Session::create([
+            'line_items'  => [
+                [
+                    'price_data' => [
+                        'currency'     => 'gbp',
+                        'product_data' => [
+                            'name' => $NomEvent,
+                        ],
+                        'unit_amount'  => $PrixbyEvent_id,
+                    ],
+                    'quantity'   => 1,
+                ],
+            ],
+            'mode'        => 'payment',
+            'success_url' => route('success'),
+            'cancel_url'  => route('session'),
+        ]);
+
+        return redirect()->away($session->url);
+    }
+
+    public function success()
+    {
+        return redirect()->back()->with('success', ' ticket acheteé avec succeés');   
     }
 }

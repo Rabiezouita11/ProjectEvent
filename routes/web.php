@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-Route::get('/qr', function () {
-    return view('home');
+Route::get('/stripe', function () {
+    return view('Client.Stripe.index');
 });
 // Route::get('/akrem', function () {
 //     return view('Client.home.home');
@@ -50,7 +50,8 @@ Route::post('/AjoutContact', [App\Http\Controllers\DemandeurController::class, '
 // authentification 
 Auth::routes();
 
-
+// rate event
+Route::post('/submitRating', [App\Http\Controllers\DemandeurController::class, 'submitRating'])->name('submitRating')->middleware('auth');
 // modifier profile
 Route::post('/EditProfile', [App\Http\Controllers\DemandeurController::class, 'EditProfile'])->name('EditProfile');
 
@@ -63,6 +64,12 @@ Route::get('/ShowEventByCategory/{id}', [App\Http\Controllers\DemandeurControlle
 // show page events details
 Route::get('/ShowEventDetails_{id}', [App\Http\Controllers\DemandeurController::class, 'ShowEventDetails'])->name('ShowEventDetails');
 
+// button acheter ticket
+Route::post('/buyTicket', [App\Http\Controllers\DemandeurController::class, 'buyTicket'])->name('buyTicket')->middleware('auth');
+
+// button acheter ticket by stripe
+Route::post('/buyTicketByStripe', [App\Http\Controllers\StripeController::class, 'session'])->name('session')->middleware('auth');
+Route::get('/success',  [App\Http\Controllers\StripeController::class, 'success'])->name('success');
                                                                             /* Admin */ 
 
                                                                             // show page admin
