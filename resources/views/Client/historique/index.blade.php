@@ -43,6 +43,7 @@
         Vous n'avez pas encore d'historique de réservation.
     </div>
     @else
+    
     @foreach ($reservations as $reservation)
     <section class="event-schedule pb-8 about-after">
         <div class="container">
@@ -69,7 +70,7 @@
                         <div class="col-lg-3 d-flex">
                             <div class="schedule-speaker d-lg-flex p-4 align-items-center text-center text-lg-start w-100 border-start">
                                 <div class="speaker-content ms-3">
-                                    <a href="{{ route('download-invoice', $reservation) }}" class="nir-btn nir-btn-sm nir-btn-rounded nir-btn-outline nir-btn-outline-theme1">Télécharger Facture</a>
+                                    <a href="{{ route('download-invoice', $reservation) }}" class="nir-btn nir-btn-sm nir-btn-rounded nir-btn-outline nir-btn-outline-theme1" style="color:black">Télécharger Facture</a>
                                 </div>
                             </div>
                         </div>

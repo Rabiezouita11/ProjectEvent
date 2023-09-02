@@ -8,10 +8,15 @@ use App\Models\Events;
 use App\Models\Rate;
 use App\Models\Reservation;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PDF;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class DemandeurController extends Controller
 {
@@ -217,13 +222,33 @@ class DemandeurController extends Controller
     }
 
 
+
     public function downloadInvoice(Reservation $reservation)
     {
         // Load the reservation data along with user and event details
         $reservation->load('user', 'event');
 
+        // Create a string containing the user and event information
+        $qrData = "User Name: {$reservation->user->name}\n";
+        $qrData .= "User Email: {$reservation->user->email}\n";
+        $qrData .= "Event Name: {$reservation->event->Nom}\n";
+        $qrData .= "Event Date: {$reservation->event->start_date} - {$reservation->event->end_date}\n";
+        $qrData .= "Event Start Time: {$reservation->event->start_time}\n";
+        $qrData .= "Event End Time: {$reservation->event->end_time}\n";
+        $qrData .= "Event Location: {$reservation->event->Location}\n";
+        $qrData .= "Prix: {$reservation->event->Prix}";
+
+
+
+        // Generate the QR code from the concatenated data
+        $qrCode = QrCode::format('png')->size(200)->generate($qrData);
+        $tempFilePath = storage_path('app/public/qrcode.png'); // Save the QR code image to a public directory
+
+        // Save the QR code image to the public directory
+        file_put_contents($tempFilePath, $qrCode);
+
         // Generate the PDF using the invoice template view
-        $pdf = PDF::loadView('Client.invoices.invoice-template', compact('reservation'));
+        $pdf = PDF::loadView('Client.invoices.invoice-template', compact('reservation', 'tempFilePath'));
 
         // Define the PDF filename
         $filename = 'Facture-' . $reservation->id . '.pdf';

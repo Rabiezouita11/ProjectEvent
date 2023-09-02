@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,67 +9,88 @@
         body {
             font-family: Arial, sans-serif;
         }
+
         .invoice {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
         }
+
         .invoice-header {
             text-align: center;
             background-color: #f0f0f0;
             padding: 10px;
         }
+
         .invoice-title {
             font-size: 24px;
             margin: 0;
             color: #333;
         }
+
         .invoice-details {
             margin-top: 20px;
             padding: 20px;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
         }
+
         .invoice-details h2 {
             font-size: 18px;
             margin: 0;
             color: #333;
         }
+
         .invoice-details ul {
             list-style: none;
             padding: 0;
             margin-top: 10px;
         }
+
         .invoice-details li {
             margin-bottom: 5px;
         }
+
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         .invoice-table th,
         .invoice-table td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         .invoice-table th {
             background-color: #f0f0f0;
         }
+
         .invoice-total {
             margin-top: 20px;
             text-align: right;
         }
+
         .invoice-total span {
             font-weight: bold;
             font-size: 18px;
             color: #333;
         }
     </style>
+    <style>
+        /* ... Your existing CSS styles ... */
+        .invoice-qrcode {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
+
     <div class="invoice">
         <div class="invoice-header">
             <h1 class="invoice-title">Facture</h1>
@@ -113,6 +135,11 @@
         <div class="invoice-total">
             <span>Total à payer: {{ $reservation->event->Prix }} TND</span>
         </div>
+        <div class="invoice-qrcode">
+            <img src="{{ $tempFilePath }}" alt="QR Code">
+        </div>
     </div>
+
 </body>
+
 </html>
