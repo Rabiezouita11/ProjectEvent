@@ -37,7 +37,7 @@ class StripeController extends Controller
 
     public function success()
     {
-        return redirect()->route('home')->with('home', 'profile modifier avec succés');
+        return redirect()->route('historique')->with('success', 'Paiement effectué avec succès');
 
     }
 }

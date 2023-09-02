@@ -2,7 +2,17 @@
 
  @section('content')
 
-
+ <section class="breadcrumb-main" style="background-image:url(images/pexels-wendy-wei-1190297.jpg);">
+     <div class="breadcrumb-outer">
+         <div class="container">
+             <div class="breadcrumb-content text-center pt-14 pb-2">
+                 <h5 class="theme mb-0">Eventiz</h5>
+                 <h1 class="mb-0 white">Event Detail</h1>
+             </div>
+         </div>
+     </div>
+     <div class="bread-overlay"></div>
+ </section>
 
  <section class="event-detail pt-12">
      <center> @if (session('success'))
@@ -159,11 +169,24 @@
                                  <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 
                                  <div class="rating">
-                                     <!-- Your rating input fields here -->
+                                     <input type="radio" name="rating" id="rating-5" value="5">
+                                     <label for="rating-5">5</label>
+                                     <input type="radio" name="rating" id="rating-4" value="4">
+                                     <label for="rating-4">4</label>
+                                     <input type="radio" name="rating" id="rating-3" value="3">
+                                     <label for="rating-3">3</label>
+                                     <input type="radio" name="rating" id="rating-2" value="2">
+                                     <label for="rating-2">2</label>
+                                     <input type="radio" name="rating" id="rating-1" value="1">
+                                     <label for="rating-1">1</label>
                                  </div>
 
                                  <p class="rating-value">Your Rating: <span id="rating-display">0</span> / 5</p>
-                                 <button type="submit" class="nir-btn">Submit</button>
+
+                                 <!-- Add a validation message element -->
+                                 <div id="validation-message" style="color: red;"></div>
+
+                                 <button type="submit" class="nir-btn" onclick="validateAndSubmit(event)">Submit Rating</button>
                              </form>
                              @endif
 
@@ -177,6 +200,29 @@
 
                  </div>
              </div>
+             <script>
+                 function validateAndSubmit(event) {
+                     // Get all radio buttons by name
+                     const ratingButtons = document.querySelectorAll('input[name="rating"]');
+
+                     // Check if at least one radio button is selected
+                     let isRatingSelected = false;
+                     ratingButtons.forEach(button => {
+                         if (button.checked) {
+                             isRatingSelected = true;
+                         }
+                     });
+
+                     // If no radio button is selected, prevent form submission and display an error message
+                     if (!isRatingSelected) {
+                         event.preventDefault(); // Prevent form submission
+                         document.getElementById('validation-message').textContent = 'Please select a rating.';
+                     } else {
+                         // If a radio button is selected, submit the form
+                         document.getElementById('rating-form').submit();
+                     }
+                 }
+             </script>
 
              <!-- sidebar starts -->
              <div class="col-lg-4 ps-lg-4">

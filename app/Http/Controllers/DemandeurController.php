@@ -155,7 +155,7 @@ class DemandeurController extends Controller
         $eventId = $request->input('event_id');
         $PrixbyEvent_id = DB::table('events')->where('id', $eventId)->value('Prix');
         $NomEvent = DB::table('events')->where('id', $eventId)->value('Nom');
-      
+
         $event = Events::findOrFail($eventId);
 
         if (!$event->isAvailable()) {
@@ -181,7 +181,7 @@ class DemandeurController extends Controller
             'line_items'  => [
                 [
                     'price_data' => [
-                        'currency'     => 'gbp',
+                        'currency'     => 'eur',
                         'product_data' => [
                             'name' => $NomEvent,
                         ],
@@ -200,30 +200,35 @@ class DemandeurController extends Controller
 
     public function success()
     {
-        return redirect()->back()->with('success', ' ticket acheteé avec succeés');   
+        return redirect()->back()->with('success', ' ticket acheteé avec succeés');
     }
 
     public function historique()
     {
         $categories = Categorie::all();
         $user_id = auth()->id();
-     
-        $reservations = Reservation::where('user_id', $user_id)->paginate(5);
+
+        // Retrieve all reservations, order them by the latest first, and paginate the results
+        $reservations = Reservation::where('user_id', $user_id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5); // You can adjust the number of items per page as needed
+
         return view('Client.historique.index')->with('reservations', $reservations)->with('categories', $categories);
     }
 
+
     public function downloadInvoice(Reservation $reservation)
-{
-    // Load the reservation data along with user and event details
-    $reservation->load('user', 'event');
+    {
+        // Load the reservation data along with user and event details
+        $reservation->load('user', 'event');
 
-    // Generate the PDF using the invoice template view
-    $pdf = PDF::loadView('Client.invoices.invoice-template', compact('reservation'));
+        // Generate the PDF using the invoice template view
+        $pdf = PDF::loadView('Client.invoices.invoice-template', compact('reservation'));
 
-    // Define the PDF filename
-    $filename = 'Facture-' . $reservation->id . '.pdf';
+        // Define the PDF filename
+        $filename = 'Facture-' . $reservation->id . '.pdf';
 
-    // Download the PDF with a specific filename
-    return $pdf->download($filename);
-}
+        // Download the PDF with a specific filename
+        return $pdf->download($filename);
+    }
 }
