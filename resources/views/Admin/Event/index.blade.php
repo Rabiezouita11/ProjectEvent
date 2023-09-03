@@ -100,7 +100,7 @@
                                         </thead>
                                         <tbody>
                                             @forelse($events as $event)
-
+                                            @if ($event->status === 'accepted')
 
                                             <tr>
                                                 <th scope="row">{{ $event->id }}</th>
@@ -130,6 +130,11 @@
 
                                                 </td>
                                             </tr>
+                                            @else
+                                            <td colspan="13" class="text-center">Aucune donnée disponible</td>
+                                            @endif
+
+
 
                                             <div class="modal" id="deleteModal{{ $event->id }}" tabindex="-1">
                                                 <div class="modal-dialog">

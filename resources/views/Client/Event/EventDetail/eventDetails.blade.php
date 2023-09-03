@@ -30,7 +30,9 @@
      <br>
 
      <div class="container">
+         @include('kustomer::kustomer')
          <div class="row">
+            
              <div class="col-lg-8 pe-lg-4">
                  <div class="event-detail-inner text-center text-md-start">
                      <img src="{{asset('storage/'.$event->Image)}}" alt="" class="mb-3">
@@ -385,4 +387,6 @@
          </div>
      </div>
  </section>
+
+
  @endsection

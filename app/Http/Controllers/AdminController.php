@@ -152,7 +152,10 @@ class AdminController extends Controller
             'end_time' => 'required|string|max:255|after:start_time',
             'Description' => 'required|string',
             'Image' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+            'status' => 'required',
+
+
         ]);
 
         // Handle image upload
@@ -170,6 +173,7 @@ class AdminController extends Controller
         $event->Description = $validatedData['Description'];
         $event->Image = $imagePath;
         $event->categorie_id = $validatedData['category_id'];
+        $event->status = $validatedData['status'];
         $event->save();
 
         return redirect()->route('events')->with('success', 'Event added successfully!');

@@ -256,4 +256,55 @@ class DemandeurController extends Controller
         // Download the PDF with a specific filename
         return $pdf->download($filename);
     }
+    public function addEventByDemandeur(Request $request)
+    {
+        $validatedData = $request->validate([
+            'Nom' => 'required|string|max:255',
+            'Location' => 'required|string|max:255',
+            'Nombre_total_abonnés' => 'required|integer',
+            'Prix' => 'required|integer',
+            'start_date' => 'required|string|max:255',
+            'end_date' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($request) {
+                    $start_date = strtotime($request->input('start_date'));
+                    $end_date = strtotime($value);
+
+                    if ($end_date <= $start_date) {
+                        $fail('The end date must be greater than the start date.');
+                    }
+                },
+            ],
+            'start_time' => 'required|string|max:255',
+            'end_time' => 'required|string|max:255|after:start_time',
+            'Description' => 'required|string',
+            'Image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'category_id' => 'required|exists:categories,id',
+            'status' => 'required',
+        ]);
+
+        // Handle image upload
+        $imagePath = $request->file('Image')->store('event_images', 'public');
+
+        $event = new \App\Models\Events;
+        $event->Nom = $validatedData['Nom'];
+        $event->Location = $validatedData['Location'];
+        $event->Nombre_total_abonnés = $validatedData['Nombre_total_abonnés'];
+        $event->Prix = $validatedData['Prix'];
+        $event->start_date = $validatedData['start_date'];
+        $event->end_date = $validatedData['end_date'];
+        $event->start_time = $validatedData['start_time'];
+        $event->end_time = $validatedData['end_time'];
+        $event->Description = $validatedData['Description'];
+        $event->Image = $imagePath;
+        $event->categorie_id = $validatedData['category_id'];
+        $event->status = $validatedData['status'];
+
+        
+        $event->save();
+
+        return redirect()->route('home')->with('azer', 'Event added successfully!');
+    }
 }

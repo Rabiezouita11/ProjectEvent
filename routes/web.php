@@ -77,7 +77,8 @@ Route::get('/historique', [App\Http\Controllers\DemandeurController::class, 'his
 
 // pdf facture
 Route::get('/download-invoice/{reservation}', [App\Http\Controllers\DemandeurController::class, 'downloadInvoice'])->name('download-invoice');
-
+// add event by demandeur 
+Route::post('/addEventByDemandeur', [App\Http\Controllers\DemandeurController::class, 'addEventByDemandeur'])->name('addEventByDemandeur')->middleware('auth');
                                                                             /* Admin */ 
 
                                                                             // show page admin
@@ -111,7 +112,7 @@ Route::post('/deleteEvent', [App\Http\Controllers\AdminController::class, 'delet
 Route::get('/pageAddEvent', [App\Http\Controllers\AdminController::class, 'showPageAddEvents'])->name('showPageAddEvents')->middleware('role:admin');
 
 // button Add Events
-Route::post('/addEvent', [App\Http\Controllers\AdminController::class, 'addEvent'])->name('addEvent');
+Route::post('/addEvent', [App\Http\Controllers\AdminController::class, 'addEvent'])->name('addEvent')->middleware('role:admin');
 
 // button update Events
 Route::post('/updateEvent', [App\Http\Controllers\AdminController::class, 'updateEvent'])->name('updateEvent');

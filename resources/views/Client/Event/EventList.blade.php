@@ -46,6 +46,9 @@
     </div>
     </div>
 </section>
+@php
+$acceptedEventsExist = false;
+@endphp
 <!-- event-schedule starts -->
 @if ($cat->event->isEmpty())
 <!-- Show a message if there are no events in the category -->
@@ -58,6 +61,7 @@
 
 @else
 @foreach ( $cat->event as $events )
+@if ($events->status === 'accepted')
 <section class="event-schedule pb-8 about-after">
     <div class="container">
 
@@ -125,7 +129,20 @@
     </div>
     </div>
 </section>
+@php
+$acceptedEventsExist = true;
+@endphp
+@endif
 @endforeach
+@if (!$acceptedEventsExist)
+<!-- Show a message if there are no events with status "accepted" -->
+<div class="container text-center my-5">
+    <div class="alert alert-info">
+        <h4 class="alert-heading">No Events Found</h4>
+        <p>There are no events in this category at the moment.</p>
+    </div>
+</div>
+@endif
 @endif
 <!-- event-schedule ends -->
 

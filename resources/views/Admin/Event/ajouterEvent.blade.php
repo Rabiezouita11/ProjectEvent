@@ -320,6 +320,8 @@
                                             <strong style="color: red;">{{ $errors->first('Nom') }}</strong>
                                             @endif
                                         </div>
+                                        <input type="hidden" name="status" value="accepted">
+
                                         <div class="col-md-12">
                                             <label class="form-label">Location</label>
                                             <select name="Location" class="form-control" required>

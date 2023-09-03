@@ -43,7 +43,7 @@
                                 <img src="{{ asset('client/images/logo-white.png') }}" alt="image">
                                 <img src="{{ asset('client/images/logo.png') }}" alt="image">
                             </a>
-                        </div>  
+                        </div>
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="navbar-collapse1 d-flex align-items-center" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav" id="responsive-menu">
@@ -63,23 +63,8 @@
                                 </li>
                                 <li><a href="{{ url('historique' )}}" class="">Historique</a></li>
 
-                                <li class="submenu dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="products.html">Product Lists</a></li>
-                                        <li><a href="product-detail.html">Product Detail</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="myaccount.html">My Account</a></li>
-                                    </ul>
-                                </li>
-                                <li class="submenu dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">News <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="post-grid-1.html">All Posts</a></li>
-                                        <li><a href="detail-1.html">Single Post</a></li>
-                                    </ul>
-                                </li>
+
+
                                 <li><a href="{{ url('contact') }}" class="">Contact Us</a></li>
 
 
@@ -87,17 +72,19 @@
 
                                 @guest
                                 @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <li>
+                                    <a href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                                 @endif
 
                                 @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <li>
+                                    <a href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                                 @endif
                                 @else
+
+
                                 <li class="submenu dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
@@ -110,36 +97,24 @@
                                         @csrf
                                     </form>
                                 </li>
+
+                                @if (Auth::user()->role == 'demandeur')
+                                <li>
+                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un evenement</a>
+                                </li> @endif
+
+
                                 @endguest
 
 
 
 
-                                <li class="search-main">
-                                    <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
-                                </li>
+
                             </ul>
                         </div><!-- /.navbar-collapse -->
-                        @guest
-                        <div class="register-login">
-                            <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
-                        </div>
-                        @else
-
-
-
-                        <div class="register-login">
-                            <a href="#" class="nir-btn white">Buy Ticket <i class="fa fa-angle-right "></i></a>
-                        </div>
-
-
-                        <div class="register-login">
-                        </div>
-
-
-
-                        @endguest
-
+                        <li class="search-main">
+                            <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
+                        </li>
 
                         <div id="slicknav-mobile"></div>
                     </div>
@@ -148,7 +123,216 @@
         </div>
         <!-- Navigation Bar Ends -->
     </header>
+   
+        <style>
+
+        /* Style the modal background */
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 10px;
+        }
+
+        /* Style the modal title */
+        .modal-title {
+            color: #333;
+        }
+
+        /* Style the modal body */
+        .modal-body {
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* Style the modal footer */
+        .modal-footer {
+            background-color: #f2f2f2;
+            border-top: none;
+        }
+
+        /* Style the close button */
+        .modal-content .close {
+            font-size: 24px;
+            color: #555;
+        }
+
+        /* Style the close button on hover */
+        .modal-content .close:hover {
+            color: #333;
+        }
+    </style>
+
+    </style>
+    <center> @if (session('azer'))
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+         
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                    <p>Votre demande d'événement a été envoyée avec succès à l'administrateur. Veuillez patienter pour leur réponse.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        @endif
+    </center>
+
+
     <!-- header ends -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un événement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Place your form here -->
+                    <form method="post" action="{{ route('addEventByDemandeur') }}" name="eventForm" id="eventForm" class="row g-3" enctype="multipart/form-data" onsubmit="showSuccessModal(event)">
+                        @csrf
+                        <div class="col-md-12">
+                            <label class="form-label">Nom</label>
+                            <input type="text" name="Nom" class="form-control" placeholder="Enter Nom" value="{{ old('Nom') }}" required>
+                            @if ($errors->has('Nom'))
+                            <strong style="color: red;">{{ $errors->first('Nom') }}</strong>
+                            @endif
+                        </div>
+                        <div id="validation-errors" style="display: none">
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                        </div>
+                        <input type="hidden" name="status" value="En attente" class="form-control">
+                        <div class="col-md-12">
+                            <label class="form-label">Location</label>
+                            <select name="Location" class="form-control" required>
+
+                                <option style="color:black" value="" disabled selected>Select a Location</option>
+                                <option style="color:black" value="Ariana" @if(old('Location')==='Ariana' ) selected @endif>Ariana</option>
+                                <option style="color:black" value="Béja" @if(old('Location')==='Béja' ) selected @endif>Béja</option>
+                                <option style="color:black" value="Ben Arous" @if(old('Location')==='Ben Arous' ) selected @endif>Ben Arous</option>
+                                <option style="color:black" value="Bizerte" @if(old('Location')==='Bizerte' ) selected @endif>Bizerte</option>
+                                <option style="color:black" value="Gabès" @if(old('Location')==='Gabès' ) selected @endif>Gabès</option>
+                                <option style="color:black" value="Gafsa" @if(old('Location')==='Gafsa' ) selected @endif>Gafsa</option>
+                                <option style="color:black" value="Jendouba" @if(old('Location')==='Jendouba' ) selected @endif>Jendouba</option>
+                                <option style="color:black" value="Kairouan" @if(old('Location')==='Kairouan' ) selected @endif>Kairouan</option>
+                                <option style="color:black" value="Kasserine" @if(old('Location')==='Kasserine' ) selected @endif>Kasserine</option>
+                                <option style="color:black" value="Kebili" @if(old('Location')==='Kebili' ) selected @endif>Kebili</option>
+                                <option style="color:black" value="Kef" @if(old('Location')==='Kef' ) selected @endif>Kef</option>
+                                <option style="color:black" value="Mahdia" @if(old('Location')==='Mahdia' ) selected @endif>Mahdia</option>
+                                <option style="color:black" value="Manouba" @if(old('Location')==='Manouba' ) selected @endif>Manouba</option>
+                                <option style="color:black" value="Medenine" @if(old('Location')==='Medenine' ) selected @endif>Medenine</option>
+                                <option style="color:black" value="Monastir" @if(old('Location')==='Monastir' ) selected @endif>Monastir</option>
+                                <option style="color:black" value="Nabeul" @if(old('Location')==='Nabeul' ) selected @endif>Nabeul</option>
+                                <option style="color:black" value="Sfax" @if(old('Location')==='Sfax' ) selected @endif>Sfax</option>
+                                <option style="color:black" value="Sidi Bouzid" @if(old('Location')==='Sidi Bouzid' ) selected @endif>Sidi Bouzid</option>
+                                <option style="color:black" value="Siliana" @if(old('Location')==='Siliana' ) selected @endif>Siliana</option>
+                                <option style="color:black" value="Sousse" @if(old('Location')==='Sousse' ) selected @endif>Sousse</option>
+                                <option style="color:black" value="Tataouine" @if(old('Location')==='Tataouine' ) selected @endif>Tataouine</option>
+                                <option style="color:black" value="Tozeur" @if(old('Location')==='Tozeur' ) selected @endif>Tozeur</option>
+                                <option style="color:black" value="Tunis" @if(old('Location')==='Tunis' ) selected @endif>Tunis</option>
+                                <option style="color:black" value="Zaghouan" @if(old('Location')==='Zaghouan' ) selected @endif>Zaghouan</option>
+                            </select>
+                            @if ($errors->has('Location'))
+                            <strong style="color: red;">{{ $errors->first('Location') }}</strong>
+                            @endif
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Nombre_total_abonnés</label>
+                            <input type="number" name="Nombre_total_abonnés" class="form-control" placeholder="Enter Nombre_total_abonnés" value="{{ old('Nombre_total_abonnés') }}" required>
+                            @if ($errors->has('Nombre_total_abonnés'))
+                            <strong style="color: red;">{{ $errors->first('Nombre_total_abonnés') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Prix</label>
+                            <input type="number" name="Prix" class="form-control" placeholder="Enter Prix" value="{{ old('Prix') }}" required>
+                            @if ($errors->has('Prix'))
+                            <strong style="color: red;">{{ $errors->first('Prix') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" name="start_date" class="form-control" value="{{ old('start_date') }}" required>
+                            @if ($errors->has('start_date'))
+                            <strong style="color: red;">{{ $errors->first('start_date') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">End Date</label>
+                            <input type="date" name="end_date" class="form-control" value="{{ old('end_date') }}" required>
+                            @if ($errors->has('end_date'))
+                            <strong style="color: red;">{{ $errors->first('end_date') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Start Time</label>
+                            <input type="time" name="start_time" class="form-control" value="{{ old('start_time') }}" required>
+                            @if ($errors->has('start_time'))
+                            <strong style="color: red;">{{ $errors->first('start_time') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">End Time</label>
+                            <input type="time" name="end_time" class="form-control" value="{{ old('end_time') }}" required>
+                            @if ($errors->has('end_time'))
+                            <strong style="color: red;">{{ $errors->first('end_time') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Description</label>
+                            <textarea name="Description" class="form-control" placeholder="Enter Description" required>{{ old('Description') }}</textarea>
+                            @if ($errors->has('Description'))
+                            <strong style="color: red;">{{ $errors->first('Description') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Image</label>
+                            <input type="file" name="Image" class="form-control" accept="image/*" required>
+                            @if ($errors->has('Image'))
+                            <strong style="color: red;">{{ $errors->first('Image') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Category</label>
+                            <select name="category_id" class="form-control" required>
+                                <option value="">Select Category</option>
+                                @foreach($categories as $category)
+                                <option value="{{ $category->id }}" style="color:black;" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->Nom }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('category_id'))
+                            <strong style="color: red;">{{ $errors->first('category_id') }}</strong>
+                            @endif
+                        </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" href="{{ route('addEventByDemandeur') }}" form="eventForm" class="btn btn-primary" onclick="event.preventDefault();  document.getElementById('eventForm').submit();">Ajouter l'événement</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     @yield('content')
 
@@ -249,6 +433,31 @@
 
 
     <!-- *Scripts* -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var validationErrors = $('#validation-errors').html();
+
+            if (validationErrors.trim() !== '') {
+                $('#exampleModal').modal('show');
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Check if the session variable 'azer' is set
+            @if(session('azer'))
+            // Show the success modal
+            $('#successModal').modal('show');
+            @endif
+        });
+    </script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="{{asset('client/js/jquery-3.5.1.min.js')}}"></script>
     <script src="{{asset('client/js/bootstrap.min.js')}}"></script>

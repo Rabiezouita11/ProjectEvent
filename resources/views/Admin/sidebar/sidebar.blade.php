@@ -28,7 +28,7 @@
                     </a>
                 </li>
 
-             <li>
+                <li>
                     <a href="{{route('Users')}}" class=" waves-effect">
                         <i class="ti-user"></i>
                         <span>utilisateurs</span>
@@ -40,24 +40,29 @@
                         <span>Commentaires</span>
                     </a>
                 </li>
-               
+
                 <li>
                     <a href="{{route('contacts')}}" class=" waves-effect">
-                    <i class="ti-email"></i>
+                        <i class="ti-email"></i>
 
                         <span>contacts</span>
                     </a>
                 </li>
-               
-                
+
+                <li>
+                    <a href="" class="waves-effect">
+                        <i class="ti-alert"></i>
+                        <span>Liste d'événements En Attente</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{route('logoutt')}}" class=" waves-effect">
                         <i class="ti-power-off"></i>
                         <span>se deconnecter</span>
                     </a>
-             </li>
+                </li>
 
-              
+
 
             </ul>
         </div>
