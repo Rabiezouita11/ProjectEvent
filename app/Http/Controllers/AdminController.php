@@ -111,9 +111,13 @@ class AdminController extends Controller
 
     public function events()
     {
-        $events = \App\Models\Events::with('categorie')->paginate(4);
+        $events = \App\Models\Events::with('categorie')
+            ->where('status', 'accepted')
+            ->paginate(4);
+
         $categories = DB::table('categories')->get();
-        return view('Admin.Event.index ', compact('events', 'categories'));
+
+        return view('Admin.Event.index', compact('events', 'categories'));
     }
     public function deleteEvent(Request $request)
     {
