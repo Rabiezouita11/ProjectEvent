@@ -309,6 +309,8 @@ class DemandeurController extends Controller
         // Get the ID of the logged-in user
         $userEvent->event_id = $event->id; // Get the ID of the newly created event
         $userEvent->save();
+        
+        Notification::send($event, new NewEventNotification());
 
         return redirect()->route('home')->with('azer', 'Event added successfully!');
     }
