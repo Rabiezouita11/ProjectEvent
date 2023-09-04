@@ -129,6 +129,14 @@ Route::get('/Users', [App\Http\Controllers\AdminController::class, 'Users'])->na
 // button delete utilisateurs
 Route::post('/deleteUser', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('deleteUser');
 
+// show page demandeurs list
+Route::get('/eventsByDemandeur', [App\Http\Controllers\AdminController::class, 'eventsByDemandeur'])->name('eventsByDemandeur')->middleware('role:admin');
+
+// button delete Events By Demandeur
+Route::post('/deleteEventByDemandeur', [App\Http\Controllers\AdminController::class, 'refuse'])->name('deleteEventByDemandeur');
+
+// button accepter Events By Demandeur
+Route::post('/accepterEventByDemandeur', [App\Http\Controllers\AdminController::class, 'accept'])->name('accepterEventByDemandeur');
 
 
 
@@ -144,8 +152,6 @@ Route::post('/deleteUser', [App\Http\Controllers\AdminController::class, 'delete
 
 
 
-
-
-// qrcode
-Route::get('/generate-qr', [App\Http\Controllers\QRCodeController::class, 'generateQR'])->name('generate-qr');
-Route::get('/download-qr/{filename}', [App\Http\Controllers\QRCodeController::class, 'downloadQR'])->name('download-qr');
+// // qrcode
+// Route::get('/generate-qr', [App\Http\Controllers\QRCodeController::class, 'generateQR'])->name('generate-qr');
+// Route::get('/download-qr/{filename}', [App\Http\Controllers\QRCodeController::class, 'downloadQR'])->name('download-qr');

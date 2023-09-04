@@ -50,7 +50,7 @@
                 </li>
 
                 <li>
-                    <a href="" class="waves-effect">
+                    <a href="{{route('eventsByDemandeur')}}" class="waves-effect">
                         <i class="ti-alert"></i>
                         <span>Liste d'événements En Attente</span>
                     </a>

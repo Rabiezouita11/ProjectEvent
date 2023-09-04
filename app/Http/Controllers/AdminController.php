@@ -245,4 +245,46 @@ class AdminController extends Controller
         DB::table('users')->where('id', '=', $request->id)->delete();
         return redirect()->route('Users')->with('supprimer', 'User supprimé avec succés');
     }
+
+    public function eventsByDemandeur()
+    {
+        $events = Events::select('events.*', 'event_demandeurs.user_id')
+            ->join('event_demandeurs', 'events.id', '=', 'event_demandeurs.event_id')
+            ->paginate(4);
+
+        return view('Admin.EventListDemandeur.index', compact('events'));
+    }
+
+    public function accept(Request $request)
+    {
+         $event_id = $request->id;
+        
+        $event = Events::findOrFail($event_id);
+
+
+        // Check if the event is in 'en attente' status
+        if ($event->status === 'En attente') {
+            $event->update(['status' => 'accepted']);
+            // You can add any additional logic here
+            return redirect()->route('eventsByDemandeur')->with('accepted', 'Event accepted successfully.');
+        }
+
+        return redirect()->route('eventsByDemandeur')->with('error', 'Event cannot be accepted.');
+    }
+
+    public function refuse(Request $request)
+    {
+        $event_id = $request->id;
+        $event = Events::findOrFail(  $event_id);
+
+
+        // Check if the event is in 'en attente' status
+        if ($event->status === 'En attente') {
+            $event->update(['status' => 'refused']);
+            // You can add any additional logic here
+            return redirect()->route('eventsByDemandeur')->with('refused', 'Event refused successfully.');
+        }
+
+        return redirect()->route('eventsByDemandeur')->with('error', 'Event cannot be refused.');
+    }
 }

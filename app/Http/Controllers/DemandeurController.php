@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
-
+use App\Models\EventDemandeur;
 use App\Models\Events;
 use App\Models\Rate;
 use App\Models\Reservation;
@@ -302,8 +302,13 @@ class DemandeurController extends Controller
         $event->categorie_id = $validatedData['category_id'];
         $event->status = $validatedData['status'];
 
-        
+
         $event->save();
+        $userEvent = new EventDemandeur();
+        $userEvent->user_id = auth()->user()->id;
+        // Get the ID of the logged-in user
+        $userEvent->event_id = $event->id; // Get the ID of the newly created event
+        $userEvent->save();
 
         return redirect()->route('home')->with('azer', 'Event added successfully!');
     }
