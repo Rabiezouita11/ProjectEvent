@@ -79,7 +79,21 @@ Route::get('/historique', [App\Http\Controllers\DemandeurController::class, 'his
 Route::get('/download-invoice/{reservation}', [App\Http\Controllers\DemandeurController::class, 'downloadInvoice'])->name('download-invoice');
 // add event by demandeur 
 Route::post('/addEventByDemandeur', [App\Http\Controllers\DemandeurController::class, 'addEventByDemandeur'])->name('addEventByDemandeur')->middleware('auth');
-                                                                            /* Admin */ 
+                                  
+
+
+// show notification chaque client 
+Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+
+
+
+
+
+
+
+
+
+/* Admin */ 
 
                                                                             // show page admin
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'home'])->name('admin')->middleware('role:admin');

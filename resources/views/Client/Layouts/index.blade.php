@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('client/fonts/line-icons.css') }}" type="text/css">
     <script src="{{ asset('vendor/kustomer/js/kustomer.js') }}" defer></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
 </head>
 
 <body>
@@ -61,7 +64,11 @@
                                         @endforeach
                                     </ul>
                                 </li>
+                                @guest
+                                @else
                                 <li><a href="{{ url('historique' )}}" class="">Historique</a></li>
+                                @endguest
+                                <!-- resources/views/notifications.blade.php -->
 
 
 
@@ -98,34 +105,56 @@
                                     </form>
                                 </li>
 
-                                @if (Auth::user()->role == 'demandeur')
-                                <li>
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un evenement</a>
-                                </li> @endif
 
 
-                                @endguest
+                                <li class="submenu dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> notifications <span id="notification-count">0</span>
+                                        <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <div id="notifications">
+                                            @if (isset($notifications) && count($notifications) > 0)
+
+                                            @foreach ($notifications as $notification)
+                                            <li>{{ $notification->message }}</li>
+
+                                            @endforeach
+                                            @else
+                                            <li>No notifications.</li>
+                                            @endif
+                                    </ul>
+                        </div>
 
 
-
-
-
-                            </ul>
-                        </div><!-- /.navbar-collapse -->
-                        <li class="search-main">
-                            <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
                         </li>
 
-                        <div id="slicknav-mobile"></div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </nav>
+
+                        @if (Auth::user()->role == 'demandeur')
+                        <li>
+                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un evenement</a>
+                        </li> @endif
+
+
+                        @endguest
+
+
+
+
+
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                    <li class="search-main">
+                        <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
+                    </li>
+
+                    <div id="slicknav-mobile"></div>
+                </div>
+        </div><!-- /.container-fluid -->
+        </nav>
         </div>
         <!-- Navigation Bar Ends -->
     </header>
-   
-        <style>
 
+    <style>
         /* Style the modal background */
         .modal-content {
             background-color: #ffffff;
@@ -163,22 +192,22 @@
 
     </style>
     <center> @if (session('Demandeur'))
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-         
-            <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
-                    <p>Votre demande d'événement a été envoyée avec succès à l'administrateur. Veuillez patienter pour leur réponse.</p>
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                            <p>Votre demande d'événement a été envoyée avec succès à l'administrateur. Veuillez patienter pour leur réponse.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-            </div>
         </div>
-    </div>
-</div>
 
 
         @endif
@@ -453,6 +482,76 @@
             @endif
         });
     </script>
+    <audio id="notification-sound">
+        <source src="{{ asset('friend-request-14878.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let audioPlayed = false; // Track whether the audio has been played
+
+        function fetchNotifications() {
+            fetch('{{ route("notifications.index") }}', {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    updateNotificationUI(data.notifications); // Update notifications
+                    updateUnreadCount(data.unread_count); // Update unread count
+
+                    if (data.notifications.length > 0 && !audioPlayed && document.hasFocus()) {
+                        playNotificationSound(); // Play notification sound if there are new notifications and page has focus
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                });
+        }
+
+        function updateNotificationUI(notifications) {
+            // Update the notification UI with new notifications
+            const notificationsContainer = document.getElementById('notifications');
+            notificationsContainer.innerHTML = '';
+
+            if (notifications.length > 0) {
+                notifications.forEach(notification => {
+                    const notificationDiv = document.createElement('div');
+                    notificationDiv.textContent = notification.message;
+                    notificationsContainer.appendChild(notificationDiv);
+                });
+            } else {
+                const noNotificationsDiv = document.createElement('div');
+                noNotificationsDiv.textContent = 'No notifications.';
+                notificationsContainer.appendChild(noNotificationsDiv);
+            }
+        }
+
+        function updateUnreadCount(count) {
+            // Update the notification count in the UI
+            const countElement = document.getElementById('notification-count');
+            countElement.textContent = count;
+        }
+
+        function playNotificationSound() {
+            const audioElement = document.getElementById('notification-sound');
+            audioElement.muted = false; // Unmute the audio
+            audioElement.play() // Play the audio
+                .then(() => {
+                    audioPlayed = true; // Mark audio as played
+                })
+                .catch(error => {
+                    console.error('Audio Play Error:', error);
+                });
+        }
+
+        // Poll for new notifications every 30 seconds (adjust as needed)
+        setInterval(fetchNotifications, 10000);
+
+        // Fetch notifications initially when the page loads
+        fetchNotifications();
+    </script>
+
+
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

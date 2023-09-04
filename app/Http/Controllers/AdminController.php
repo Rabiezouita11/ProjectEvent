@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use App\Models\Category;
 use App\Models\Events;
+use App\Models\Notification;
+use App\Models\Notifications;
 
 class AdminController extends Controller
 {
@@ -257,8 +259,8 @@ class AdminController extends Controller
 
     public function accept(Request $request)
     {
-         $event_id = $request->id;
-        
+        $event_id = $request->id;
+        $user_id = $request->user_id;
         $event = Events::findOrFail($event_id);
 
 
@@ -266,6 +268,10 @@ class AdminController extends Controller
         if ($event->status === 'En attente') {
             $event->update(['status' => 'accepted']);
             // You can add any additional logic here
+            Notifications::create([
+                'user_id' =>   $user_id,
+                'message' => 'Your event has been accepted.',
+            ]);
             return redirect()->route('eventsByDemandeur')->with('accepted', 'Event accepted successfully.');
         }
 
@@ -275,13 +281,19 @@ class AdminController extends Controller
     public function refuse(Request $request)
     {
         $event_id = $request->id;
-        $event = Events::findOrFail(  $event_id);
+        $user_id = $request->user_id;
+        $event = Events::findOrFail($event_id);
 
 
         // Check if the event is in 'en attente' status
         if ($event->status === 'En attente') {
             $event->update(['status' => 'refused']);
             // You can add any additional logic here
+            Notifications::create([
+                'user_id' => $user_id,
+                'message' => 'Your event has been refused.',
+            ]);
+
             return redirect()->route('eventsByDemandeur')->with('refused', 'Event refused successfully.');
         }
 

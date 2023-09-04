@@ -128,7 +128,9 @@
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                         <form action="{{ route('accepterEventByDemandeur' )}}" method="POST">
                                                             @csrf
+
                                                             <input type="hidden" name="id" value="{{ $event->id }}">
+                                                            <input type="hidden" name="user_id" value="{{ $event->user->id }}">
 
                                                             <button type="submit" class="btn btn-success">Accept</button>
                                                         </form>
@@ -155,6 +157,8 @@
                                                         <form action="{{ route('deleteEventByDemandeur')}}" method="POST">
                                                             @csrf
                                                             <input type="hidden" name="id" value="{{ $event->id }}">
+                                                            <input type="hidden" name="user_id" value="{{ $event->user->id }}">
+
                                                             <button type="submit" class="btn btn-danger">Refuse</button>
                                                         </form>
                                                     </div>

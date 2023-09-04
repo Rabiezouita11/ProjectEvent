@@ -10,6 +10,7 @@ use App\Models\Reservation;
 use App\Models\User;
 use App\Events\PusherBroadcast;
 use App\Events\SendMessage;
+use App\Models\Notifications;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class DemandeurController extends Controller
 {
@@ -68,7 +70,20 @@ class DemandeurController extends Controller
     public function index()
     {
         $categories = Categorie::all();
-        return view('Client.home.home')->with('categories', $categories);
+
+
+        $user = Auth::user();
+       
+        if ($user) {
+
+            $notifications = Notifications::where('user_id', $user->id)
+                ->where('is_read', false)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            return view('Client.home.home')->with('categories', $categories)->with('notifications', $notifications);
+        } else {
+            return view('Client.home.home')->with('categories', $categories);
+        }
     }
 
 
@@ -311,7 +326,7 @@ class DemandeurController extends Controller
         $userEvent->event_id = $event->id; // Get the ID of the newly created event
         $userEvent->save();
 
-       
+
 
         return redirect()->route('home')->with('Demandeur', 'Event added successfully!');
     }
