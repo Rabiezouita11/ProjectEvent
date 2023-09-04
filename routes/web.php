@@ -140,7 +140,8 @@ Route::post('/accepterEventByDemandeur', [App\Http\Controllers\AdminController::
 
 
 
-
+// button recieve  notification
+Route::post('/message', [App\Http\Controllers\DemandeurController::class, 'message'])->name('message');
 
 
 

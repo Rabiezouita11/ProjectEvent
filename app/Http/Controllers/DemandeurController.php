@@ -8,15 +8,16 @@ use App\Models\Events;
 use App\Models\Rate;
 use App\Models\Reservation;
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use App\Events\PusherBroadcast;
+use App\Events\SendMessage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class DemandeurController extends Controller
 {
@@ -309,9 +310,9 @@ class DemandeurController extends Controller
         // Get the ID of the logged-in user
         $userEvent->event_id = $event->id; // Get the ID of the newly created event
         $userEvent->save();
-        
-        Notification::send($event, new NewEventNotification());
 
-        return redirect()->route('home')->with('azer', 'Event added successfully!');
+       
+
+        return redirect()->route('home')->with('Demandeur', 'Event added successfully!');
     }
 }

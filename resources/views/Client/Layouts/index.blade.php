@@ -162,7 +162,7 @@
     </style>
 
     </style>
-    <center> @if (session('azer'))
+    <center> @if (session('Demandeur'))
     <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -447,7 +447,7 @@
     <script>
         $(document).ready(function() {
             // Check if the session variable 'azer' is set
-            @if(session('azer'))
+            @if(session('Demandeur'))
             // Show the success modal
             $('#successModal').modal('show');
             @endif
