@@ -240,7 +240,7 @@ class DemandeurController extends Controller
         $qrData .= "Event Start Time: {$reservation->event->start_time}\n";
         $qrData .= "Event End Time: {$reservation->event->end_time}\n";
         $qrData .= "Event Location: {$reservation->event->Location}\n";
-        $qrData .= "Prix: {$reservation->event->Prix}";
+        $qrData .= "Prix: {$reservation->event->Prix}  TND\n";
 
 
 
@@ -317,5 +317,23 @@ class DemandeurController extends Controller
 
 
         return redirect()->route('home')->with('Demandeur', 'Event added successfully!');
+    }
+
+    public function search()
+    {
+        request()->validate([
+            'q' => 'required|min:3',
+        ]);
+
+        $q = request()->input('q');
+        $categories = Categorie::all();
+
+        // Use a stable column for ordering, such as 'id'
+        $events = Events::where('Nom', 'like', "%$q%")
+            ->where('status', 'accepted')
+            ->orderBy('id') // Use 'id' or another stable column
+            ->paginate(1000000000);
+
+        return view('Client.Search.index')->with('categories', $categories)->with('events', $events);
     }
 }

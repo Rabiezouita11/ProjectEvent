@@ -108,7 +108,8 @@
 
 
                                 <li class="submenu dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" onclick="markAllNotificationsAsRead()"> notifications <span id="notification-count">0</span>
+
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="notifications-button" aria-haspopup="true" aria-expanded="false" onclick="markAllNotificationsAsRead()"> notifications <span id="notification-count">0</span>
                                         <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
                                         <div id="notifications">
@@ -132,7 +133,8 @@
 
                         @if (Auth::user()->role == 'demandeur')
                         <li>
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un evenement</a>
+                            <a href="#" style="color: #f2f2f2;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un evenement</a>
+
                         </li> @endif
 
 
@@ -456,9 +458,10 @@
     <!-- search popup -->
     <div id="search1">
         <button type="button" class="close">×</button>
-        <form>
-            <input type="search" value="" placeholder="type keyword(s) here" />
-            <button type="submit" class="btn btn-primary">Search</button>
+        <form action="{{ url('search')}}" id="search">
+            <input type="search" name="q" value="{{ request()->q ??''}}" placeholder="type keyword(s) here" required />
+            <button type="submit" class="btn btn-primary" onclick="event.preventDefault();
+                                                     document.getElementById('search').submit();">Search</button>
         </form>
     </div>
 
@@ -489,6 +492,23 @@
         Your browser does not support the audio element.
     </audio>
     <script>
+        const notificationsButton = document.getElementById('notifications-button');
+
+        // Add a click event listener to the button
+        notificationsButton.addEventListener('click', function(event) {
+            // Prevent the default behavior of the link
+            event.preventDefault();
+
+            // Call your function to mark notifications as read or perform other actions
+            markAllNotificationsAsRead();
+        });
+
+        // Add a hover event listener to the button
+        notificationsButton.addEventListener('mouseenter', function() {
+            // Call your function when the mouse enters the button (hover)
+            markAllNotificationsAsRead();
+        });
+
         function markAllNotificationsAsRead() {
             // Make an AJAX request to mark all notifications as read
             fetch('{{ route("notifications.markAllAsRead") }}', {
@@ -641,7 +661,7 @@
         }
 
         // Poll for new notifications every 30 seconds (adjust as needed)
-        setInterval(fetchNotifications, 10000);
+        setInterval(fetchNotifications, 1000);
 
         // Fetch notifications initially when the page loads
         fetchNotifications();

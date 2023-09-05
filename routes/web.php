@@ -90,7 +90,8 @@ Route::get('/notifications', [App\Http\Controllers\NotificationController::class
 Route::post('/notifications/markAllAsRead',  [App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
 
 
-
+// search Event by Nom etc 
+Route::get('/search', [App\Http\Controllers\DemandeurController::class, 'search']);
 
 
 

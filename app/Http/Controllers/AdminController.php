@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,7 @@ use App\Models\Category;
 use App\Models\Events;
 use App\Models\Notification;
 use App\Models\Notifications;
+use Illuminate\Http\JsonResponse;
 
 class AdminController extends Controller
 {
@@ -103,7 +105,7 @@ class AdminController extends Controller
 
         $id = $request['id'];
 
-        $category = Category::find($id);
+        $category = Categorie::find($id);
 
 
         $category->Nom = $request['Nom'];
