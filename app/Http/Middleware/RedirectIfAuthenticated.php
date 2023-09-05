@@ -26,10 +26,10 @@ class RedirectIfAuthenticated
                return redirect('/admin');
                break;
             case 'demandeur':
-               return redirect('/home_demandeur');
+               return redirect('/home');
                break; 
             case 'participant':
-               return redirect('/home_participant');
+               return redirect('/home');
                break; 
             default:
                return redirect('/home'); 

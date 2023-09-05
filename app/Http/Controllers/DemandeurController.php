@@ -71,19 +71,7 @@ class DemandeurController extends Controller
     {
         $categories = Categorie::all();
 
-
-        $user = Auth::user();
-       
-        if ($user) {
-
-            $notifications = Notifications::where('user_id', $user->id)
-                ->where('is_read', false)
-                ->orderBy('created_at', 'desc')
-                ->get();
-            return view('Client.home.home')->with('categories', $categories)->with('notifications', $notifications);
-        } else {
-            return view('Client.home.home')->with('categories', $categories);
-        }
+        return view('Client.home.home')->with('categories', $categories);
     }
 
 

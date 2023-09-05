@@ -267,10 +267,16 @@ class AdminController extends Controller
         // Check if the event is in 'en attente' status
         if ($event->status === 'En attente') {
             $event->update(['status' => 'accepted']);
+
+            $eventName = $event->Nom;
+
+            // Create the notification message with the event name
+            $message = "Your event '$eventName' has been accepted.";
             // You can add any additional logic here
             Notifications::create([
                 'user_id' =>   $user_id,
-                'message' => 'Your event has been accepted.',
+                'message' =>  $message,
+                'event_id' => $event_id,
             ]);
             return redirect()->route('eventsByDemandeur')->with('accepted', 'Event accepted successfully.');
         }
@@ -288,10 +294,15 @@ class AdminController extends Controller
         // Check if the event is in 'en attente' status
         if ($event->status === 'En attente') {
             $event->update(['status' => 'refused']);
+            $eventName = $event->Nom;
+
+            // Create the notification message with the event name
+            $message = "Your event '$eventName' has been refused.";
             // You can add any additional logic here
             Notifications::create([
                 'user_id' => $user_id,
-                'message' => 'Your event has been refused.',
+                'message' => $message,
+                'event_id' => $event_id,
             ]);
 
             return redirect()->route('eventsByDemandeur')->with('refused', 'Event refused successfully.');

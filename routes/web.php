@@ -25,13 +25,13 @@ Route::get('/stripe', function () {
 
 
 
-                                                                              /* Client */ 
+/* Client */
 // show page profile client
 Route::get('/profileclient', [App\Http\Controllers\DemandeurController::class, 'profile'])->name('profileclient')->middleware('auth');
 
 
 
- 
+
 // show page client
 Route::get('/home', [App\Http\Controllers\DemandeurController::class, 'index'])->name('home');
 
@@ -79,13 +79,15 @@ Route::get('/historique', [App\Http\Controllers\DemandeurController::class, 'his
 Route::get('/download-invoice/{reservation}', [App\Http\Controllers\DemandeurController::class, 'downloadInvoice'])->name('download-invoice');
 // add event by demandeur 
 Route::post('/addEventByDemandeur', [App\Http\Controllers\DemandeurController::class, 'addEventByDemandeur'])->name('addEventByDemandeur')->middleware('auth');
-                                  
+
 
 
 // show notification chaque client 
 Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
 
 
+// mark notification as read
+Route::post('/notifications/markAllAsRead',  [App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
 
 
 
@@ -93,9 +95,9 @@ Route::get('/notifications', [App\Http\Controllers\NotificationController::class
 
 
 
-/* Admin */ 
+/* Admin */
 
-                                                                            // show page admin
+// show page admin
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'home'])->name('admin')->middleware('role:admin');
 
 // logout admin

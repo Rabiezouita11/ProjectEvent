@@ -108,7 +108,7 @@
 
 
                                 <li class="submenu dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> notifications <span id="notification-count">0</span>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" onclick="markAllNotificationsAsRead()"> notifications <span id="notification-count">0</span>
                                         <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
                                         <div id="notifications">
@@ -121,7 +121,9 @@
                                             @else
                                             <li>No notifications.</li>
                                             @endif
+                                        </div>
                                     </ul>
+
                         </div>
 
 
@@ -486,62 +488,156 @@
         <source src="{{ asset('friend-request-14878.mp3') }}" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
     <script>
-        let audioPlayed = false; // Track whether the audio has been played
-
-        function fetchNotifications() {
-            fetch('{{ route("notifications.index") }}', {
-                    method: 'GET',
+        function markAllNotificationsAsRead() {
+            // Make an AJAX request to mark all notifications as read
+            fetch('{{ route("notifications.markAllAsRead") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
                 })
                 .then(response => response.json())
                 .then(data => {
-                    updateNotificationUI(data.notifications); // Update notifications
-                    updateUnreadCount(data.unread_count); // Update unread count
+                    // Hide the count
+                    const countElement = document.getElementById('notification-count');
 
-                    if (data.notifications.length > 0 && !audioPlayed && document.hasFocus()) {
-                        playNotificationSound(); // Play notification sound if there are new notifications and page has focus
+
+                    // Update the UI to display all notifications
+                    const notificationsContainer = document.getElementById('notifications');
+                    notificationsContainer.innerHTML = '';
+
+                    if (notifications.length > 0) {
+                        notifications.forEach(notification => {
+                            // Create a notification item
+                            const notificationItem = document.createElement('div');
+                            notificationItem.className = 'notification-item';
+
+                            // Create a message element
+                            const messageElement = document.createElement('div');
+                            messageElement.className = 'notification-message';
+                            messageElement.textContent = notification.message;
+
+                            // Check if the notification message contains "refused"
+                            if (!notification.message.includes('refused') && notification.event_id) {
+                                // Create a link for viewing event details
+                                const eventLink = document.createElement('a');
+                                eventLink.className = 'view-event-link';
+                                eventLink.textContent = 'View Event Details';
+                                eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
+
+                                // Append the link to the message element
+                                messageElement.appendChild(eventLink);
+                            }
+
+                            // Append the message element to the notification item
+                            notificationItem.appendChild(messageElement);
+
+                            // Append the notification item to the container
+                            notificationsContainer.appendChild(notificationItem);
+                        });
+                    } else {
+                        // If there are no notifications
+                        const noNotificationsDiv = document.createElement('div');
+                        noNotificationsDiv.className = 'no-notifications';
+                        noNotificationsDiv.textContent = 'No notifications.';
+                        notificationsContainer.appendChild(noNotificationsDiv);
                     }
                 })
                 .catch(error => {
-                    console.error('Fetch Error:', error);
+                    console.error('Mark All as Read Error:', error);
                 });
         }
+    </script>
+    <script>
+        let audioPlayed = false; // Track whether the audio has been played
+        const homeRoute = "{{ route('home') }}";
 
-        function updateNotificationUI(notifications) {
-            // Update the notification UI with new notifications
-            const notificationsContainer = document.getElementById('notifications');
-            notificationsContainer.innerHTML = '';
+        function fetchNotifications() {
 
-            if (notifications.length > 0) {
-                notifications.forEach(notification => {
-                    const notificationDiv = document.createElement('div');
-                    notificationDiv.textContent = notification.message;
-                    notificationsContainer.appendChild(notificationDiv);
-                });
-            } else {
-                const noNotificationsDiv = document.createElement('div');
-                noNotificationsDiv.textContent = 'No notifications.';
-                notificationsContainer.appendChild(noNotificationsDiv);
-            }
-        }
-
-        function updateUnreadCount(count) {
-            // Update the notification count in the UI
-            const countElement = document.getElementById('notification-count');
-            countElement.textContent = count;
-        }
-
-        function playNotificationSound() {
-            const audioElement = document.getElementById('notification-sound');
-            audioElement.muted = false; // Unmute the audio
-            audioElement.play() // Play the audio
-                .then(() => {
-                    audioPlayed = true; // Mark audio as played
+            fetch(homeRoute, {
+                    method: 'GET',
                 })
-                .catch(error => {
-                    console.error('Audio Play Error:', error);
-                });
+                .then(() => {
+                    fetch('{{ route("notifications.index") }}', {
+                            method: 'GET',
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            updateNotificationUI(data.notifications); // Update notifications
+                            updateUnreadCount(data.unread_count); // Update unread count
+
+                            // if (data.notifications.length > 0 && !audioPlayed && document.hasFocus()) {
+                            //     playNotificationSound(); // Play notification sound if there are new notifications and page has focus
+                            // }
+                        })
+                        .catch(error => {
+                            console.error('Fetch Error:', error);
+                        });
+                })
+
+
+            function updateNotificationUI(notifications) {
+                // Update the notification UI with new notifications
+                const notificationsContainer = document.getElementById('notifications');
+                notificationsContainer.innerHTML = '';
+
+                if (notifications.length > 0) {
+                    notifications.forEach(notification => {
+                        // Create a notification item
+                        const notificationItem = document.createElement('div');
+                        notificationItem.className = 'notification-item';
+
+                        // Create a message element
+                        const messageElement = document.createElement('div');
+                        messageElement.className = 'notification-message';
+                        messageElement.textContent = notification.message;
+
+                        // Check if the notification message contains "refused"
+                        if (!notification.message.includes('refused') && notification.event_id) {
+                            // Create a link for viewing event details
+                            const eventLink = document.createElement('a');
+                            eventLink.className = 'view-event-link';
+                            eventLink.textContent = 'View Event Details';
+                            eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
+
+                            // Append the link to the message element
+                            messageElement.appendChild(eventLink);
+                        }
+
+                        // Append the message element to the notification item
+                        notificationItem.appendChild(messageElement);
+
+                        // Append the notification item to the container
+                        notificationsContainer.appendChild(notificationItem);
+                    });
+                } else {
+                    // If there are no notifications
+                    const noNotificationsDiv = document.createElement('div');
+                    noNotificationsDiv.className = 'no-notifications';
+                    noNotificationsDiv.textContent = 'No notifications.';
+                    notificationsContainer.appendChild(noNotificationsDiv);
+                }
+            }
+
+
+            function updateUnreadCount(count) {
+                // Update the notification count in the UI
+                const countElement = document.getElementById('notification-count');
+                countElement.textContent = count;
+            }
+
+            function playNotificationSound() {
+                const audioElement = document.getElementById('notification-sound');
+                audioElement.muted = false; // Unmute the audio
+                audioElement.play() // Play the audio
+                    .then(() => {
+                        audioPlayed = true; // Mark audio as played
+                    })
+                    .catch(error => {
+                        console.error('Audio Play Error:', error);
+                    });
+            }
         }
 
         // Poll for new notifications every 30 seconds (adjust as needed)
@@ -550,7 +646,39 @@
         // Fetch notifications initially when the page loads
         fetchNotifications();
     </script>
+    <style>
+        /* CSS styles for notification items */
+        .notification-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f5f5f5;
+        }
 
+        /* CSS styles for notification messages */
+        .notification-message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        /* CSS styles for the "View Event Details" link */
+        .view-event-link {
+            color: #007bff;
+            text-decoration: none;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* CSS styles for the "No notifications" message */
+        .no-notifications {
+            font-size: 18px;
+            font-weight: bold;
+            color: #888;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
 
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
