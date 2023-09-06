@@ -504,10 +504,10 @@
         });
 
         // Add a hover event listener to the button
-        notificationsButton.addEventListener('mouseenter', function() {
-            // Call your function when the mouse enters the button (hover)
-            markAllNotificationsAsRead();
-        });
+        // notificationsButton.addEventListener('mouseenter', function() {
+        //     // Call your function when the mouse enters the button (hover)
+        //     markAllNotificationsAsRead();
+        // });
 
         function markAllNotificationsAsRead() {
             // Make an AJAX request to mark all notifications as read
@@ -661,7 +661,7 @@
         }
 
         // Poll for new notifications every 30 seconds (adjust as needed)
-        setInterval(fetchNotifications, 1000);
+        setInterval(fetchNotifications, 10000);
 
         // Fetch notifications initially when the page loads
         fetchNotifications();

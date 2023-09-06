@@ -161,7 +161,12 @@ Route::post('/accepterEventByDemandeur', [App\Http\Controllers\AdminController::
 Route::post('/message', [App\Http\Controllers\DemandeurController::class, 'message'])->name('message');
 
 
+// show Notifications for admin 
 
+Route::get('/AdminNotification', [App\Http\Controllers\NotificationController::class, 'AdminNotification'])->name('AdminNotification');
+
+// mark notification as read for admin
+Route::post('/notifications/markAllAsReadAdmin',  [App\Http\Controllers\NotificationController::class, 'markAllAsReadAdmin'])->name('notifications.markAllAsReadAdmin');
 
 
 

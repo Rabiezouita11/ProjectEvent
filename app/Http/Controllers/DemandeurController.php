@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Events\PusherBroadcast;
 use App\Events\SendMessage;
 use App\Models\Notifications;
+use App\Models\NotificationsAdmin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -313,8 +314,13 @@ class DemandeurController extends Controller
         // Get the ID of the logged-in user
         $userEvent->event_id = $event->id; // Get the ID of the newly created event
         $userEvent->save();
-
-
+        $userNom = auth()->user()->name;
+        $message = " l'evenement " . $event->Nom . " a été ajouté par " . $userNom;
+        NotificationsAdmin::create([
+            'user_id' => auth()->user()->id,
+            'message' => $message,
+            'event_id' => $event->id,
+        ]);
 
         return redirect()->route('home')->with('Demandeur', 'Event added successfully!');
     }

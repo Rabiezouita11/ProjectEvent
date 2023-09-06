@@ -141,84 +141,75 @@
                     </div>
 
                     <div class="dropdown d-inline-block">
-                        <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn header-item noti-icon waves-effect" id="notifications-button" onclick="markAllNotificationsAsRead()" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="mdi mdi-bell-outline"></i>
-                            <span class="badge bg-danger rounded-pill">3</span>
+                            <span class="badge bg-danger rounded-pill" id="notification-count">0</span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
                             <div class="p-3">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h5 class="m-0 font-size-16"> Notifications (258) </h5>
+                                        </h5>
                                     </div>
                                 </div>
                             </div>
                             <div data-simplebar style="max-height: 230px;">
 
 
+                                <div id="notifications">
+                                    @if (isset($notifications) && count($notifications) > 0)
+                                    @foreach ($notifications as $notification)
+                                    <a href="" class="text-reset notification-item">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar-xs">
+                                                    <span class="avatar-title bg-info rounded-circle font-size-16">
+                                                        <i class="mdi mdi-glass-cocktail"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1">
+                                                </h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">{{ $notification->message }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    @endforeach
+                                    @else
+                                    <a href="" class="text-reset notification-item">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar-xs">
 
-                                <a href="" class="text-reset notification-item">
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 me-3">
-                                            <div class="avatar-xs">
-                                                <span class="avatar-title bg-info rounded-circle font-size-16">
-                                                    <i class="mdi mdi-glass-cocktail"></i>
-                                                </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1">
+                                                </h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">No notifications.</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="mb-1">
-                                            </h6>
-                                            <div class="font-size-12 text-muted">
-                                                <p class="mb-1">It is a long established fact that a reader will</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                    </a>
 
-                                <a href="" class="text-reset notification-item">
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 me-3">
-                                            <div class="avatar-xs">
-                                                <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                                    <i class="mdi mdi-cart-outline"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="mb-1">Your order is placed</h6>
-                                            <div class="font-size-12 text-muted">
-                                                <p class="mb-1">Dummy text of the printing and typesetting industry.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                    @endif
 
-                                <a href="" class="text-reset notification-item">
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 me-3">
-                                            <div class="avatar-xs">
-                                                <span class="avatar-title bg-danger rounded-circle font-size-16">
-                                                    <i class="mdi mdi-message-text-outline"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="mb-1">New Message received</h6>
-                                            <div class="font-size-12 text-muted">
-                                                <p class="mb-1">You have 87 unread messages</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                </div>
+
+
+
                             </div>
-                            <div class="p-2 border-top">
+                            <!-- <div class="p-2 border-top">
                                 <div class="d-grid">
                                     <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
                                         View all
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -320,6 +311,177 @@
     </div>
     <!-- /Right-bar -->
 
+    <script>
+        const notificationsButton = document.getElementById('notifications-button');
+
+        // Add a click event listener to the button
+        notificationsButton.addEventListener('click', function(event) {
+            // Prevent the default behavior of the link
+            event.preventDefault();
+
+            // Call your function to mark notifications as read or perform other actions
+            markAllNotificationsAsRead();
+        });
+
+        // Add a hover event listener to the button
+        // notificationsButton.addEventListener('mouseenter', function() {
+        //     // Call your function when the mouse enters the button (hover)
+        //     markAllNotificationsAsRead();
+        // });
+
+        function markAllNotificationsAsRead() {
+            // Make an AJAX request to mark all notifications as read
+            fetch('{{ route("notifications.markAllAsReadAdmin") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Hide the count
+                    const countElement = document.getElementById('notification-count');
+
+
+                    // Update the UI to display all notifications
+                    const notificationsContainer = document.getElementById('notifications');
+                    notificationsContainer.innerHTML = '';
+
+                    if (notifications.length > 0) {
+                        notifications.forEach(notification => {
+                            // Create a notification item
+                            const notificationItem = document.createElement('div');
+                            notificationItem.className = 'notification-item';
+
+                            // Create a message element
+                            const messageElement = document.createElement('div');
+                            messageElement.className = 'notification-message';
+                            messageElement.textContent = notification.message;
+
+                            // Check if the notification message contains "refused"
+                            if (!notification.message.includes('refused') && notification.event_id) {
+                                // Create a link for viewing event details
+                                const eventLink = document.createElement('a');
+                                eventLink.className = 'view-event-link';
+                                eventLink.textContent = 'View Event Details';
+                                eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
+
+                                // Append the link to the message element
+                                messageElement.appendChild(eventLink);
+                            }
+
+                            // Append the message element to the notification item
+                            notificationItem.appendChild(messageElement);
+
+                            // Append the notification item to the container
+                            notificationsContainer.appendChild(notificationItem);
+                        });
+                    } else {
+                        // If there are no notifications
+                        const noNotificationsDiv = document.createElement('div');
+                        noNotificationsDiv.className = 'no-notifications';
+                        noNotificationsDiv.textContent = 'No notifications.';
+                        notificationsContainer.appendChild(noNotificationsDiv);
+                    }
+                })
+                .catch(error => {
+                    console.error('Mark All as Read Error:', error);
+                });
+        }
+    </script>
+    <script>
+        let audioPlayed = false; // Track whether the audio has been played
+        const homeRoute = "{{ route('admin') }}";
+
+        function fetchNotifications() {
+
+            fetch(homeRoute, {
+                    method: 'GET',
+                })
+                .then(() => {
+                    fetch('{{ route("AdminNotification") }}', {
+                            method: 'GET',
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            updateNotificationUI(data.notifications); // Update notifications
+                            updateUnreadCount(data.unread_count); // Update unread count
+
+                            // if (data.notifications.length > 0 && !audioPlayed && document.hasFocus()) {
+                            //     playNotificationSound(); // Play notification sound if there are new notifications and page has focus
+                            // }
+                        })
+                        .catch(error => {
+                            console.error('Fetch Error:', error);
+                        });
+                })
+
+
+            function updateNotificationUI(notifications) {
+                // Update the notification UI with new notifications
+                const notificationsContainer = document.getElementById('notifications');
+                notificationsContainer.innerHTML = '';
+
+                if (notifications.length > 0) {
+                    notifications.forEach(notification => {
+                        // Create a notification item
+                        const notificationItem = document.createElement('div');
+                        notificationItem.className = 'notification-item';
+
+                        // Create a message element
+                        const messageElement = document.createElement('div');
+                        messageElement.className = 'notification-message';
+                        messageElement.textContent = notification.message;
+
+                        // Check if the notification message contains "refused"
+                        // Create a link for viewing event details
+                        const eventLink = document.createElement('a');
+                        eventLink.className = 'view-event-link';
+                        eventLink.textContent = 'View Event Details';
+                        eventLink.href = '{{ route("events")}}';
+
+                        // Append the link to the message element
+                        messageElement.appendChild(eventLink);
+
+
+                        // Append the message element to the notification item
+                        notificationItem.appendChild(messageElement);
+
+                        // Append the notification item to the container
+                        notificationsContainer.appendChild(notificationItem);
+                    });
+                } else {
+                    // If there are no notifications
+                    const noNotificationsDiv = document.createElement('div');
+                    noNotificationsDiv.className = 'no-notifications';
+                    noNotificationsDiv.textContent = 'No notifications.';
+                    notificationsContainer.appendChild(noNotificationsDiv);
+                }
+            }
+
+
+            function updateUnreadCount(count) {
+                // Update the notification count in the UI
+                const countElement = document.getElementById('notification-count');
+                countElement.textContent = count;
+            }
+
+
+        }
+
+        // Poll for new notifications every 30 seconds (adjust as needed)
+        setInterval(fetchNotifications, 80000);
+
+        // Fetch notifications initially when the page loads
+        fetchNotifications();
+    </script>
+
+
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>
 
@@ -330,8 +492,8 @@
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/libs/metismenu/metisMenu.min.js"></script>
     <script src="assets/libs/simplebar/simplebar.min.js"></script>
-  
-   
+
+
     <script src="assets/js/app.js"></script>
 
 </body>
