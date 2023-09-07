@@ -20,6 +20,171 @@
     <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css">
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        const notificationsButton = document.getElementById('notifications-button');
+
+        // Add a click event listener to the button
+        notificationsButton.addEventListener('click', function(event) {
+            // Prevent the default behavior of the link
+            event.preventDefault();
+
+            // Call your function to mark notifications as read or perform other actions
+            markAllNotificationsAsRead();
+        });
+
+        // Add a hover event listener to the button
+        // notificationsButton.addEventListener('mouseenter', function() {
+        //     // Call your function when the mouse enters the button (hover)
+        //     markAllNotificationsAsRead();
+        // });
+
+        function markAllNotificationsAsRead() {
+            // Make an AJAX request to mark all notifications as read
+            fetch('{{ route("notifications.markAllAsReadAdmin") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Hide the count
+                    const countElement = document.getElementById('notification-count');
+
+
+                    // Update the UI to display all notifications
+                    const notificationsContainer = document.getElementById('notifications');
+                    notificationsContainer.innerHTML = '';
+
+                    if (notifications.length > 0) {
+                        notifications.forEach(notification => {
+                            // Create a notification item
+                            const notificationItem = document.createElement('div');
+                            notificationItem.className = 'notification-item';
+
+                            // Create a message element
+                            const messageElement = document.createElement('div');
+                            messageElement.className = 'notification-message';
+                            messageElement.textContent = notification.message;
+
+                            // Check if the notification message contains "refused"
+
+                            // Create a link for viewing event details
+                            const eventLink = document.createElement('a');
+                            eventLink.className = 'view-event-link';
+                            eventLink.textContent = 'View Event Details';
+                            eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
+
+                            // Append the link to the message element
+                            messageElement.appendChild(eventLink);
+
+
+                            // Append the message element to the notification item
+                            notificationItem.appendChild(messageElement);
+
+                            // Append the notification item to the container
+                            notificationsContainer.appendChild(notificationItem);
+                        });
+                    } else {
+                        // If there are no notifications
+                        const noNotificationsDiv = document.createElement('div');
+                        noNotificationsDiv.className = 'no-notifications';
+                        noNotificationsDiv.textContent = 'No notifications.';
+                        notificationsContainer.appendChild(noNotificationsDiv);
+                    }
+                })
+                .catch(error => {
+                    console.error('Mark All as Read Error:', error);
+                });
+        }
+    </script>
+
+    <script>
+        let audioPlayed = false; // Track whether the audio has been played
+        const homeRoute = "{{ route('admin') }}";
+        const maxPollingInterval = 10000; // Maximum polling interval (5 minutes)
+
+        function fetchNotifications() {
+
+            fetch(homeRoute, {
+                    method: 'GET',
+                })
+                .then(() => {
+                    fetch('{{ route("AdminNotification") }}', {
+                            method: 'GET',
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            updateNotificationUI(data.notifications); // Update notifications
+                            updateUnreadCount(data.unread_count); // Update unread count
+
+                        })
+                        .catch(error => {
+                            console.error('Fetch Error:', error);
+                        });
+                })
+
+
+            function updateNotificationUI(notifications) {
+                // Update the notification UI with new notifications
+                const notificationsContainer = document.getElementById('notifications');
+                notificationsContainer.innerHTML = '';
+
+                if (notifications.length > 0) {
+                    notifications.forEach(notification => {
+                        // Create a notification item
+                        const notificationItem = document.createElement('div');
+                        notificationItem.className = 'notification-item';
+
+                        // Create a message element
+                        const messageElement = document.createElement('div');
+                        messageElement.className = 'notification-message';
+                        messageElement.textContent = notification.message;
+
+                        // Check if the notification message contains "refused"
+                        // Create a link for viewing event details
+                        const eventLink = document.createElement('a');
+                        eventLink.className = 'view-event-link';
+                        eventLink.textContent = 'View Event Details';
+                        eventLink.href = '{{ route("eventsByDemandeur")}}';
+
+                        // Append the link to the message element
+                        messageElement.appendChild(eventLink);
+
+
+                        // Append the message element to the notification item
+                        notificationItem.appendChild(messageElement);
+
+                        // Append the notification item to the container
+                        notificationsContainer.appendChild(notificationItem);
+                    });
+                } else {
+                    // If there are no notifications
+                    const noNotificationsDiv = document.createElement('div');
+                    noNotificationsDiv.className = 'no-notifications';
+                    noNotificationsDiv.textContent = 'No notifications.';
+                    notificationsContainer.appendChild(noNotificationsDiv);
+                }
+            }
+
+
+            function updateUnreadCount(count) {
+                // Update the notification count in the UI
+                const countElement = document.getElementById('notification-count');
+                countElement.textContent = count;
+            }
+
+
+        }
+
+        // Poll for new notifications every 30 seconds (adjust as needed)
+        setTimeout(fetchNotifications, 30000);
+
+
+        // Fetch notifications initially when the page loads
+        fetchNotifications();
+    </script>
+
 </head>
 
 <body data-sidebar="dark">
@@ -311,172 +476,40 @@
     </div>
     <!-- /Right-bar -->
 
-    <script>
-        const notificationsButton = document.getElementById('notifications-button');
 
-        // Add a click event listener to the button
-        notificationsButton.addEventListener('click', function(event) {
-            // Prevent the default behavior of the link
-            event.preventDefault();
-
-            // Call your function to mark notifications as read or perform other actions
-            markAllNotificationsAsRead();
-        });
-
-        // Add a hover event listener to the button
-        // notificationsButton.addEventListener('mouseenter', function() {
-        //     // Call your function when the mouse enters the button (hover)
-        //     markAllNotificationsAsRead();
-        // });
-
-        function markAllNotificationsAsRead() {
-            // Make an AJAX request to mark all notifications as read
-            fetch('{{ route("notifications.markAllAsReadAdmin") }}', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Hide the count
-                    const countElement = document.getElementById('notification-count');
-
-
-                    // Update the UI to display all notifications
-                    const notificationsContainer = document.getElementById('notifications');
-                    notificationsContainer.innerHTML = '';
-
-                    if (notifications.length > 0) {
-                        notifications.forEach(notification => {
-                            // Create a notification item
-                            const notificationItem = document.createElement('div');
-                            notificationItem.className = 'notification-item';
-
-                            // Create a message element
-                            const messageElement = document.createElement('div');
-                            messageElement.className = 'notification-message';
-                            messageElement.textContent = notification.message;
-
-                            // Check if the notification message contains "refused"
-                            if (!notification.message.includes('refused') && notification.event_id) {
-                                // Create a link for viewing event details
-                                const eventLink = document.createElement('a');
-                                eventLink.className = 'view-event-link';
-                                eventLink.textContent = 'View Event Details';
-                                eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
-
-                                // Append the link to the message element
-                                messageElement.appendChild(eventLink);
-                            }
-
-                            // Append the message element to the notification item
-                            notificationItem.appendChild(messageElement);
-
-                            // Append the notification item to the container
-                            notificationsContainer.appendChild(notificationItem);
-                        });
-                    } else {
-                        // If there are no notifications
-                        const noNotificationsDiv = document.createElement('div');
-                        noNotificationsDiv.className = 'no-notifications';
-                        noNotificationsDiv.textContent = 'No notifications.';
-                        notificationsContainer.appendChild(noNotificationsDiv);
-                    }
-                })
-                .catch(error => {
-                    console.error('Mark All as Read Error:', error);
-                });
-        }
-    </script>
-    <script>
-        let audioPlayed = false; // Track whether the audio has been played
-        const homeRoute = "{{ route('admin') }}";
-
-        function fetchNotifications() {
-
-            fetch(homeRoute, {
-                    method: 'GET',
-                })
-                .then(() => {
-                    fetch('{{ route("AdminNotification") }}', {
-                            method: 'GET',
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            updateNotificationUI(data.notifications); // Update notifications
-                            updateUnreadCount(data.unread_count); // Update unread count
-
-                            // if (data.notifications.length > 0 && !audioPlayed && document.hasFocus()) {
-                            //     playNotificationSound(); // Play notification sound if there are new notifications and page has focus
-                            // }
-                        })
-                        .catch(error => {
-                            console.error('Fetch Error:', error);
-                        });
-                })
-
-
-            function updateNotificationUI(notifications) {
-                // Update the notification UI with new notifications
-                const notificationsContainer = document.getElementById('notifications');
-                notificationsContainer.innerHTML = '';
-
-                if (notifications.length > 0) {
-                    notifications.forEach(notification => {
-                        // Create a notification item
-                        const notificationItem = document.createElement('div');
-                        notificationItem.className = 'notification-item';
-
-                        // Create a message element
-                        const messageElement = document.createElement('div');
-                        messageElement.className = 'notification-message';
-                        messageElement.textContent = notification.message;
-
-                        // Check if the notification message contains "refused"
-                        // Create a link for viewing event details
-                        const eventLink = document.createElement('a');
-                        eventLink.className = 'view-event-link';
-                        eventLink.textContent = 'View Event Details';
-                        eventLink.href = '{{ route("events")}}';
-
-                        // Append the link to the message element
-                        messageElement.appendChild(eventLink);
-
-
-                        // Append the message element to the notification item
-                        notificationItem.appendChild(messageElement);
-
-                        // Append the notification item to the container
-                        notificationsContainer.appendChild(notificationItem);
-                    });
-                } else {
-                    // If there are no notifications
-                    const noNotificationsDiv = document.createElement('div');
-                    noNotificationsDiv.className = 'no-notifications';
-                    noNotificationsDiv.textContent = 'No notifications.';
-                    notificationsContainer.appendChild(noNotificationsDiv);
-                }
-            }
-
-
-            function updateUnreadCount(count) {
-                // Update the notification count in the UI
-                const countElement = document.getElementById('notification-count');
-                countElement.textContent = count;
-            }
-
-
+    <style>
+        /* CSS styles for notification items */
+        .notification-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f5f5f5;
         }
 
-        // Poll for new notifications every 30 seconds (adjust as needed)
-        setInterval(fetchNotifications, 80000);
+        /* CSS styles for notification messages */
+        .notification-message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
 
-        // Fetch notifications initially when the page loads
-        fetchNotifications();
-    </script>
+        /* CSS styles for the "View Event Details" link */
+        .view-event-link {
+            color: #007bff;
+            text-decoration: none;
+            margin-top: 5px;
+            display: block;
+        }
 
-
+        /* CSS styles for the "No notifications" message */
+        .no-notifications {
+            font-size: 18px;
+            font-weight: bold;
+            color: #888;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
 
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

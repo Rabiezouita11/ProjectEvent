@@ -21,7 +21,189 @@
     <link rel="stylesheet" href="{{ asset('client/fonts/line-icons.css') }}" type="text/css">
     <script src="{{ asset('vendor/kustomer/js/kustomer.js') }}" defer></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <audio id="notification-sound">
+        <source src="{{ asset('friend-request-14878.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        const notificationsButton = document.getElementById('notifications-button');
 
+        // Add a click event listener to the button
+        notificationsButton.addEventListener('click', function(event) {
+            // Prevent the default behavior of the link
+            event.preventDefault();
+
+            // Call your function to mark notifications as read or perform other actions
+            markAllNotificationsAsRead();
+        });
+
+        // Add a hover event listener to the button
+        // notificationsButton.addEventListener('mouseenter', function() {
+        //     // Call your function when the mouse enters the button (hover)
+        //     markAllNotificationsAsRead();
+        // });
+
+        function markAllNotificationsAsRead() {
+            // Make an AJAX request to mark all notifications as read
+            fetch('{{ route("notifications.markAllAsRead") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Hide the count
+                    const countElement = document.getElementById('notification-count');
+
+
+                    // Update the UI to display all notifications
+                    const notificationsContainer = document.getElementById('notifications');
+                    notificationsContainer.innerHTML = '';
+
+                    if (notifications.length > 0) {
+                        notifications.forEach(notification => {
+                            // Create a notification item
+                            const notificationItem = document.createElement('div');
+                            notificationItem.className = 'notification-item';
+
+                            // Create a message element
+                            const messageElement = document.createElement('div');
+                            messageElement.className = 'notification-message';
+                            messageElement.textContent = notification.message;
+
+                            // Check if the notification message contains "refused"
+                            if (!notification.message.includes('refused') && notification.event_id) {
+                                // Create a link for viewing event details
+                                const eventLink = document.createElement('a');
+                                eventLink.className = 'view-event-link';
+                                eventLink.textContent = 'View Event Details';
+                                eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
+
+                                // Append the link to the message element
+                                messageElement.appendChild(eventLink);
+                            }
+
+                            // Append the message element to the notification item
+                            notificationItem.appendChild(messageElement);
+
+                            // Append the notification item to the container
+                            notificationsContainer.appendChild(notificationItem);
+                        });
+                    } else {
+                        // If there are no notifications
+                        const noNotificationsDiv = document.createElement('div');
+                        noNotificationsDiv.className = 'no-notifications';
+                        noNotificationsDiv.textContent = 'No notifications.';
+                        notificationsContainer.appendChild(noNotificationsDiv);
+                    }
+                })
+                .catch(error => {
+                    console.error('Mark All as Read Error:', error);
+                });
+        }
+    </script>
+    <script>
+        let audioPlayed = false; // Track whether the audio has been played
+        const homeRoute = "{{ route('home') }}";
+        const maxPollingInterval = 10000; // Maximum polling interval (5 minutes)
+
+        function fetchNotifications() {
+
+            fetch(homeRoute, {
+                    method: 'GET',
+                })
+                .then(() => {
+                    fetch('{{ route("notifications.index") }}', {
+                            method: 'GET',
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            updateNotificationUI(data.notifications); // Update notifications
+                            updateUnreadCount(data.unread_count); // Update unread count
+
+                            // if (data.notifications.length > 0 && !audioPlayed && document.hasFocus()) {
+                            //     playNotificationSound(); // Play notification sound if there are new notifications and page has focus
+                            // }
+                        })
+                        .catch(error => {
+                            console.error('Fetch Error:', error);
+                        });
+                })
+
+
+            function updateNotificationUI(notifications) {
+                // Update the notification UI with new notifications
+                const notificationsContainer = document.getElementById('notifications');
+                notificationsContainer.innerHTML = '';
+
+                if (notifications.length > 0) {
+                    notifications.forEach(notification => {
+                        // Create a notification item
+                        const notificationItem = document.createElement('div');
+                        notificationItem.className = 'notification-item';
+
+                        // Create a message element
+                        const messageElement = document.createElement('div');
+                        messageElement.className = 'notification-message';
+                        messageElement.textContent = notification.message;
+
+                        // Check if the notification message contains "refused"
+                        if (!notification.message.includes('refused') && notification.event_id) {
+                            // Create a link for viewing event details
+                            const eventLink = document.createElement('a');
+                            eventLink.className = 'view-event-link';
+                            eventLink.textContent = 'View Event Details';
+                            eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
+
+                            // Append the link to the message element
+                            messageElement.appendChild(eventLink);
+                        }
+
+                        // Append the message element to the notification item
+                        notificationItem.appendChild(messageElement);
+
+                        // Append the notification item to the container
+                        notificationsContainer.appendChild(notificationItem);
+                    });
+                } else {
+                    // If there are no notifications
+                    const noNotificationsDiv = document.createElement('div');
+                    noNotificationsDiv.className = 'no-notifications';
+                    noNotificationsDiv.textContent = 'No notifications.';
+                    notificationsContainer.appendChild(noNotificationsDiv);
+                }
+            }
+
+
+            function updateUnreadCount(count) {
+                // Update the notification count in the UI
+                const countElement = document.getElementById('notification-count');
+                countElement.textContent = count;
+            }
+
+            function playNotificationSound() {
+                const audioElement = document.getElementById('notification-sound');
+                audioElement.muted = false; // Unmute the audio
+                audioElement.play() // Play the audio
+                    .then(() => {
+                        audioPlayed = true; // Mark audio as played
+                    })
+                    .catch(error => {
+                        console.error('Audio Play Error:', error);
+                    });
+            }
+        }
+
+        // Poll for new notifications every 30 seconds (adjust as needed)
+
+
+        // Continue polling with the adjusted interval
+        setTimeout(fetchNotifications, 30000);
+
+        // Fetch notifications initially when the page loads
+        fetchNotifications();
+    </script>
 
 </head>
 
@@ -105,7 +287,7 @@
                                     </form>
                                 </li>
 
-
+                                @if (Auth::user()->role == 'demandeur')
 
                                 <li class="submenu dropdown">
 
@@ -129,7 +311,7 @@
 
 
                         </li>
-
+                        @endguest
 
                         @if (Auth::user()->role == 'demandeur')
                         <li>
@@ -467,8 +649,6 @@
 
 
     <!-- *Scripts* -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
             var validationErrors = $('#validation-errors').html();
@@ -487,185 +667,7 @@
             @endif
         });
     </script>
-    <audio id="notification-sound">
-        <source src="{{ asset('friend-request-14878.mp3') }}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <script>
-        const notificationsButton = document.getElementById('notifications-button');
 
-        // Add a click event listener to the button
-        notificationsButton.addEventListener('click', function(event) {
-            // Prevent the default behavior of the link
-            event.preventDefault();
-
-            // Call your function to mark notifications as read or perform other actions
-            markAllNotificationsAsRead();
-        });
-
-        // Add a hover event listener to the button
-        // notificationsButton.addEventListener('mouseenter', function() {
-        //     // Call your function when the mouse enters the button (hover)
-        //     markAllNotificationsAsRead();
-        // });
-
-        function markAllNotificationsAsRead() {
-            // Make an AJAX request to mark all notifications as read
-            fetch('{{ route("notifications.markAllAsRead") }}', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Hide the count
-                    const countElement = document.getElementById('notification-count');
-
-
-                    // Update the UI to display all notifications
-                    const notificationsContainer = document.getElementById('notifications');
-                    notificationsContainer.innerHTML = '';
-
-                    if (notifications.length > 0) {
-                        notifications.forEach(notification => {
-                            // Create a notification item
-                            const notificationItem = document.createElement('div');
-                            notificationItem.className = 'notification-item';
-
-                            // Create a message element
-                            const messageElement = document.createElement('div');
-                            messageElement.className = 'notification-message';
-                            messageElement.textContent = notification.message;
-
-                            // Check if the notification message contains "refused"
-                            if (!notification.message.includes('refused') && notification.event_id) {
-                                // Create a link for viewing event details
-                                const eventLink = document.createElement('a');
-                                eventLink.className = 'view-event-link';
-                                eventLink.textContent = 'View Event Details';
-                                eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
-
-                                // Append the link to the message element
-                                messageElement.appendChild(eventLink);
-                            }
-
-                            // Append the message element to the notification item
-                            notificationItem.appendChild(messageElement);
-
-                            // Append the notification item to the container
-                            notificationsContainer.appendChild(notificationItem);
-                        });
-                    } else {
-                        // If there are no notifications
-                        const noNotificationsDiv = document.createElement('div');
-                        noNotificationsDiv.className = 'no-notifications';
-                        noNotificationsDiv.textContent = 'No notifications.';
-                        notificationsContainer.appendChild(noNotificationsDiv);
-                    }
-                })
-                .catch(error => {
-                    console.error('Mark All as Read Error:', error);
-                });
-        }
-    </script>
-    <script>
-        let audioPlayed = false; // Track whether the audio has been played
-        const homeRoute = "{{ route('home') }}";
-
-        function fetchNotifications() {
-
-            fetch(homeRoute, {
-                    method: 'GET',
-                })
-                .then(() => {
-                    fetch('{{ route("notifications.index") }}', {
-                            method: 'GET',
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            updateNotificationUI(data.notifications); // Update notifications
-                            updateUnreadCount(data.unread_count); // Update unread count
-
-                            // if (data.notifications.length > 0 && !audioPlayed && document.hasFocus()) {
-                            //     playNotificationSound(); // Play notification sound if there are new notifications and page has focus
-                            // }
-                        })
-                        .catch(error => {
-                            console.error('Fetch Error:', error);
-                        });
-                })
-
-
-            function updateNotificationUI(notifications) {
-                // Update the notification UI with new notifications
-                const notificationsContainer = document.getElementById('notifications');
-                notificationsContainer.innerHTML = '';
-
-                if (notifications.length > 0) {
-                    notifications.forEach(notification => {
-                        // Create a notification item
-                        const notificationItem = document.createElement('div');
-                        notificationItem.className = 'notification-item';
-
-                        // Create a message element
-                        const messageElement = document.createElement('div');
-                        messageElement.className = 'notification-message';
-                        messageElement.textContent = notification.message;
-
-                        // Check if the notification message contains "refused"
-                        if (!notification.message.includes('refused') && notification.event_id) {
-                            // Create a link for viewing event details
-                            const eventLink = document.createElement('a');
-                            eventLink.className = 'view-event-link';
-                            eventLink.textContent = 'View Event Details';
-                            eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
-
-                            // Append the link to the message element
-                            messageElement.appendChild(eventLink);
-                        }
-
-                        // Append the message element to the notification item
-                        notificationItem.appendChild(messageElement);
-
-                        // Append the notification item to the container
-                        notificationsContainer.appendChild(notificationItem);
-                    });
-                } else {
-                    // If there are no notifications
-                    const noNotificationsDiv = document.createElement('div');
-                    noNotificationsDiv.className = 'no-notifications';
-                    noNotificationsDiv.textContent = 'No notifications.';
-                    notificationsContainer.appendChild(noNotificationsDiv);
-                }
-            }
-
-
-            function updateUnreadCount(count) {
-                // Update the notification count in the UI
-                const countElement = document.getElementById('notification-count');
-                countElement.textContent = count;
-            }
-
-            function playNotificationSound() {
-                const audioElement = document.getElementById('notification-sound');
-                audioElement.muted = false; // Unmute the audio
-                audioElement.play() // Play the audio
-                    .then(() => {
-                        audioPlayed = true; // Mark audio as played
-                    })
-                    .catch(error => {
-                        console.error('Audio Play Error:', error);
-                    });
-            }
-        }
-
-        // Poll for new notifications every 30 seconds (adjust as needed)
-        setInterval(fetchNotifications, 10000);
-
-        // Fetch notifications initially when the page loads
-        fetchNotifications();
-    </script>
     <style>
         /* CSS styles for notification items */
         .notification-item {

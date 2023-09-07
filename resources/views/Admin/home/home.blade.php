@@ -96,7 +96,7 @@
                                     <img src="assets/images/services-icon/03.png" alt="">
                                 </div>
                                 <h5 class="font-size-16 text-uppercase text-white-50">Reservations</h5>
-                                <h4 class="fw-medium font-size-24">0 <i class="mdi mdi-arrow-up text-success ms-2"></i></h4>
+                                <h4 class="fw-medium font-size-24">{{$reservations}} <i class="mdi mdi-arrow-up text-success ms-2"></i></h4>
                                 <div class="mini-stat-label bg-info">
                                     <p class="mb-0"> 00%</p>
                                 </div>

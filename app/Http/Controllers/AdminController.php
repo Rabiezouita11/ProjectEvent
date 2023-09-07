@@ -32,8 +32,9 @@ class AdminController extends Controller
         $categories = DB::table('categories')->count();
         $events = DB::table('events')->count();
         $feedbacks = DB::table('feedbacks')->count();
+        $reservations = DB::table('reservations')->count();
 
-        return view('Admin.home.home', compact('users', 'categories', 'events', 'feedbacks'));
+        return view('Admin.home.home', compact('users', 'categories', 'events', 'feedbacks', 'reservations'));
     }
 
     public function categories()

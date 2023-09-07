@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-lg-5">
                         <div class="banner-image" style="background-image:url(client/images/manbg.png);">
-                            <img src="client/images/man4.png" alt="">
+                            <img src="client/images/373482209_290223443742303_3203736016382781435_n.jpg" height="500px" alt="">
                         </div>
                     </div>
                 </div>
