@@ -2196,20 +2196,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
+  key: "azeazra",
   cluster: "mt1",
-  forceTLS: true,
-  wshost: window.location.hostname,
+  wsHost: window.location.hostname,
   wsPort: 6001,
   disableStats: true,
-  enabledTransports: ['ws', 'wss'],
-  authEndpoint: '/broadcasting/auth',
-  auth: {
-    headers: {
-      // headers for auth endpoint
-      'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
-    }
-  }
+  forceTLS: false,
+  enabledTransports: ['ws'],
+  authEndpoint: '/broadcasting/auth'
 });
 
 /***/ }),

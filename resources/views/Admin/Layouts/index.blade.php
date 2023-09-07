@@ -20,7 +20,7 @@
     <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css">
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script>
+    <!-- <script>
         const notificationsButton = document.getElementById('notifications-button');
 
         // Add a click event listener to the button
@@ -183,7 +183,7 @@
 
         // Fetch notifications initially when the page loads
         fetchNotifications();
-    </script>
+    </script> -->
 
 </head>
 

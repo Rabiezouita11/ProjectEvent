@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PrivateChannelUser;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -274,13 +275,15 @@ class AdminController extends Controller
             $eventName = $event->Nom;
 
             // Create the notification message with the event name
-            $message = "Your event '$eventName' has been accepted.";
+            $message = "Your event <a href='".route('ShowEventDetails', ['id' => $event_id])."'>$eventName</a> has been accepted.";
             // You can add any additional logic here
             Notifications::create([
                 'user_id' =>   $user_id,
                 'message' =>  $message,
                 'event_id' => $event_id,
             ]);
+
+            event(new PrivateChannelUser($message, $user_id));
             return redirect()->route('eventsByDemandeur')->with('accepted', 'Event accepted successfully.');
         }
 
@@ -307,7 +310,7 @@ class AdminController extends Controller
                 'message' => $message,
                 'event_id' => $event_id,
             ]);
-
+            event(new PrivateChannelUser($message, $user_id));
             return redirect()->route('eventsByDemandeur')->with('refused', 'Event refused successfully.');
         }
 

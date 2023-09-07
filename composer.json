@@ -16,9 +16,10 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "mydnic/laravel-kustomer": "^1.9",
-        "pusher/pusher-php-server": "^7.2",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "stripe/stripe-php": "^12.1"
+        "stripe/stripe-php": "^12.1",
+        "pusher/pusher-php-server": "7.0.2"
+
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

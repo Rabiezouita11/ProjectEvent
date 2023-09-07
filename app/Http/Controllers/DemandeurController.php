@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PrivateChannelUser;
 use App\Models\Categorie;
 use App\Models\EventDemandeur;
 use App\Models\Events;
@@ -71,8 +72,9 @@ class DemandeurController extends Controller
     public function index()
     {
         $categories = Categorie::all();
-
-        return view('Client.home.home')->with('categories', $categories);
+        $notifications = Notifications::where('user_id', auth()->id())->orderBy('created_at', 'desc')->get();
+        $notificationsCount = $notifications->count();
+        return view('Client.home.home')->with('categories', $categories)->with('notifications', $notifications)->with('notificationsCount', $notificationsCount);
     }
 
 
