@@ -86,11 +86,20 @@ class DemandeurController extends Controller
     // modifier profile 
     public function EditProfile(Request $request)
     {
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif',
+
+        ]);
 
         $id = $request['id'];
         $users = \App\Models\User::find($id);
 
         $users->name = $request['name'];
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('user_images', 'public');
+            $users->image = $imagePath;
+        }
 
         $users->update();
         return redirect()->route('profileclient')->with('profileupdate', 'profile modifier avec succés');

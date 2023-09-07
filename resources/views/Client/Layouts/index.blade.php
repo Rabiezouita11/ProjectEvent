@@ -21,10 +21,7 @@
     <link rel="stylesheet" href="{{ asset('client/fonts/line-icons.css') }}" type="text/css">
     <script src="{{ asset('vendor/kustomer/js/kustomer.js') }}" defer></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <audio id="notification-sound">
-        <source src="{{ asset('friend-request-14878.mp3') }}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+   
     <script>
         const notificationsButton = document.getElementById('notifications-button');
 
@@ -37,11 +34,7 @@
             markAllNotificationsAsRead();
         });
 
-        // Add a hover event listener to the button
-        // notificationsButton.addEventListener('mouseenter', function() {
-        //     // Call your function when the mouse enters the button (hover)
-        //     markAllNotificationsAsRead();
-        // });
+      
 
         function markAllNotificationsAsRead() {
             // Make an AJAX request to mark all notifications as read
@@ -122,9 +115,7 @@
                             updateNotificationUI(data.notifications); // Update notifications
                             updateUnreadCount(data.unread_count); // Update unread count
 
-                            // if (data.notifications.length > 0 && !audioPlayed && document.hasFocus()) {
-                            //     playNotificationSound(); // Play notification sound if there are new notifications and page has focus
-                            // }
+                          
                         })
                         .catch(error => {
                             console.error('Fetch Error:', error);
@@ -224,7 +215,7 @@
                     <div class="navbar-flex d-flex align-items-center justify-content-between w-100 pb-2 pt-2">
                         <!-- Brand and toggle get grouped for better mobile display -->
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="index.html">
+                            <a class="navbar-brand" href="{{route('home')}}">
                                 <img src="{{ asset('client/images/logo-white.png') }}" alt="image">
                                 <img src="{{ asset('client/images/logo.png') }}" alt="image">
                             </a>
@@ -233,7 +224,7 @@
                         <div class="navbar-collapse1 d-flex align-items-center" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav" id="responsive-menu">
                                 <li class="dropdown submenu active">
-                                    <a href="index.html" class="">Home</a>
+                                    <a href="{{route('home')}}" class="">Home</a>
                                 </li>
 
                                 <li><a href="{{ url('about' )}}" class="">About Us</a></li>
@@ -277,7 +268,7 @@
                                 <li class="submenu dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="detail-1.html">Mon Compte</a></li>
+                                        <li><a href="{{route('profileclient')}}">Mon Compte</a></li>
                                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</a></li>
 
