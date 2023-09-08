@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AdminChannel;
 use App\Events\PrivateChannelUser;
 use App\Models\Categorie;
 use App\Models\EventDemandeur;
@@ -72,9 +73,8 @@ class DemandeurController extends Controller
     public function index()
     {
         $categories = Categorie::all();
-        $notifications = Notifications::where('user_id', auth()->id())->orderBy('created_at', 'desc')->get();
-        $notificationsCount = $notifications->count();
-        return view('Client.home.home')->with('categories', $categories)->with('notifications', $notifications)->with('notificationsCount', $notificationsCount);
+
+        return view('Client.home.home')->with('categories', $categories);
     }
 
 
@@ -327,11 +327,7 @@ class DemandeurController extends Controller
         $userEvent->save();
         $userNom = auth()->user()->name;
         $message = " l'evenement " . $event->Nom . " a été ajouté par " . $userNom;
-        NotificationsAdmin::create([
-            'user_id' => auth()->user()->id,
-            'message' => $message,
-            'event_id' => $event->id,
-        ]);
+        event(new AdminChannel($message));
 
         return redirect()->route('home')->with('Demandeur', 'Event added successfully!');
     }

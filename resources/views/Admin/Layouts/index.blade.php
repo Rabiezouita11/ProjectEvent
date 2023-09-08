@@ -20,170 +20,6 @@
     <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css">
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <!-- <script>
-        const notificationsButton = document.getElementById('notifications-button');
-
-        // Add a click event listener to the button
-        notificationsButton.addEventListener('click', function(event) {
-            // Prevent the default behavior of the link
-            event.preventDefault();
-
-            // Call your function to mark notifications as read or perform other actions
-            markAllNotificationsAsRead();
-        });
-
-        // Add a hover event listener to the button
-        // notificationsButton.addEventListener('mouseenter', function() {
-        //     // Call your function when the mouse enters the button (hover)
-        //     markAllNotificationsAsRead();
-        // });
-
-        function markAllNotificationsAsRead() {
-            // Make an AJAX request to mark all notifications as read
-            fetch('{{ route("notifications.markAllAsReadAdmin") }}', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Hide the count
-                    const countElement = document.getElementById('notification-count');
-
-
-                    // Update the UI to display all notifications
-                    const notificationsContainer = document.getElementById('notifications');
-                    notificationsContainer.innerHTML = '';
-
-                    if (notifications.length > 0) {
-                        notifications.forEach(notification => {
-                            // Create a notification item
-                            const notificationItem = document.createElement('div');
-                            notificationItem.className = 'notification-item';
-
-                            // Create a message element
-                            const messageElement = document.createElement('div');
-                            messageElement.className = 'notification-message';
-                            messageElement.textContent = notification.message;
-
-                            // Check if the notification message contains "refused"
-
-                            // Create a link for viewing event details
-                            const eventLink = document.createElement('a');
-                            eventLink.className = 'view-event-link';
-                            eventLink.textContent = 'View Event Details';
-                            eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
-
-                            // Append the link to the message element
-                            messageElement.appendChild(eventLink);
-
-
-                            // Append the message element to the notification item
-                            notificationItem.appendChild(messageElement);
-
-                            // Append the notification item to the container
-                            notificationsContainer.appendChild(notificationItem);
-                        });
-                    } else {
-                        // If there are no notifications
-                        const noNotificationsDiv = document.createElement('div');
-                        noNotificationsDiv.className = 'no-notifications';
-                        noNotificationsDiv.textContent = 'No notifications.';
-                        notificationsContainer.appendChild(noNotificationsDiv);
-                    }
-                })
-                .catch(error => {
-                    console.error('Mark All as Read Error:', error);
-                });
-        }
-    </script>
-
-    <script>
-        let audioPlayed = false; // Track whether the audio has been played
-        const homeRoute = "{{ route('admin') }}";
-        const maxPollingInterval = 10000; // Maximum polling interval (5 minutes)
-
-        function fetchNotifications() {
-
-            fetch(homeRoute, {
-                    method: 'GET',
-                })
-                .then(() => {
-                    fetch('{{ route("AdminNotification") }}', {
-                            method: 'GET',
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            updateNotificationUI(data.notifications); // Update notifications
-                            updateUnreadCount(data.unread_count); // Update unread count
-
-                        })
-                        .catch(error => {
-                            console.error('Fetch Error:', error);
-                        });
-                })
-
-
-            function updateNotificationUI(notifications) {
-                // Update the notification UI with new notifications
-                const notificationsContainer = document.getElementById('notifications');
-                notificationsContainer.innerHTML = '';
-
-                if (notifications.length > 0) {
-                    notifications.forEach(notification => {
-                        // Create a notification item
-                        const notificationItem = document.createElement('div');
-                        notificationItem.className = 'notification-item';
-
-                        // Create a message element
-                        const messageElement = document.createElement('div');
-                        messageElement.className = 'notification-message';
-                        messageElement.textContent = notification.message;
-
-                        // Check if the notification message contains "refused"
-                        // Create a link for viewing event details
-                        const eventLink = document.createElement('a');
-                        eventLink.className = 'view-event-link';
-                        eventLink.textContent = 'View Event Details';
-                        eventLink.href = '{{ route("eventsByDemandeur")}}';
-
-                        // Append the link to the message element
-                        messageElement.appendChild(eventLink);
-
-
-                        // Append the message element to the notification item
-                        notificationItem.appendChild(messageElement);
-
-                        // Append the notification item to the container
-                        notificationsContainer.appendChild(notificationItem);
-                    });
-                } else {
-                    // If there are no notifications
-                    const noNotificationsDiv = document.createElement('div');
-                    noNotificationsDiv.className = 'no-notifications';
-                    noNotificationsDiv.textContent = 'No notifications.';
-                    notificationsContainer.appendChild(noNotificationsDiv);
-                }
-            }
-
-
-            function updateUnreadCount(count) {
-                // Update the notification count in the UI
-                const countElement = document.getElementById('notification-count');
-                countElement.textContent = count;
-            }
-
-
-        }
-
-        // Poll for new notifications every 30 seconds (adjust as needed)
-        setTimeout(fetchNotifications, 30000);
-
-
-        // Fetch notifications initially when the page loads
-        fetchNotifications();
-    </script> -->
 
 </head>
 
@@ -306,7 +142,7 @@
                     </div>
 
                     <div class="dropdown d-inline-block">
-                        <button type="button" class="btn header-item noti-icon waves-effect" id="notifications-button" onclick="markAllNotificationsAsRead()" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn header-item noti-icon waves-effect" id="notifications-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="mdi mdi-bell-outline"></i>
                             <span class="badge bg-danger rounded-pill" id="notification-count">0</span>
                         </button>
@@ -322,46 +158,9 @@
 
 
                                 <div id="notifications">
-                                    @if (isset($notifications) && count($notifications) > 0)
-                                    @foreach ($notifications as $notification)
-                                    <a href="" class="text-reset notification-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar-xs">
-                                                    <span class="avatar-title bg-info rounded-circle font-size-16">
-                                                        <i class="mdi mdi-glass-cocktail"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1">
-                                                </h6>
-                                                <div class="font-size-12 text-muted">
-                                                    <p class="mb-1">{{ $notification->message }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    @endforeach
-                                    @else
-                                    <a href="" class="text-reset notification-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar-xs">
 
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1">
-                                                </h6>
-                                                <div class="font-size-12 text-muted">
-                                                    <p class="mb-1">No notifications.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
 
-                                    @endif
+
 
                                 </div>
 
@@ -511,6 +310,93 @@
         }
     </style>
 
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const notificationsList = document.getElementById('notifications');
+            const notificationCount = document.getElementById('notification-count');
+            let countValue = parseInt(localStorage.getItem('adminNotificationCount')) || 0;
+
+            // Retrieve notifications from local storage
+            const storedNotifications = JSON.parse(localStorage.getItem('adminNotifications')) || [];
+
+            // Display all stored notifications
+            storedNotifications.forEach((content) => {
+                addNotification(content); // Define the addNotification function (see below)
+            });
+
+            // Update the notification count in the button
+            notificationCount.textContent = countValue;
+            notificationCount.setAttribute('data-count', countValue);
+
+            // Listen for new notifications from the WebSocket
+            const echo = window.Echo.channel('AdminChannel');
+            echo.listen('.App\\Events\\AdminChannel', (e) => {
+                // Add the new notification to the notifications list
+                const notification = e.message; // Use the message as the notification content
+
+                // Create a new notification item
+                addNotification(notification);
+
+                // Increment the count and update the button count
+                countValue++;
+                notificationCount.textContent = countValue;
+                notificationCount.setAttribute('data-count', countValue);
+
+                // Save all notifications in local storage
+                storedNotifications.push(notification);
+                localStorage.setItem('adminNotifications', JSON.stringify(storedNotifications));
+                localStorage.setItem('adminNotificationCount', countValue.toString());
+            });
+
+            // Add a click event listener to the notifications button
+            const notificationsButton = document.getElementById('notifications-button');
+            notificationsButton.addEventListener('click', function() {
+                // Set the count to 0 and update the button count
+                countValue = 0;
+                notificationCount.textContent = countValue;
+                notificationCount.setAttribute('data-count', countValue);
+
+                // Save the new count value in local storage
+                localStorage.setItem('adminNotificationCount', countValue.toString());
+            });
+
+            // Define a function to add a new notification to the list
+            function addNotification(content) {
+                // Create a new notification item
+                const notificationItem = document.createElement('a');
+                notificationItem.className = 'text-reset notification-item';
+                notificationItem.href = ''; // Add your notification link here
+
+                // Create the notification content element
+                const notificationContent = document.createElement('div');
+                notificationContent.className = 'd-flex';
+
+                const avatarContainer = document.createElement('div');
+                avatarContainer.className = 'flex-shrink-0 me-3';
+                avatarContainer.innerHTML = `
+                    <div class="avatar-xs">
+                        <span class="avatar-title bg-info rounded-circle font-size-15">
+                            <i class="mdi mdi-glass-cocktail"></i>
+                        </span>
+                    </div>
+                `;
+
+                const textContainer = document.createElement('div');
+                textContainer.className = 'flex-grow-1';
+                textContainer.innerHTML = `
+                    <div class="font-size-15 text-muted">
+                        <p class="mb-1">${content}</p>
+                    </div>
+                `;
+
+                notificationContent.appendChild(avatarContainer);
+                notificationContent.appendChild(textContainer);
+                notificationItem.appendChild(notificationContent);
+                notificationsList.appendChild(notificationItem);
+            }
+        });
+    </script>
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

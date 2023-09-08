@@ -21,8 +21,26 @@
     <link rel="stylesheet" href="{{ asset('client/fonts/line-icons.css') }}" type="text/css">
     <script src="{{ asset('vendor/kustomer/js/kustomer.js') }}" defer></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            var validationErrors = $('#validation-errors').html();
 
+            if (validationErrors.trim() !== '') {
+                $('#exampleModal').modal('show');
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Check if the session variable 'azer' is set
+            @if(session('Demandeur'))
+            // Show the success modal
+            $('#successModal').modal('show');
+            @endif
+        });
+    </script>
 
 </head>
 
@@ -49,7 +67,7 @@
                             </a>
                         </div>
                         <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="navbar-collapse1 d-flex align-items-center" id="bs-example-navbar-collapse-1">
+                        <div class="navbar-collapse1  align-items-center" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav" id="responsive-menu">
                                 <li class="dropdown submenu active">
                                     <a href="{{route('home')}}" class="">Home</a>
@@ -141,18 +159,22 @@
 
 
 
-                        </ul>
+
                     </div><!-- /.navbar-collapse -->
                     <li class="search-main">
                         <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
                     </li>
-
                     <div id="slicknav-mobile"></div>
+
                 </div>
+
+
         </div><!-- /.container-fluid -->
         </nav>
+
         </div>
         <!-- Navigation Bar Ends -->
+
     </header>
 
     <style>
@@ -464,24 +486,7 @@
 
 
     <!-- *Scripts* -->
-    <script>
-        $(document).ready(function() {
-            var validationErrors = $('#validation-errors').html();
 
-            if (validationErrors.trim() !== '') {
-                $('#exampleModal').modal('show');
-            }
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Check if the session variable 'azer' is set
-            @if(session('Demandeur'))
-            // Show the success modal
-            $('#successModal').modal('show');
-            @endif
-        });
-    </script>
 
     <style>
         /* CSS styles for notification items */
@@ -524,48 +529,105 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const notificationsList = document.getElementById('notifications-list');
-            const notificationCount = document.getElementById('notification-count');
-            let countValue = parseInt(notificationCount.getAttribute('data-count'));
-            const storedNotifications = JSON.parse(localStorage.getItem('notifications'));
-            console.log(storedNotifications);
-            const storedCount = parseInt(localStorage.getItem('notificationCount')) || 0;
-            if (storedNotifications && Array.isArray(storedNotifications)) {
-                storedNotifications.forEach((notification) => {
-                    const notificationItem = document.createElement('li');
-                    notificationItem.innerHTML = notification;
-                    notificationsList.appendChild(notificationItem);
-                });
+            // Get the user ID (You need to set this based on your authentication logic)
+            const userId = '{{ Auth::id() }}';
+
+            // Function to add a notification to the list and local storage
+            function addNotification(message) {
+                // Create a new list item for the notification
+                const notificationItem = document.createElement('li');
+                notificationItem.className = 'notification-item';
+
+                // Create the notification content element
+                const notificationContent = document.createElement('div');
+                notificationContent.innerHTML = message;
+
+                // Add the notification content to the list item
+                notificationItem.appendChild(notificationContent);
+
+                // Add the new notification to the notifications list
+                notificationsList.appendChild(notificationItem);
             }
 
-            // Update the notification count with the combined count
-            countValue = storedCount; // Set count to the stored count
+            // Get notifications list and count elements
+            const notificationsList = document.getElementById('notifications-list');
+            const notificationCount = document.getElementById('notification-count');
+            const noNotificationsMessage = document.createElement('li');
+            noNotificationsMessage.textContent = 'No notifications';
 
-            window.Echo.private('myPrivateChannel.user.{{ Auth::user()->id }}')
-                .listen('.App\\Events\\PrivateChannelUser', (e) => {
-                    // Create a new list item for the notification
-                    const notificationItem = document.createElement('li');
-                    notificationItem.className = 'notification-item';
+            // Initialize the notification count from local storage
+            let countValue = parseInt(localStorage.getItem(`notificationCount_${userId}`)) || 0;
+            notificationCount.textContent = countValue;
+            notificationCount.setAttribute('data-count', countValue);
 
-                    // Create the notification content element
-                    const notificationContent = document.createElement('div');
-                    notificationContent.innerHTML = e.message;
+            // Initialize the notifications list from local storage
+            const storedNotifications = JSON.parse(localStorage.getItem(`notifications_${userId}`)) || [];
 
-                    // Add the notification content to the list item
-                    notificationItem.appendChild(notificationContent);
+            // Load existing notifications from local storage
+            if (storedNotifications.length === 0) {
+                // If local storage is empty, hide the message
+              
+                noNotificationsMessage.style.display = 'none';
 
-                    // Add the new notification to the notifications list
-                    notificationsList.appendChild(notificationItem);
+
+            } else {
+
+
+                // determine if the "No notifications" message is in the list
+            
+
+           
+
+               if (storedNotifications.length > 0) {
+                // remove the "No notifications" message
+               
+
+                
+                    // If there are notifications, display them
+                    storedNotifications.forEach((notification) => {
+                        addNotification(notification);
+                    });
+                }
+
+                // If there are notifications, display them
+              
+            }
+
+            // Initialize Echo for the private channel
+            const echo = window.Echo.private(`myPrivateChannel.user.${userId}`);
+
+            // Listen for notifications
+            echo.listen('.App\\Events\\PrivateChannelUser', (e) => {
+                // Check if the notification already exists in local storage
+                if (!storedNotifications.includes(e.message)) {
+                    addNotification(e.message);
 
                     // Update the notification count
-                    countValue++; // Increment the count
+                    countValue++;
                     notificationCount.textContent = countValue;
                     notificationCount.setAttribute('data-count', countValue);
-                    const notificationsArray = JSON.parse(localStorage.getItem('notifications')) || [];
-                    notificationsArray.push(e.message);
-                    localStorage.setItem('notifications', JSON.stringify(notificationsArray));
-                    localStorage.setItem('notificationCount', countValue);
-                });
+
+                    // Add the new notification to the local storage
+                    storedNotifications.push(e.message);
+                    localStorage.setItem(`notifications_${userId}`, JSON.stringify(storedNotifications));
+                    localStorage.setItem(`notificationCount_${userId}`, countValue);
+
+                    // Hide the "No notifications" message
+                    noNotificationsMessage.style.display = 'none';
+                }
+            });
+
+            // Add a click event listener to the notifications button
+            const notificationsButton = document.getElementById('notifications-button');
+            notificationsButton.addEventListener('click', () => {
+                // Reset the notification count to 0
+                countValue = 0;
+                notificationCount.textContent = countValue;
+                notificationCount.setAttribute('data-count', countValue);
+
+                // Update the local storage count
+                localStorage.setItem(`notificationCount_${userId}`, countValue);
+            });
         });
     </script>
 
@@ -607,7 +669,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Include Bootstrap JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="{{asset('client/js/jquery-3.5.1.min.js')}}"></script>
     <script src="{{asset('client/js/bootstrap.min.js')}}"></script>

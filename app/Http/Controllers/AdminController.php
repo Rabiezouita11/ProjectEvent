@@ -277,11 +277,7 @@ class AdminController extends Controller
             // Create the notification message with the event name
             $message = "Your event <a href='".route('ShowEventDetails', ['id' => $event_id])."'>$eventName</a> has been accepted.";
             // You can add any additional logic here
-            Notifications::create([
-                'user_id' =>   $user_id,
-                'message' =>  $message,
-                'event_id' => $event_id,
-            ]);
+        
 
             event(new PrivateChannelUser($message, $user_id));
             return redirect()->route('eventsByDemandeur')->with('accepted', 'Event accepted successfully.');
@@ -305,11 +301,7 @@ class AdminController extends Controller
             // Create the notification message with the event name
             $message = "Your event '$eventName' has been refused.";
             // You can add any additional logic here
-            Notifications::create([
-                'user_id' => $user_id,
-                'message' => $message,
-                'event_id' => $event_id,
-            ]);
+         
             event(new PrivateChannelUser($message, $user_id));
             return redirect()->route('eventsByDemandeur')->with('refused', 'Event refused successfully.');
         }
