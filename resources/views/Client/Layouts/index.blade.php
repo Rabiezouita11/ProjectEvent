@@ -566,7 +566,7 @@
             // Load existing notifications from local storage
             if (storedNotifications.length === 0) {
                 // If local storage is empty, hide the message
-              
+
                 noNotificationsMessage.style.display = 'none';
 
 
@@ -574,15 +574,15 @@
 
 
                 // determine if the "No notifications" message is in the list
-            
 
-           
 
-               if (storedNotifications.length > 0) {
-                // remove the "No notifications" message
-               
 
-                
+
+                if (storedNotifications.length > 0) {
+                    // remove the "No notifications" message
+
+
+
                     // If there are notifications, display them
                     storedNotifications.forEach((notification) => {
                         addNotification(notification);
@@ -590,7 +590,7 @@
                 }
 
                 // If there are notifications, display them
-              
+
             }
 
             // Initialize Echo for the private channel

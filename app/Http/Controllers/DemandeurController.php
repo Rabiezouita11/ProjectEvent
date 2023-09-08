@@ -72,9 +72,22 @@ class DemandeurController extends Controller
 
     public function index()
     {
-        $categories = Categorie::all();
 
-        return view('Client.home.home')->with('categories', $categories);
+
+        $usersName = DB::table('users')->get();
+        $feedbacksName = DB::table('feedbacks')->get();
+        $reservations = DB::table('reservations')->count();
+        $categories = Categorie::all();
+        $eventss = DB::table('events')->count();
+        $feedbacks = DB::table('feedbacks')->count();
+        $users = DB::table('users')
+        ->orWhere('role', 'participant')
+        ->orWhere('role', 'demandeur')
+        ->count();
+        $events = Events::where('status', 'accepted')
+            ->orderBy('Nombre_total_abonnés', 'desc')
+            ->paginate(5);
+        return view('Client.home.home')->with('feedbacksName', $feedbacksName)->with('usersName', $usersName)->with('categories', $categories)->with('events', $events)->with('feedbacks', $feedbacks)->with('eventss', $eventss)->with('users', $users)->with('reservations', $reservations);
     }
 
 
