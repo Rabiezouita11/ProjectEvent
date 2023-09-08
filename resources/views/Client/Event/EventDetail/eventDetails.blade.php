@@ -30,9 +30,8 @@
      <br>
 
      <div class="container">
-         @include('kustomer::kustomer')
          <div class="row">
-            
+
              <div class="col-lg-8 pe-lg-4">
                  <div class="event-detail-inner text-center text-md-start">
                      <img src="{{asset('storage/'.$event->Image)}}" alt="" class="mb-3">
@@ -334,6 +333,16 @@
                              </div>
                              <div class="theme-overlay"></div>
                          </div>
+                         <br>
+                         <div class="sidebar-item p-5 text-center position-relative" style="background-image: url(images/pexels-wendy-wei-1190297.jpg); background-size: cover;">
+                             <div class="sidebar-item-content position-relative z-index2">
+                                 <h3 class="mb-3 theme">feedbacks?</h3>
+                                 <button type="button" class="nir-btn" data-bs-toggle="modal" data-bs-target="#myModal">
+                                 feedbacks
+                                </button>
+                             </div>
+                             <div class="theme-overlay"></div>
+                         </div>
 
                      </div>
                  </div>
@@ -341,6 +350,21 @@
          </div>
      </div>
  </section>
+ <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">votre feedbacks</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @include('kustomer::kustomer')
+            </div>
+       
+        </div>
+    </div>
+</div>
+
  <!-- blog Ends -->
  <!-- event-contact ends -->
  <section class="event-contact bg-grey pb-8">
