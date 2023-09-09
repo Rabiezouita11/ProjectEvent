@@ -169,7 +169,7 @@
 
                                         @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">Aucune donnée disponible</td>
+                                            <td colspan="7" class="text-center">Aucune donnée disponible</td>
                                         </tr>
                                         @endforelse
                                     </tbody>

@@ -339,7 +339,7 @@ class DemandeurController extends Controller
         $userEvent->event_id = $event->id; // Get the ID of the newly created event
         $userEvent->save();
         $userNom = auth()->user()->name;
-        $message = " l'evenement " . $event->Nom . " a été ajouté par " . $userNom;
+        $message = "l'événement <a href='".route('eventsByDemandeur')."'>$event->Nom</a> a été ajouté par $userNom.";
         event(new AdminChannel($message));
 
         return redirect()->route('home')->with('Demandeur', 'Event added successfully!');

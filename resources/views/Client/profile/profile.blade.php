@@ -20,170 +20,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="client/fonts/line-icons.css" type="text/css">
-    <script>
-        const notificationsButton = document.getElementById('notifications-button');
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        // Add a click event listener to the button
-        notificationsButton.addEventListener('click', function(event) {
-            // Prevent the default behavior of the link
-            event.preventDefault();
-
-            // Call your function to mark notifications as read or perform other actions
-            markAllNotificationsAsRead();
-        });
-
-
-
-        function markAllNotificationsAsRead() {
-            // Make an AJAX request to mark all notifications as read
-            fetch('{{ route("notifications.markAllAsRead") }}', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Hide the count
-                    const countElement = document.getElementById('notification-count');
-
-
-                    // Update the UI to display all notifications
-                    const notificationsContainer = document.getElementById('notifications');
-                    notificationsContainer.innerHTML = '';
-
-                    if (notifications.length > 0) {
-                        notifications.forEach(notification => {
-                            // Create a notification item
-                            const notificationItem = document.createElement('div');
-                            notificationItem.className = 'notification-item';
-
-                            // Create a message element
-                            const messageElement = document.createElement('div');
-                            messageElement.className = 'notification-message';
-                            messageElement.textContent = notification.message;
-
-                            // Check if the notification message contains "refused"
-                            if (!notification.message.includes('refused') && notification.event_id) {
-                                // Create a link for viewing event details
-                                const eventLink = document.createElement('a');
-                                eventLink.className = 'view-event-link';
-                                eventLink.textContent = 'View Event Details';
-                                eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
-
-                                // Append the link to the message element
-                                messageElement.appendChild(eventLink);
-                            }
-
-                            // Append the message element to the notification item
-                            notificationItem.appendChild(messageElement);
-
-                            // Append the notification item to the container
-                            notificationsContainer.appendChild(notificationItem);
-                        });
-                    } else {
-                        // If there are no notifications
-                        const noNotificationsDiv = document.createElement('div');
-                        noNotificationsDiv.className = 'no-notifications';
-                        noNotificationsDiv.textContent = 'No notifications.';
-                        notificationsContainer.appendChild(noNotificationsDiv);
-                    }
-                })
-                .catch(error => {
-                    console.error('Mark All as Read Error:', error);
-                });
-        }
-    </script>
-    <script>
-        let audioPlayed = false; // Track whether the audio has been played
-        const homeRoute = "{{ route('home') }}";
-        const maxPollingInterval = 10000; // Maximum polling interval (5 minutes)
-
-        function fetchNotifications() {
-
-            fetch(homeRoute, {
-                    method: 'GET',
-                })
-                .then(() => {
-                    fetch('{{ route("notifications.index") }}', {
-                            method: 'GET',
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            updateNotificationUI(data.notifications); // Update notifications
-                            updateUnreadCount(data.unread_count); // Update unread count
-
-
-                        })
-                        .catch(error => {
-                            // console.error('Fetch Error:', error);
-                            // alert(error);
-                        });
-                })
-
-
-            function updateNotificationUI(notifications) {
-                // Update the notification UI with new notifications
-                const notificationsContainer = document.getElementById('notifications');
-                notificationsContainer.innerHTML = '';
-
-                if (notifications.length > 0) {
-                    notifications.forEach(notification => {
-                        // Create a notification item
-                        const notificationItem = document.createElement('div');
-                        notificationItem.className = 'notification-item';
-
-                        // Create a message element
-                        const messageElement = document.createElement('div');
-                        messageElement.className = 'notification-message';
-                        messageElement.textContent = notification.message;
-
-                        // Check if the notification message contains "refused"
-                        if (!notification.message.includes('refused') && notification.event_id) {
-                            // Create a link for viewing event details
-                            const eventLink = document.createElement('a');
-                            eventLink.className = 'view-event-link';
-                            eventLink.textContent = 'View Event Details';
-                            eventLink.href = '{{ route("ShowEventDetails", ["id" => "_event_id_"]) }}'.replace('_event_id_', notification.event_id);
-
-                            // Append the link to the message element
-                            messageElement.appendChild(eventLink);
-                        }
-
-                        // Append the message element to the notification item
-                        notificationItem.appendChild(messageElement);
-
-                        // Append the notification item to the container
-                        notificationsContainer.appendChild(notificationItem);
-                    });
-                } else {
-                    // If there are no notifications
-                    const noNotificationsDiv = document.createElement('div');
-                    noNotificationsDiv.className = 'no-notifications';
-                    noNotificationsDiv.textContent = 'No notifications.';
-                    notificationsContainer.appendChild(noNotificationsDiv);
-                }
-            }
-
-
-            function updateUnreadCount(count) {
-                // Update the notification count in the UI
-                const countElement = document.getElementById('notification-count');
-                countElement.textContent = count;
-            }
-
-
-        }
-
-        // Poll for new notifications every 30 seconds (adjust as needed)
-
-
-        // Continue polling with the adjusted interval
-        setTimeout(fetchNotifications, 30000);
-
-        // Fetch notifications initially when the page loads
-        fetchNotifications();
-    </script>
 </head>
 
 <body>
@@ -270,7 +108,7 @@
 
                                 <li class="submenu dropdown">
 
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="notifications-button" aria-haspopup="true" aria-expanded="false" onclick="markAllNotificationsAsRead()"> notifications <span id="notification-count">0</span>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="notifications-button" aria-haspopup="true" aria-expanded="false" > notifications <span id="notification-count">0</span>
                                         <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
                                     <ul class="dropdown-menu">
                                         <div id="notifications">
@@ -343,12 +181,13 @@
 
             </div>
             @endif
-            @if (session('success'))
+            @if (session('passwordChangeSuccess'))
             <div class="alert alert-success">
-                <center>{{session('success')}}</center>
+                <center>{{session('passwordChangeSuccess')}}</center>
 
             </div>
             @endif
+            
 
             @if (session('error'))
             <div class="alert alert-danger">
@@ -603,7 +442,6 @@
 
 
     <!-- *Scripts* -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="client/js/jquery-3.5.1.min.js"></script>
     <script src="client/js/bootstrap.min.js"></script>
