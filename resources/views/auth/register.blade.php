@@ -19,6 +19,8 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="LoginDashboard/style.css">
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <style>
         select option {
   margin: 40px;
@@ -47,89 +49,65 @@
 			</div>
 			<div class="fxt-form">
 				<p>Register for create account</p>
-                <form method="POST" action="{{ route('register') }}">
-                        @csrf
-					<div class="form-group">
-						<div class="fxt-transformY-50 fxt-transition-delay-1">
-							
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="name" value="{{ old('name') }}" required  autofocus>
-                            @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-					</div>
+				<form method="POST" action="{{ route('register') }}">
+    @csrf
 
-                    <div class="form-group">
-						<div class="fxt-transformY-50 fxt-transition-delay-1">
-							
-                        <select name="role" class="form-control"   id="" required>
-                        <option value="">select role</option>
-                        
-                        <option value="demandeur" >demandeur</option>
-                        <option value="participant">participant</option>
+    <div class="form-group">
+        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+            placeholder="Name" value="{{ old('name') }}" required autofocus>
+        @error('name')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
 
-                   
-                        </select>
-                         
-                        </div>
-					</div>
+    <div class="form-group">
+        <select name="role" class="form-control" id="" required>
+            <option value="">Select Role</option>
+            <option value="demandeur">Demandeur</option>
+            <option value="participant">Participant</option>
+        </select>
+    </div>
 
-					<div class="form-group">
-                        
-						<div class="fxt-transformY-50 fxt-transition-delay-1">
-							
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"  placeholder="email" name="email" value="{{ old('email') }}" required autocomplete="email">
+    <div class="form-group">
+        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+            placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email">
+        @error('email')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
 
-@error('email')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-@enderror
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="fxt-transformY-50 fxt-transition-delay-2">
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="password" name="password" required autocomplete="new-password">
+    <div class="form-group">
+        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+            placeholder="Password" name="password" required autocomplete="new-password">
+        @error('password')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+        <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+    </div>
 
-@error('password')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-@enderror
-							<i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
-						</div>
-					</div>
-                    <div class="form-group">
-                        
-						<div class="fxt-transformY-50 fxt-transition-delay-1">
-							
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="confirm password" required autocomplete="new-password">
+    <div class="form-group">
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+            placeholder="Confirm Password" required autocomplete="new-password">
+    </div>
 
-  
+    <div class="form-group">
+        <div class="g-recaptcha" data-sitekey="6Ld8HIYjAAAAALw437G-L_PF1PNrNZH4Qq76MvSU"></div>
+        @error('g-recaptcha-response')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
 
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="fxt-transformY-50 fxt-transition-delay-3">
-							<div class="fxt-checkbox-area">
-								<div class="checkbox">
-									<input id="checkbox1" type="checkbox">
-									<label for="checkbox1">Keep me logged in</label>
-								</div>
-							</div>
-						</div>
-					</div>
-
-                    
-					<div class="form-group">
-						<div class="fxt-transformY-50 fxt-transition-delay-4">
-							<button type="submit" class="fxt-btn-fill">Register</button>
-						</div>
-					</div>
-				</form>
-			</div>
+    <div class="form-group">
+        <button type="submit" class="fxt-btn-fill">Register</button>
+    </div>
+</form>
+</div>
 			
 			
 			<div class="fxt-footer">
