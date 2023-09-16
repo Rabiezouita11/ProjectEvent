@@ -36,16 +36,16 @@
 	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="LoginDashboard/img/figure/bg8-l.jpg">
 		<div class="fxt-content">
 			<div class="fxt-header">
-				<a href="login-8.html" class="fxt-logo"><img src="LoginDashboard/img/logo-8.png" alt="Logo"></a>
+			<a href="{{route('home')}}" class="fxt-logo"><img src="client/images/logo-white.png" alt="Logo"></a>
 			</div>
 			<div class="fxt-form">
-				<p>Login into your account</p>
+				<p>Connectez-vous à votre compte</p>
 				<form method="POST" action="{{ route('login') }}">
                         @csrf
 
 					<div class="form-group">
 						<div class="fxt-transformY-50 fxt-transition-delay-1">
-							<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+							<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="@lang('E-Mail Address')">
 							@error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
 					<div class="form-group">
 						<div class="fxt-transformY-50 fxt-transition-delay-2">
 							
-							<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="********" name="password" required autocomplete="current-password">
+							<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="********" name="password" required autocomplete="current-password"  placeholder="@lang('Password')">
 							@error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -69,29 +69,25 @@
 						<div class="fxt-transformY-50 fxt-transition-delay-3">
 							<div class="fxt-checkbox-area">
 								<div class="checkbox">
-									<input id="checkbox1" type="checkbox">
-									<label for="checkbox1">Keep me logged in</label>
 								</div>
-								<a href="{{ route('password.request') }}" class="switcher-text">Forgot Password</a>
+								<a href="{{ route('password.request') }}" class="switcher-text">Mot de passe oublié</a>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="fxt-transformY-50 fxt-transition-delay-4">
-							<button type="submit" class="fxt-btn-fill">Log in</button>
+							<button type="submit" class="fxt-btn-fill">Connexion</button>
 						</div>
 					</div>
 				</form>
 			</div>
 			<div class="fxt-style-line">
-				<div class="fxt-transformY-50 fxt-transition-delay-5">
-					<h3>Or Login With</h3>
-				</div>
+			
 			</div>
 		
 			<div class="fxt-footer">
 				<div class="fxt-transformY-50 fxt-transition-delay-9">
-					<p>Don't have an account?<a href="{{route('register')}}" class="switcher-text2 inline-text">Register</a></p>
+					<p> Vous n'avez pas de compte ? <a href="{{ route('register') }}" class="switcher-text2 inline-text">Inscrivez-vous ici</a></p>
 				</div>
 			</div>
 		</div>

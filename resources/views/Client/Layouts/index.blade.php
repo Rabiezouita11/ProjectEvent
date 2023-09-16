@@ -73,7 +73,7 @@
                                     <a href="{{route('home')}}" class="">Home</a>
                                 </li>
 
-                                <li><a href="{{ url('about' )}}" class="">About Us</a></li>
+                                <li><a href="{{ url('about' )}}" class="">À PROPOS </a></li>
 
                                 <li class="submenu dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <i class="fas fa-caret-down ms-1" aria-hidden="true"></i></a>
@@ -91,7 +91,7 @@
 
 
 
-                                <li><a href="{{ url('contact') }}" class="">Contact Us</a></li>
+                                <li><a href="{{ url('contact') }}" class="">Contactez</a></li>
 
 
 
@@ -99,7 +99,7 @@
                                 @guest
                                 @if (Route::has('login'))
                                 <li>
-                                    <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a href="{{ route('login') }}">{{ __(' Se connecter') }}</a>
                                 </li>
                                 @endif
 
@@ -116,7 +116,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="{{route('profileclient')}}">Mon Compte</a></li>
                                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">Logout</a></li>
+                                                     document.getElementById('logout-form').submit();">Se déconnecter</a></li>
 
                                     </ul>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -141,7 +141,7 @@
                                     </ul>
 
                         </div>
-
+                
 
                         </li>
                         @endguest
@@ -158,14 +158,13 @@
 
 
 
+                        <li class="search-main">
+                        <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
+                    </li>
 
 
                     </div><!-- /.navbar-collapse -->
-                    <li class="search-main">
-                        <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
-                    </li>
-                    <div id="slicknav-mobile"></div>
-
+                  
                 </div>
 
 
@@ -478,7 +477,7 @@
     <div id="search1">
         <button type="button" class="close">×</button>
         <form action="{{ url('search')}}" id="search">
-            <input type="search" name="q" value="{{ request()->q ??''}}" placeholder="type keyword(s) here" required />
+            <input type="search" name="q" value="{{ request()->q ??''}}" placeholder="Tapez le(s) mot(s)-clé(s) ici" required />
             <button type="submit" class="btn btn-primary" onclick="event.preventDefault();
                                                      document.getElementById('search').submit();">Search</button>
         </form>

@@ -21,13 +21,12 @@
                     <h3 class="h-title">Schedule</h3>
 
 
-                    <h4 class="theme">Event Conference Organisation</h4>
                     <div class="selector4" style="display: flex; justify-content: center;">
                         <h2 class="ah-headline mb-0">
                             <span> Liste des événements planifiés</span>
                             <span class="ah-words-wrapper white theme">
-                                <b class="is-visible textcap"> qui sont </b>
-                                <b>ATTENDUATTENDU </b>
+                                <b class="is-visible textcap"> qui sont ATTENDUATTENDU </b>
+                                <b>qui sont ATTENDUATTENDU </b>
                             </span>
                         </h2>
                     </div>
@@ -54,8 +53,8 @@ $acceptedEventsExist = false;
 <!-- Show a message if there are no events in the category -->
 <div class="container text-center my-5">
     <div class="alert alert-info">
-        <h4 class="alert-heading">No Events Found</h4>
-        <p>There are no events in this category at the moment.</p>
+        <h4 class="alert-heading">Aucun événement trouvé.</h4>
+        <p>Il n'y a actuellement aucun événement dans cette catégorie. {{$cat->Nom}} </p>
     </div>
 </div>
 
@@ -138,8 +137,8 @@ $acceptedEventsExist = true;
 <!-- Show a message if there are no events with status "accepted" -->
 <div class="container text-center my-5">
     <div class="alert alert-info">
-        <h4 class="alert-heading">No Events Found</h4>
-        <p>There are no events in this category at the moment.</p>
+        <h4 class="alert-heading">Aucun événement trouvé. </h4>
+        <p>Il n'y a actuellement aucun événement dans cette catégorie  {{$cat->Nom}} </p>
     </div>
 </div>
 @endif

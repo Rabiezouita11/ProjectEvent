@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Xmee | Login and Register Form Html Templates</title>
+	<title> Register </title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Favicon -->
@@ -45,10 +45,10 @@
 	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="login.jpg">
 		<div class="fxt-content">
 			<div class="fxt-header">
-				<a href="login-8.html" class="fxt-logo"><img src="client/images/logo-white.png" alt="Logo"></a>
+				<a href="{{route('home')}}" class="fxt-logo"><img src="client/images/logo-white.png" alt="Logo"></a>
 			</div>
 			<div class="fxt-form">
-				<p>Register for create account</p>
+				<p>Enregistrez-vous pour créer un compte</p>
 				<form method="POST" action="{{ route('register') }}">
     @csrf
 
@@ -64,7 +64,7 @@
 
     <div class="form-group">
         <select name="role" class="form-control" id="" required>
-            <option value="">Select Role</option>
+            <option value="">Choisir un rôle</option>
             <option value="demandeur">Demandeur</option>
             <option value="participant">Participant</option>
         </select>
@@ -72,7 +72,7 @@
 
     <div class="form-group">
         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-            placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email">
+            name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
         @error('email')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -112,7 +112,7 @@
 			
 			<div class="fxt-footer">
 				<div class="fxt-transformY-50 fxt-transition-delay-9">
-					<p>Have an account?<a href="{{route('login')}}" class="switcher-text2 inline-text">Log in</a></p>
+					<p> Vous avez déjà un compte ? <a href="{{ route('login') }}" class="switcher-text2 inline-text">Connectez-vous ici</a></p>
 				</div>
 			</div>
 		</div>

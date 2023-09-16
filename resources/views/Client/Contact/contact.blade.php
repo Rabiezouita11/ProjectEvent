@@ -12,7 +12,7 @@
         <div class="container">
             <div class="breadcrumb-content text-center pt-14 pb-2">
                 <h5 class="theme mb-0">Eventiz</h5>
-                <h1 class="mb-0 white">Contact us</h1>
+                <h1 class="mb-0 white">Contactez-nous</h1>
             </div>
         </div>
     </div>
@@ -33,13 +33,13 @@
         <div class="contact-info-main mt-0">
             <div class="section-title mb-5 w-75 mx-auto text-center">
                 <h3 class="h-title">Contact</h3>
-                <h4 class="theme">Touch WIth Us</h4>
+                <h4 class="theme">Restez en contact avec nous</h4>
                 <div class="selector4" style="display: flex; justify-content: center;">
                     <h2 class="ah-headline mb-0">
-                        <span>How Can We </span>
+                        <span>Comment pouvons-nous vous </span>   
                         <span class="ah-words-wrapper white theme">
-                            <b class="is-visible textcap">help?</b>
-                            <b>help?</b>
+                            <b class="is-visible textcap">aider ?</b>
+                            <b>aider ?</b>
                         </span>
                     </h2>
                 </div>
@@ -99,7 +99,7 @@
                                     <input type="email" name="email" class="form-control" value="{{ Auth::user()->email }}" id="email" placeholder="Email" readonly>
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input type="text" name="numero" class="form-control" id="phnumber" placeholder="votre numero" required>
+                                    <input type="text" name="numero" class="form-control" id="phnumber" placeholder="votre numero de telephone" value="{{ old('numero') }}" required>
                                     <div>@if ($errors->has('numero'))
                                         <strong style="color: red;">{{ $errors->first('numero') }}</strong>
                                         @endif
@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="comment-btn text-center text-lg-start">
                                     <input href="{{ route('AjoutContact') }}" onclick="event.preventDefault();
-                                                     document.getElementById('contactform2').submit();" type="submit" class="nir-btn" id="submit2" value="Send Message">
+                                                     document.getElementById('contactform2').submit();" type="submit" class="nir-btn" id="submit2" value="Envoyer le message">
                                 </div>
                             </form>
                         </div>

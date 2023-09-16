@@ -3,26 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Events\AdminChannel;
-use App\Events\PrivateChannelUser;
 use App\Models\Categorie;
 use App\Models\EventDemandeur;
 use App\Models\Events;
 use App\Models\Rate;
 use App\Models\Reservation;
 use App\Models\User;
-use App\Events\PusherBroadcast;
-use App\Events\SendMessage;
-use App\Models\Notifications;
-use App\Models\NotificationsAdmin;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
+
 
 class DemandeurController extends Controller
 {
@@ -78,7 +71,9 @@ class DemandeurController extends Controller
         $feedbacksName = DB::table('feedbacks')->get();
         $reservations = DB::table('reservations')->count();
         $categories = Categorie::all();
-        $eventss = DB::table('events')->count();
+        $eventss = DB::table('events')
+        ->orWhere('status', 'accepted')
+        ->count();
         $feedbacks = DB::table('feedbacks')->count();
         $users = DB::table('users')
         ->orWhere('role', 'participant')
@@ -137,7 +132,7 @@ class DemandeurController extends Controller
                 'password' => bcrypt($request->new_password)
             ]);
 
-            return redirect()->back()->with('passwordChangeSuccess', 'Password changed successfully')->with('activeTab', 'v-pills-motdepasse-tab');
+            return redirect()->back()->with('passwordChangeSuccess', 'Mot de passe modifié avec succès.')->with('activeTab', 'v-pills-motdepasse-tab');
         } else {
             return redirect()->back()->with('error', 'Ancien mot de passe incorrect.');
         }
@@ -193,7 +188,7 @@ class DemandeurController extends Controller
         $event = Events::findOrFail($eventId);
 
         if (!$event->isAvailable()) {
-            return redirect()->back()->with('error', 'Tickets are not available for this event.');
+            return redirect()->back()->with('error', 'Les billets ne sont pas disponibles pour cet événement.');
         }
 
 
@@ -234,7 +229,7 @@ class DemandeurController extends Controller
 
     public function success()
     {
-        return redirect()->back()->with('success', ' ticket acheteé avec succeés');
+        return redirect()->back()->with('success', ' Ticket acheté avec succès');
     }
 
     public function historique()
@@ -277,7 +272,7 @@ class DemandeurController extends Controller
         file_put_contents($tempFilePath, $qrCode);
 
         // Generate the PDF using the invoice template view
-        $pdf = PDF::loadView('Client.invoices.invoice-template', compact('reservation', 'tempFilePath'));
+        $pdf = DomPDFPDF::loadView('Client.invoices.invoice-template', compact('reservation', 'tempFilePath'));
 
         // Define the PDF filename
         $filename = 'Facture-' . $reservation->id . '.pdf';
@@ -342,7 +337,7 @@ class DemandeurController extends Controller
         $message = "l'événement <a href='".route('eventsByDemandeur')."'>$event->Nom</a> a été ajouté par $userNom.";
         event(new AdminChannel($message));
 
-        return redirect()->route('home')->with('Demandeur', 'Event added successfully!');
+        return redirect()->route('home')->with('Demandeur', 'l\'événement a été ajouté avec succès');
     }
 
     public function search()

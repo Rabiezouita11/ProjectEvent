@@ -25,7 +25,7 @@ return new class extends Migration
             $table -> string('end_date');
             $table -> string('start_time');
             $table -> string('end_time');
-            $table -> string('Description');
+            $table -> longText('Description');
             $table -> string('Image');
             $table -> string('status')->default('ACCEPTED');
             $table->timestamps();

@@ -4,12 +4,12 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Basic Tables | Veltrix - Admin & Dashboard Template</title>
+    <title>Administartion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
     <meta content="Themesbrand" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('logo mini.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Bootstrap Css -->
@@ -43,12 +43,12 @@
                             </span>
                         </a>
 
-                        <a href="index.html" class="logo logo-light">
+                        <a href="{{route('admin')}}" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="assets/images/logo-sm.png" alt="" height="22">
+                                <img src="{{ asset('logo mini.png') }}" alt="" height="40">
                             </span>
                             <span class="logo-lg">
-                                <img src="assets/images/logo-light.png" alt="" height="18">
+                                <img src="{{ asset('client/images/logo-white.png') }}" alt="" height="50">
                             </span>
                         </a>
                     </div>
@@ -57,31 +57,11 @@
                         <i class="mdi mdi-menu"></i>
                     </button>
 
-                    <div class="d-none d-sm-block">
-                        <div class="dropdown pt-3 d-inline-block">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Create <i class="mdi mdi-chevron-down"></i>
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="d-flex">
                     <!-- App Search-->
-                    <form class="app-search d-none d-lg-block">
-                        <div class="position-relative">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <span class="fa fa-search"></span>
-                        </div>
-                    </form>
+                    
 
                     <div class="dropdown d-inline-block d-lg-none ms-2">
                         <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -102,38 +82,7 @@
                         </div>
                     </div>
 
-                    <div class="dropdown d-none d-md-block ms-2">
-                        <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="me-2" src="assets/images/flags/us_flag.jpg" alt="Header Language" height="16"> English <span class="mdi mdi-chevron-down"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end">
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/germany_flag.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> German </span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/italy_flag.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Italian </span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/french_flag.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> French </span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/spain_flag.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Spanish </span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/russia_flag.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Russian </span>
-                            </a>
-                        </div>
-                    </div>
+                 
 
                     <div class="dropdown d-none d-lg-inline-block">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
@@ -183,20 +132,13 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
-                            <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle font-size-17 align-middle me-1"></i> Profile</a>
-                            <a class="dropdown-item" href="#"><i class="mdi mdi-wallet font-size-17 align-middle me-1"></i> My Wallet</a>
-                            <a class="dropdown-item d-flex align-items-center" href="#"><i class="mdi mdi-cog font-size-17 align-middle me-1"></i> Settings<span class="badge bg-success ms-auto">11</span></a>
-                            <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline font-size-17 align-middle me-1"></i> Lock screen</a>
+                          
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-17 align-middle me-1 text-danger"></i> Logout</a>
+                            <a class="dropdown-item text-danger" href="{{route('logoutt')}}"><i class="bx bx-power-off font-size-17 align-middle me-1 text-danger"></i> Déconnexion</a>
                         </div>
                     </div>
 
-                    <div class="dropdown d-inline-block">
-                        <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
-                            <i class="mdi mdi-cog-outline"></i>
-                        </button>
-                    </div>
+                   
 
                 </div>
             </div>
@@ -217,7 +159,7 @@
                     <div class="col-12">
                         © <script>
                             document.write(new Date().getFullYear())
-                        </script> Veltrix<span class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand.</span>
+                        </script>
                     </div>
                 </div>
             </div>

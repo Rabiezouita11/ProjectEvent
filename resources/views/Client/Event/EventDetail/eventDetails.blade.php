@@ -7,7 +7,7 @@
          <div class="container">
              <div class="breadcrumb-content text-center pt-14 pb-2">
                  <h5 class="theme mb-0">Eventiz</h5>
-                 <h1 class="mb-0 white">Event Detail</h1>
+                 <h1 class="mb-0 white">Détails de l'événement de {{$event->Nom}}</h1>
              </div>
          </div>
      </div>
@@ -36,12 +36,18 @@
                  <div class="event-detail-inner text-center text-md-start">
                      <img src="{{asset('storage/'.$event->Image)}}" alt="" class="mb-3">
 
-
+                     <style>
+                         .break-words {
+                             word-wrap: break-word;
+                             word-break: break-all;
+                         }
+                     </style>
                      <h4>Description Event </h4>
                      <div class="event-quote p-4 bg-grey d-md-flex align-items-center justify-content-between mb-4 text-center text-md-start">
                          <i class="fa fa-quote-left p-4 bg-theme white fs-1 mb-md-0 mb-2"></i>
-                         <p class="mb-0 ps-md-4">{{ $event->Description }}</p>
+                         <p class="mb-0 ps-md-4 break-words" style="white-space: pre-wrap;">{{ $event->Description }}</p>
                      </div>
+
                      <h4>Rate This Event</h4>
                      <style>
                          .rating-form {
@@ -234,13 +240,13 @@
 
 
                          <div class="sidebar-item bg-grey p-4 pb-3 mb-4">
-                             <h5 class="bg-white p-3 text-lg-start text-center">Event Info</h5>
+                             <h5 class="bg-white p-3 text-lg-start text-center">Informations sur l'événement</h5>
                              <div class="footer-contact d-flex align-items-center py-3 border-b">
 
 
                                  <i class="fa fa-user theme fs-4"></i>
                                  <div class="footer-contact-content ps-3">
-                                     <h6 class="mb-1">titre Event</h6>
+                                     <h6 class="mb-1">Titre de l'événement</h6>
                                      <span class=""> {{ $event->Nom }}</span>
                                  </div>
                              </div>
@@ -256,14 +262,14 @@
                              <div class="footer-contact d-flex align-items-center py-3 border-b">
                                  <i class="fa fa-clock theme fs-4"></i>
                                  <div class="footer-contact-content ps-3">
-                                     <h6 class="mb-1">Time</h6>
+                                     <h6 class="mb-1">Temps</h6>
                                      <span class="">{{ $event->start_time }} - {{ $event->end_time }}</span>
                                  </div>
                              </div>
                              <div class="footer-contact d-flex align-items-center py-3 border-b">
                                  <i class="fa fa-clock theme fs-4"></i>
                                  <div class="footer-contact-content ps-3">
-                                     <h6 class="mb-1">Prix Ticket</h6>
+                                     <h6 class="mb-1">Prix du billet</h6>
                                      <span class=""> {{ $event->Prix }} DT</span>
                                  </div>
                              </div>
@@ -286,7 +292,7 @@
                              <div class="footer-contact d-flex align-items-center pt-3 pb-0">
                                  <i class="fa fa-star theme fs-4"></i> <!-- Change the icon class to 'fa-star' for the rating -->
                                  <div class="footer-contact-content ps-3">
-                                     <h6 class="mb-1">Average Rating:</h6>
+                                     <h6 class="mb-1">Note moyenne:</h6>
                                      <span class="">{{ number_format($averageRating, 1) }} / 5</span>
                                  </div>
                              </div>
@@ -327,19 +333,18 @@
                          <br>
                          <div class="sidebar-item p-5 text-center position-relative" style="background-image: url(images/pexels-wendy-wei-1190297.jpg); background-size: cover;">
                              <div class="sidebar-item-content position-relative z-index2">
-                                 <h3 class="mb-3 theme">Need Help?</h3>
-                                 <p class="mb-3 white">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                 <a href="{{route('contact')}}" class="nir-btn">Contact Us <i class="fa fa-angle-right"></i></a>
+                                 <h3 class="mb-3 theme">Besoin d'aide ?</h3>
+                                 <a href="{{route('contact')}}" class="nir-btn">Contactez-nous</a>
                              </div>
                              <div class="theme-overlay"></div>
                          </div>
                          <br>
                          <div class="sidebar-item p-5 text-center position-relative" style="background-image: url(images/pexels-wendy-wei-1190297.jpg); background-size: cover;">
                              <div class="sidebar-item-content position-relative z-index2">
-                                 <h3 class="mb-3 theme">feedbacks?</h3>
+                                 <h3 class="mb-3 theme"> Votre avis nous intéresse</h3>
                                  <button type="button" class="nir-btn" data-bs-toggle="modal" data-bs-target="#myModal">
-                                 feedbacks
-                                </button>
+                                     Donner votre avis
+                                 </button>
                              </div>
                              <div class="theme-overlay"></div>
                          </div>
@@ -351,19 +356,19 @@
      </div>
  </section>
  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">votre feedbacks</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                @include('kustomer::kustomer')
-            </div>
-       
-        </div>
-    </div>
-</div>
+     <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Donner votre avis</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 @include('kustomer::kustomer')
+             </div>
+
+         </div>
+     </div>
+ </div>
 
  <!-- blog Ends -->
  <!-- event-contact ends -->

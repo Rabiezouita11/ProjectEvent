@@ -45,7 +45,7 @@
                     @endif
 
 			<div class="fxt-form">
-				<p>Recover your password</p>
+				<p>Récupérez votre mot de passe</p>
                 <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
@@ -60,7 +60,7 @@
 					</div>
 					<div class="form-group">
 						<div class="fxt-transformY-50 fxt-transition-delay-4">
-							<button type="submit" class="fxt-btn-fill">Send Me Email</button>
+							<button type="submit" class="fxt-btn-fill">Envoyer le lien de réinitialisation</button>
 						</div>
 					</div>
 				</form>
@@ -68,7 +68,7 @@
 			<div class="fxt-footer">
 				<div class="fxt-transformY-50 fxt-transition-delay-9">
 					
-                <p> Don't have an account?<a href="{{ route('register') }}" class="switcher-text2 inline-text">Register</a></p>
+                <p>Vous avez déjà un compte?<a href="{{ route('login') }}" class="switcher-text2 inline-text">Connectez-vous ici</a></p>
 				</div>
 			</div>
 		</div>
