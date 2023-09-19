@@ -146,8 +146,8 @@
                              </style>
                              @guest
                              <div class="login-message">
-                                 <p class="login-text">Please log in to rate this event.</p>
-                                 <a href="{{ route('login') }}" class="login-button">Log In</a>
+                                 <p class="login-text">Vous devez vous connecter pour noter cet événement.</p>
+                                 <a href="{{ route('login') }}" class="login-button">Se connecter</a>
                              </div>
 
                              @else
@@ -303,14 +303,17 @@
                          <div class="sidebar-item p-5 text-center position-relative" style="background-image: url(images/pexels-wendy-wei-1190297.jpg); background-size: cover;">
                              <div class="sidebar-item-content position-relative z-index2">
                                  @guest
-
+                                 <div class="login-message">
+                                     <p class="login-text">Vous devez vous connecter pour acheter un billet.</p>
+                                     <a href="{{ route('login') }}" class="login-button" onclick="storeCurrentUrl()">Se connecter</a>
+                                 </div>
                                  @else
                                  <?php
                                     $user_id = Auth::user()->id;
 
                                     ?>
 
-                                 @endguest
+
 
                                  @if ($event->isAvailable())
 
@@ -319,6 +322,7 @@
                                  <form method="post" action="{{ route('buyTicket')}}" id="addTicket" name="addTicket">
                                      @csrf
                                      <input type="hidden" name="event_id" value="{{ $event->id }}">
+
                                      <input type="hidden" name="user_id" value="{{$user_id }}">
 
 
@@ -327,6 +331,7 @@
                                  @else
                                  <p style="color: black;font-weight:  bold; ">Les billets ne sont pas disponibles pour cet événement.</p>
                                  @endif
+                                 @endguest
                              </div>
                              <div class="theme-overlay"></div>
                          </div>
@@ -417,5 +422,11 @@
      </div>
  </section>
 
-
+ <script>
+    // Function to store the current URL in a JavaScript variable
+    function storeCurrentUrl() {
+        var currentUrl = window.location.href;
+        localStorage.setItem('previousUrl', currentUrl);
+    }
+</script>
  @endsection

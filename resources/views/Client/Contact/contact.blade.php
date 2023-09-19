@@ -52,8 +52,8 @@
                                 <i class="fa fa-map-marker-alt white"></i>
                             </div>
                             <div class="info-content">
-                                <h5>Galleria Conference Hall</h5>
-                                <p class="mb-0">19 By Pass Main Street, Bali, Indonesia, BC 22196</p>
+                                <h5>Le kef</h5>
+                                <p class="mb-0">8 Rue Abu elkacem chebbi</p>
                             </div>
                         </div>
                     </div>
@@ -63,9 +63,9 @@
                                 <i class="fa fa-phone white"></i>
                             </div>
                             <div class="info-content">
-                                <h5>Ticket Info</h5>
-                                <p class="m-0">Phone No. : (+977) 524-191-2022</p>
-                                <p class="m-0">Email Address: eventiz@mail.com</p>
+                                <h5>Telephone</h5>
+                                <p class="m-0"> (+216) 93966440</p>
+                             
                             </div>
                         </div>
                     </div>
@@ -75,8 +75,8 @@
                                 <i class="fa fa-envelope white"></i>
                             </div>
                             <div class="info-content ps-4">
-                                <h5>Event Schedule</h5>
-                                <p class="m-0">Sept 12 - 14 Sept 2023 Starts 09:00am to 06:00 pm</p>
+                                <h5>Email</h5>
+                                <p class="m-0">benarfaakrem@gmail.com</p>
                             </div>
                         </div>
                     </div>

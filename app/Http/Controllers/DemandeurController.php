@@ -272,7 +272,7 @@ class DemandeurController extends Controller
         file_put_contents($tempFilePath, $qrCode);
 
         // Generate the PDF using the invoice template view
-        $pdf = DomPDFPDF::loadView('Client.invoices.invoice-template', compact('reservation', 'tempFilePath'));
+        $pdf = PDF::loadView('Client.invoices.invoice-template', compact('reservation', 'tempFilePath'));
 
         // Define the PDF filename
         $filename = 'Facture-' . $reservation->id . '.pdf';

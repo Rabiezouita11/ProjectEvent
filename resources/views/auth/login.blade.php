@@ -33,7 +33,7 @@
             <div class='line3'></div>
         </div>
     </div>
-	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="LoginDashboard/img/figure/bg8-l.jpg">
+	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="login2.jpg">
 		<div class="fxt-content">
 			<div class="fxt-header">
 			<a href="{{route('home')}}" class="fxt-logo"><img src="client/images/logo-white.png" alt="Logo"></a>

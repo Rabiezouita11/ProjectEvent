@@ -33,10 +33,10 @@
             <div class='line3'></div>
         </div>
     </div>
-	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="{{asset('LoginDashboard/img/figure/bg8-l.jpg')}}">
+	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="{{asset('login2.jpg')}}">
 		<div class="fxt-content">
 			<div class="fxt-header">
-				<a href="login-8.html" class="fxt-logo"><img src="{{asset('LoginDashboard/img/logo-8.png')}}" alt="Logo"></a>
+			<a href="{{route('home')}}" class="fxt-logo"><img src="client/images/logo-white.png" alt="Logo"></a>
 			</div>
             @if (session('status'))
                         <div class="alert alert-success" role="alert">

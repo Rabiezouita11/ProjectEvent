@@ -13,7 +13,7 @@
             <div class="row align-items-end">
                 <div class="col-lg-7 mb-10">
                     <div class="banner-content text-lg-start text-center">
-                        <h4 class="theme mb-0">Big Event 2022</h4>
+                        <h4 class="theme mb-0">Big Event 2023</h4>
                         <div class="selector4" style="display: flex; justify-content: center;">
                             <h1 class="ah-headline white">
                                 <span>World Biggest 2023</span>
@@ -23,12 +23,11 @@
                                 </span>
                             </h1>
                         </div>
-                        <p class="mb-0 white">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="banner-image" style="background-image:url(client/images/manbg.png);">
-                        <img src="client/images/373482209_290223443742303_3203736016382781435_n.jpg" height="500px" alt="">
+                        <img src="home.jpg" height="500px" alt="">
                     </div>
                 </div>
             </div>

@@ -180,32 +180,6 @@
 <!-- footer ends -->
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if there's a session message for password change success and active tab
-        var passwordChangeSuccess = '{{ session('
-        passwordChangeSuccess ') }}';
-        var activeTab = '{{ session('
-        activeTab ') }}';
 
-        if (passwordChangeSuccess && activeTab) {
-            // Display the success message
-            var successAlert = document.createElement('div');
-            successAlert.className = 'alert alert-success';
-            successAlert.innerHTML = '<center>' + passwordChangeSuccess + '</center>';
-
-            var alertContainer = document.querySelector('.event-account-in'); // Replace with the appropriate container
-            if (alertContainer) {
-                alertContainer.insertBefore(successAlert, alertContainer.firstChild);
-            }
-
-            // Activate the "changer mot de passe" tab
-            var tabToActivate = document.getElementById(activeTab);
-            if (tabToActivate) {
-                tabToActivate.click(); // Trigger the click event to activate the tab
-            }
-        }
-    });
-</script>
 
 @endsection

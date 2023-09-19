@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -73,7 +72,6 @@ class RegisterController extends Controller
       'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
       'password' => ['required', 'string', 'min:8', 'confirmed'],
       'role' => ['required', 'string', 'max:255'],
-      'g-recaptcha-response' => ['required', 'recaptcha'], // Add reCAPTCHA validation
 
 
     ]);
@@ -87,31 +85,7 @@ class RegisterController extends Controller
    */
   protected function create(array $data)
   {
-    $recaptchaSecret = '6Ld8HIYjAAAAALw437G-L_PF1PNrNZH4Qq76MvSU'; // Replace with your reCAPTCHA secret key
-    $recaptchaResponse = request('g-recaptcha-response');
-
-    $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify';
-    $recaptchaData = [
-      'secret' => $recaptchaSecret,
-      'response' => $recaptchaResponse,
-    ];
-
-    $recaptchaOptions = [
-      'http' => [
-        'method' => 'POST',
-        'content' => http_build_query($recaptchaData),
-      ],
-    ];
-
-    $recaptchaContext = stream_context_create($recaptchaOptions);
-    $recaptchaVerify = file_get_contents($recaptchaUrl, false, $recaptchaContext);
-    $recaptchaResponseData = json_decode($recaptchaVerify);
-
-    if (!$recaptchaResponseData->success) {
-      // reCAPTCHA validation failed
-      throw new \Exception('reCAPTCHA validation failed');
-    }
-
+   
     return User::create([
       'name' => $data['name'],
       'email' => $data['email'],

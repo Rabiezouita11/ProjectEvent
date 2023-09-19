@@ -271,75 +271,7 @@
 <!-- our teams Ends -->
 
 <!-- testomonial start -->
-<section class="event-testimonial pt-18 pb-7 bg-grey">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-4">
-                <div class="section-title text-center text-lg-start">
-                    <h3 class="h-title">Testimonials</h3>
-                    <h4 class="theme">Our Testimonials</h4>
-                    <div class="selector4" style="display: flex; justify-content: center;">
-                        <h2 class="ah-headline mb-0">
-                            <span>What Peoples's Says About</span>
-                            <span class="ah-words-wrapper white theme">
-                                <b class="is-visible textcap">Eventiz</b>
-                                <b>Eventiz</b>
-                            </span>
-                        </h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center">
 
-            <div class="col-lg-7 pe-lg-5">
-                <div class="row review-slider">
-                    <div class="col-sm-4 item">
-                        <div class="testimonial-item bg-white p-5">
-                            <div class="testi-details mb-4">
-                                <i class="fa fa-quote-left fs-1"></i>
-                                <p class="m-0">Lorem Ipsum is simply dummy
-                                    text of the printing andypesetting industry. Lorem ipsum a simple Lorem Ipsum
-                                    has been the industry's standard dummy hic et quidem. Dignissimos maxime velit
-                                    unde inventore quasi vero dolorem.</p>
-                            </div>
-                            <div class="author-info d-flex align-items-center">
-                                <img src="client/images/reviewer/1.jpg" alt="">
-                                <div class="author-title ms-3">
-                                    <h5 class="m-0 theme">Jared Erondu</h5>
-                                    <span>Supervisor</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 item">
-                        <div class="testimonial-item bg-white p-5">
-                            <div class="testi-details mb-4">
-                                <i class="fa fa-quote-left me-2 fs-1"></i>
-                                <p class="m-0">Lorem Ipsum is simply dummy
-                                    text of the printing andypesetting industry. Lorem ipsum a simple Lorem Ipsum
-                                    has been the industry's standard dummy hic et quidem. Dignissimos maxime velit
-                                    unde inventore quasi vero dolorem.</p>
-                            </div>
-                            <div class="author-info d-flex align-items-center">
-                                <img src="client/images/reviewer/2.jpg" alt="">
-                                <div class="author-title ms-3">
-                                    <h5 class="m-0 theme">Jared Erondu</h5>
-                                    <span>Supervisor</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5 ps-lg-5">
-                <div class="testimonial-image">
-                    <img src="client/images/testi-image.png" alt="" class="opacity-50">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <!-- testimonial ends -->
 
 

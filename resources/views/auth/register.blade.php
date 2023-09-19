@@ -42,7 +42,7 @@
             <div class='line3'></div>
         </div>
     </div>
-	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="login.jpg">
+	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="login2.jpg">
 		<div class="fxt-content">
 			<div class="fxt-header">
 				<a href="{{route('home')}}" class="fxt-logo"><img src="client/images/logo-white.png" alt="Logo"></a>
@@ -112,7 +112,7 @@
 			
 			<div class="fxt-footer">
 				<div class="fxt-transformY-50 fxt-transition-delay-9">
-					<p> Vous avez déjà un compte ? <a href="{{ route('login') }}" class="switcher-text2 inline-text">Connectez-vous ici</a></p>
+					<p style="color: black; font-weight: bold; "> Vous avez déjà un compte ? <a href="{{ route('login') }}" class="switcher-text2 inline-text" style="color: black; font-weight: bold;"  >Connectez-vous ici</a></p>
 				</div>
 			</div>
 		</div>

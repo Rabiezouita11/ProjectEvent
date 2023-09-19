@@ -256,7 +256,7 @@
                             @endif
                         </div>
                         <div id="validation-errors" style="display: none">
-                            @if ($errors->any())
+                        @if ($errors->has('Nom') || $errors->has('Location') || $errors->has('Nombre_total_abonnés') || $errors->has('Prix') || $errors->has('start_date') || $errors->has('end_date') || $errors->has('start_time') || $errors->has('end_time') || $errors->has('Description') || $errors->has('Image') || $errors->has('category_id'))
                             <div class="alert alert-danger">
                                 <ul>
                                     @foreach ($errors->all() as $error)
@@ -396,8 +396,7 @@
                     <div class="footer-about">
                         <img src="images/logo-white.png" alt="">
                         <p class="mt-3 mb-3 white">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Odio suspendisse leo neque
-                            iaculis molestie sagittis maecenas aenean eget molestie sagittis.
+                    
                         </p>
 
                         <div class="social-links">
@@ -412,7 +411,7 @@
                 </div>
                 <div class="col-lg-2 col-md-6 mb-5">
                     <div class="footer-links">
-                        <h4 class="white mb-4">Quick link</h4>
+                        <h4 class="white mb-4">Lien rapide</h4>
                         <ul class="list">
                             <li class="pb-2"><a href="about-us.html">About Us</a></li>
                             <li class="pb-2"><a href="about-us.html">Services</a></li>
@@ -425,36 +424,25 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-5">
                     <div class="footer-links">
-                        <h4 class="white mb-4">get In Touch</h4>
-                        <p class="mb-3">1616 Broadway NY, New York United States of America</p>
+                        <h4 class="white mb-4">Entrer en contact</h4>
+                        <p class="mb-3">8 Rue Abu elkacem chebbi</p>
                         <div class="footer-contact d-flex align-items-center mb-3">
                             <i class="fa fa-phone white fs-4"></i>
                             <div class="footer-contact-content ps-3">
-                                <h6 class="white mb-0">955 444 1245</h6>
+                                <h6 class="white mb-0">(+216) 93966440</h6>
                                 <small class="white">For Information</small>
                             </div>
                         </div>
                         <div class="footer-contact d-flex align-items-center">
                             <i class="fa fa-envelope white fs-4"></i>
                             <div class="footer-contact-content ps-3">
-                                <h6 class="white mb-0">info@eventiz.com</h6>
+                                <h6 class="white mb-0">benarfaakrem@gmail.com</h6>
                                 <small class="white">Email Address</small>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-5">
-                    <div class="footer-links">
-                        <h4 class="white mb-4">Subscribe To Our Newsletter</h4>
-                        <div class="newsletter-form ">
-                            <p class="mb-3">New subscribers get 10% off your next order</p>
-                            <form action="#" method="get" accept-charset="utf-8" class="border-0">
-                                <input type="text" placeholder="Email Address" class="w-100 mb-2">
-                                <button class="nir-btn w-100">Subscribe</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+              
             </div>
         </div>
         <div class="theme-overlay opacity-90"></div>

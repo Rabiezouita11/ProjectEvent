@@ -9,51 +9,36 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+  use AuthenticatesUsers;
 
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    public function redirectTo() {
-        $role = Auth::user()->role; 
-        switch ($role) {
-          case 'admin':
-            return '/admin';
-            break;
-          case 'demandeur':
-            return '/home';
-            break; 
-          case 'participant':
-            return '/home';
-            break; 
-      
-          default:
-            return '/home'; 
-          break;
-        }
-      }
-
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        // Store the previous URL in the session
+        session()->put('previousUrl', url()->previous());
+
+        return view('auth.login');
+    }
+
+    public function redirectTo()
+    {
+        // Check if a previous URL is stored in the session
+        $previousUrl = session()->get('previousUrl');
+        $role = Auth::user()->role;
+        if ($previousUrl && $role == 'demandeur' || $role == 'participant') {
+            return $previousUrl; // Redirect to the stored URL
+        }
+        else{
+            return '/admin';
+        }
+
+      
+       
+
+      
     }
 }
