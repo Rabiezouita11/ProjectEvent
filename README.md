@@ -1,11 +1,42 @@
 # EVENTIZ
 
+## Description du projet:
+L'application est une plateforme complète pour la gestion d'événements, conçue pour faciliter la planification, la gestion et la participation à des événements de toutes sortes. Elle offre une gamme complète de fonctionnalités pour les administrateurs, les demandeurs d'événements, les participants et les utilisateurs en général.
+
+Fonctionnalités clés :
+
+Administration :
+
+Les administrateurs peuvent se connecter à l'interface d'administration sécurisée.
+Gestion des catégories d'événements pour une organisation efficace.
+Contrôle complet des comptes administrateurs.
+Gestion des listes de participants aux événements.
+Suivi des statistiques pour évaluer la performance.
+Gestion complète des événements, y compris leur création, mise à jour et suppression.
+Réception de feedbacks des utilisateurs pour améliorer les événements.
+Notifications en temps réel grâce à l'intégration de websockets.
+Possibilité de modifier le profil administrateur.
+Téléchargement de factures avec codes QR pour un suivi transparent.
+Communication bidirectionnelle avec les utilisateurs pour répondre aux demandes et aux questions.
+Demandeurs d'événements :
+
+Soumission de demandes pour la création d'événements.
+Réception de notifications en temps réel concernant l'acceptation ou le refus des demandes d'événements.
+Possibilité de modifier le profil personnel.
+Téléchargement de factures avec codes QR pour un suivi des événements.
+Participants :
+
+Achat de billets pour des événements.
+Réception de notifications en cas de modifications d'événements.
+Évaluation des événements auxquels ils ont participé.
+Possibilité de modifier le profil personnel.
+Cette application offre une expérience utilisateur complète pour tous les acteurs impliqués dans la planification et la participation à des événements. Elle est conçue pour être conviviale et hautement fonctionnelle, permettant ainsi aux utilisateurs de tirer le meilleur parti de leurs événements, qu'ils soient organisateurs, demandeurs ou participants.
 
 ## Steps for Project Execution :
 
 ```
 Clonez le dépôt Git :
-1.git clone https://github.com/Rabiezouita11/ProjectEvent)https://github.com/Rabiezouita11/ProjectEvent
+1.git clone https://github.com/Rabiezouita11/ProjectEvent
 
 2.Accédez au dossier du projet :
 cd ProjectEvent
@@ -25,7 +56,11 @@ php artisan migrate
 7.Lancez le serveur de développement :
 php artisan serve
 
-8.Accédez à l'application :
+8.Lancez le serveur de Websocket :
+php artisan websocket:serve
+
+
+9.Accédez à l'application :
 http://localhost:8000/home
 
 ```
