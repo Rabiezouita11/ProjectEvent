@@ -109,13 +109,10 @@ Vous pouvez maintenant accéder à l'application en utilisant les informations d
 		<td>full stack</td>
 		<td>Laravel</td>
 	</tr>
-	<tr>
-		<td>Back-End</td>
-		<td>Express, Node.js</td>
-	</tr>
+	
   <tr>
 		<td>Authentication</td>
-		<td>JWT(JSON Web Tokens)</td>
+		<td> Laravel/UI Package </td>
 	</tr>
 	<tr>
 		<td>API Testing</td>
@@ -131,7 +128,7 @@ Vous pouvez maintenant accéder à l'application en utilisant les informations d
 	</tr>
     <tr>
 		<td>Other APIs Used</td>
-		<td>Stripe Payment,api map , API de géolocalisation , API email </td>
+		<td>Stripe Payment,api map , API email(mailtrap) </td>
 	</tr>
 </tbody>
 </table>
