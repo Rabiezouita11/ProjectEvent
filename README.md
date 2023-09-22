@@ -5,7 +5,7 @@
 
 ```
 Clonez le dépôt Git :
-1.git clone [<URL_DU_DÉPÔT_GIT> nom_du_dossier_de_projet](https://github.com/Rabiezouita11/ProjectEvent)https://github.com/Rabiezouita11/ProjectEvent
+1.git clone https://github.com/Rabiezouita11/ProjectEvent)https://github.com/Rabiezouita11/ProjectEvent
 
 2.Accédez au dossier du projet :
 cd ProjectEvent
