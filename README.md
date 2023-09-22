@@ -61,6 +61,7 @@ Accédez à l'application :
 Vous pouvez maintenant accéder à l'application en utilisant les informations d'identification de l'administrateur que vous avez ajouté à la base de données.
 
 ```
+
 <table>
 <thead>
 <tr>
