@@ -161,11 +161,12 @@
                         <li class="search-main">
                         <a href="#search1" class="mt_search"><i class="fa fa-search fs-5"></i></a>
                     </li>
-
+                    </ul>
+                    </div><!-- /.navbar-collapse -->
+                    <div id="slicknav-mobile"></div> <!-- This div is required for slicknav to work -->
 
                     </div><!-- /.navbar-collapse -->
                   
-                </div>
 
 
         </div><!-- /.container-fluid -->
