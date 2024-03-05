@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\File;
 
 
 class DemandeurController extends Controller
@@ -98,21 +99,32 @@ class DemandeurController extends Controller
     {
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif',
-
         ]);
-
+    
         $id = $request['id'];
-        $users = \App\Models\User::find($id);
-
-        $users->name = $request['name'];
-
+        $user = \App\Models\User::find($id);
+    
+        $user->name = $request['name'];
+    
+        $oldImagePath = $user->image; // Get the path of the old image
+    
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('user_images', 'public');
-            $users->image = $imagePath;
+            // Delete the old image if it exists
+            if ($oldImagePath && File::exists(public_path($oldImagePath))) {
+                File::delete(public_path($oldImagePath));
+            }
+    
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            // Move the image to the public/user_images directory
+            $image->move(public_path('user_images'), $imageName); // Move the image to the public directory
+            $imagePath = 'user_images/' . $imageName; // Update the image path
+    
+            $user->image = $imagePath;
         }
-
-        $users->update();
-        return redirect()->route('profileclient')->with('profileupdate', 'profile modifier avec succés');
+    
+        $user->update();
+        return redirect()->route('profileclient')->with('profileupdate', 'Profil modifié avec succès');
     }
 
 

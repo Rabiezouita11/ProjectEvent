@@ -97,7 +97,7 @@
     </div>
 
     <div class="form-group">
-        <div class="g-recaptcha" data-sitekey="6Ld8HIYjAAAAALw437G-L_PF1PNrNZH4Qq76MvSU"></div>
+        <div class="g-recaptcha" data-sitekey="6Lf034EpAAAAAIGrRPJICATM4ZQrGqIhmFOYqJGD"></div>
         @error('g-recaptcha-response')
         <div class="text-danger">{{ $message }}</div>
         @enderror
