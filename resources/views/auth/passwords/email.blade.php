@@ -36,7 +36,7 @@
 	<section class="fxt-template-animation fxt-template-layout8" data-bg-image="{{asset('login2.jpg')}}">
 		<div class="fxt-content">
 			<div class="fxt-header">
-			<a href="{{route('home')}}" class="fxt-logo"><img src="client/images/logo-white.png" alt="Logo"></a>
+			<a href="{{route('home')}}" class="fxt-logo"><img src="{{asset('client/images/logo-white.png')}}" alt="Logo"></a>
 			</div>
             @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -76,7 +76,7 @@
 	<!-- jquery-->
 	<script src="{{asset('LoginDashboard/js/jquery-3.5.0.min.js')}}"></script>
 	<!-- Bootstrap js -->
-	<script src="{{asset('/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('LoginDashboard/js/bootstrap.min.js')}}"></script>
 	<!-- Imagesloaded js -->
 	<script src="{{asset('LoginDashboard/js/imagesloaded.pkgd.min.js')}}"></script>
 	<!-- Validator js -->

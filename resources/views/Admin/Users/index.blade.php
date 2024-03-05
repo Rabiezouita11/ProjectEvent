@@ -1,4 +1,4 @@
-@extends ('Admin.layouts.index')
+@extends ('Admin.Layouts.index')
 
 
 
