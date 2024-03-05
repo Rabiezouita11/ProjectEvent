@@ -125,7 +125,10 @@
                                 </li>
 
                                 @if (Auth::user()->role == 'demandeur')
+                                <li>
+                            <a href="#" style="color: #f2f2f2;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un evenement</a>
 
+                        </li>
                                 <li class="submenu dropdown">
 
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="notifications-button" aria-haspopup="true" aria-expanded="false"> notifications <span id="notification-count" data-count="0">0</span>
@@ -146,14 +149,7 @@
                         </li>
                         @endguest
 
-                        @if (Auth::user()->role == 'demandeur')
-                        <li>
-                            <a href="#" style="color: #f2f2f2;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter un evenement</a>
-
-                        </li> @endif
-
-
-                        @endguest
+                       
 
 
 
